@@ -96,7 +96,12 @@ namespace TrickyBot
                 var configType = service.GetType().BaseType.GetGenericArguments()[0];
                 try
                 {
-                    service.Config.CopyPropertiesFrom(JsonConvert.DeserializeObject(File.ReadAllText(configPath), configType, _configSerializerSettings));
+                    var config = JsonConvert.DeserializeObject(File.ReadAllText(configPath), configType, _configSerializerSettings);
+                    
+                    foreach (var sourceProperty in configType.GetProperties())
+                    {
+                        configType.GetProperty(sourceProperty.Name)?.SetValue(service.Config, sourceProperty.GetValue(config, null), null);
+                    }
                 }
                 catch
                 {
