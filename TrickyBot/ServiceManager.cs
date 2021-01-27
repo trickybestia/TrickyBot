@@ -1,9 +1,18 @@
-﻿using Newtonsoft.Json;
+// -----------------------------------------------------------------------
+// <copyright file="ServiceManager.cs" company="TrickyBot Team">
+// Copyright (c) TrickyBot Team. All rights reserved.
+// Licensed under the CC BY-ND 4.0 license.
+// </copyright>
+// -----------------------------------------------------------------------
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+
+using Newtonsoft.Json;
+
 using TrickyBot.API.Features;
 using TrickyBot.API.Interfaces;
 
@@ -11,21 +20,23 @@ namespace TrickyBot
 {
     public class ServiceManager
     {
-        private static readonly JsonSerializerSettings _configSerializerSettings = new JsonSerializerSettings()
+        private static readonly JsonSerializerSettings ConfigSerializerSettings = new JsonSerializerSettings()
         {
-            Formatting = Formatting.Indented
+            Formatting = Formatting.Indented,
         };
-        private readonly List<IService<IConfig>> _services;
 
-        public IReadOnlyCollection<IService<IConfig>> Services => _services;
+        private readonly List<IService<IConfig>> services;
 
         internal ServiceManager()
         {
-            _services = new List<IService<IConfig>>();
+            this.services = new List<IService<IConfig>>();
         }
+
+        public IReadOnlyCollection<IService<IConfig>> Services => this.services;
+
         public T GetService<T>(bool allowDisabled = false)
         {
-            foreach (var service in Services)
+            foreach (var service in this.Services)
             {
                 if (service.GetType() == typeof(T))
                 {
@@ -40,11 +51,12 @@ namespace TrickyBot
 
             throw new ServiceNotLoadedException(typeof(T));
         }
+
         internal async Task StartAsync()
         {
             Log.Info("Starting services...");
-            Load();
-            foreach (var service in Services)
+            this.Load();
+            foreach (var service in this.Services)
             {
                 if (service.Config.IsEnabled)
                 {
@@ -54,10 +66,11 @@ namespace TrickyBot
 
             Log.Info("Services started.");
         }
+
         internal async Task StopAsync()
         {
             Log.Info("Stopping services...");
-            foreach (var service in Services)
+            foreach (var service in this.Services)
             {
                 if (service.Config.IsEnabled)
                 {
@@ -65,14 +78,15 @@ namespace TrickyBot
                 }
             }
 
-            Save();
+            this.Save();
             Log.Info("Services stopped.");
         }
+
         private void Load()
         {
             var assemblies = new List<Assembly>
             {
-                Assembly.GetExecutingAssembly()
+                Assembly.GetExecutingAssembly(),
             };
             foreach (var file in Directory.EnumerateFiles(Paths.ServiceDlls, "*.dll", SearchOption.TopDirectoryOnly))
             {
@@ -86,18 +100,19 @@ namespace TrickyBot
                     if (type.IsAssignableTo(typeof(IService<IConfig>)))
                     {
                         var constructor = type.GetConstructor(Array.Empty<Type>());
-                        _services.Add((IService<IConfig>)constructor.Invoke(null));
+                        this.services.Add((IService<IConfig>)constructor.Invoke(null));
                     }
                 }
             }
-            foreach (var service in _services)
+
+            foreach (var service in this.services)
             {
                 var configPath = Path.Combine(Paths.Configs, $"{service.Name}.json");
                 var configType = service.GetType().BaseType.GetGenericArguments()[0];
                 try
                 {
-                    var config = JsonConvert.DeserializeObject(File.ReadAllText(configPath), configType, _configSerializerSettings);
-                    
+                    var config = JsonConvert.DeserializeObject(File.ReadAllText(configPath), configType, ConfigSerializerSettings);
+
                     foreach (var sourceProperty in configType.GetProperties())
                     {
                         configType.GetProperty(sourceProperty.Name)?.SetValue(service.Config, sourceProperty.GetValue(config, null), null);
@@ -106,16 +121,17 @@ namespace TrickyBot
                 catch
                 {
                     Log.Warn($"Service {service.Name} does not have config, generating...");
-                    File.WriteAllText(configPath, JsonConvert.SerializeObject(service.Config, _configSerializerSettings));
+                    File.WriteAllText(configPath, JsonConvert.SerializeObject(service.Config, ConfigSerializerSettings));
                 }
             }
         }
+
         private void Save()
         {
-            foreach (var service in _services)
+            foreach (var service in this.services)
             {
                 var dataPath = Path.Combine(Paths.Configs, $"{service.Name}.json");
-                File.WriteAllText(dataPath, JsonConvert.SerializeObject(service.Config, _configSerializerSettings));
+                File.WriteAllText(dataPath, JsonConvert.SerializeObject(service.Config, ConfigSerializerSettings));
             }
         }
     }
