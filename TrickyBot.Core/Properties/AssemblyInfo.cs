@@ -7,7 +7,8 @@
 
 using System.Reflection;
 
-[assembly: AssemblyTitle("TrickyBot")]
+[assembly: AssemblyTitle("TrickyBot.Core")]
 [assembly: AssemblyCompany("TrickyBot Team")]
 [assembly: AssemblyCopyright("Copyright © TrickyBot Team 2021")]
+[assembly: AssemblyProduct("TrickyBot.Core")]
 [assembly: AssemblyVersion("0.1.0.0")]
