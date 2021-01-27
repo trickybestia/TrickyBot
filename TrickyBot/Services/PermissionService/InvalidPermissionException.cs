@@ -1,14 +1,22 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+// <copyright file="InvalidPermissionException.cs" company="TrickyBot Team">
+// Copyright (c) TrickyBot Team. All rights reserved.
+// Licensed under the CC BY-ND 4.0 license.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
 
 namespace TrickyBot.Services.PermissionService
 {
     public class InvalidPermissionException : Exception
     {
-        public string Permission { get; }
-
-        public InvalidPermissionException(string permission) : base($"\"{permission}\" is invalid permission!")
+        public InvalidPermissionException(string permission)
+            : base($"\"{permission}\" is invalid permission!")
         {
-            Permission = permission;
+            this.Permission = permission;
         }
+
+        public string Permission { get; }
     }
 }

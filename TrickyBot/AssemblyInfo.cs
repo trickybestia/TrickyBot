@@ -1,6 +1,13 @@
-﻿using System.Reflection;
+﻿// -----------------------------------------------------------------------
+// <copyright file="AssemblyInfo.cs" company="TrickyBot Team">
+// Copyright (c) TrickyBot Team. All rights reserved.
+// Licensed under the CC BY-ND 4.0 license.
+// </copyright>
+// -----------------------------------------------------------------------
 
-[assembly:AssemblyTitle("TrickyBot")]
-[assembly:AssemblyCompany("TrickyBot Team")]
-[assembly:AssemblyCopyright("Copyright © TrickyBot Team 2021")]
-[assembly:AssemblyVersion("0.1.0.0")]
+using System.Reflection;
+
+[assembly: AssemblyTitle("TrickyBot")]
+[assembly: AssemblyCompany("TrickyBot Team")]
+[assembly: AssemblyCopyright("Copyright © TrickyBot Team 2021")]
+[assembly: AssemblyVersion("0.1.0.0")]
