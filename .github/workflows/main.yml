@@ -20,7 +20,7 @@ jobs:
 
       - name: Publish
         run: |
-          dotnet publish -p:Release
+          dotnet publish -p:PublishProfile=Release
           if ($? -eq $false) { Exit 1 }
 
       - name: Upload artifacts
