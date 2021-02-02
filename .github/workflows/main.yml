@@ -28,3 +28,17 @@ jobs:
         with:
           name: TrickyBot
           path: TrickyBot.Core\bin\Release\publish
+
+      - name: Create NuGet package
+        shell: pwsh
+        run: |
+          [XML]$TargetsFile = Get-Content TrickyBot.targets
+          $version = $TargetsFile.Project.PropertyGroup.Version
+          $version = $Version[0].Trim()
+          nuget pack -Version $version
+
+      - name: Upload NuGet package
+        uses: actions/upload-artifact@v2
+        with:
+          name: NuGet package
+          path: TrickyBot.*.nupkg
