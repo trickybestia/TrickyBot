@@ -9,8 +9,6 @@
     <Copyright>Copyright (c) TrickyBot Team 2020 - $([System.DateTime]::Now.ToString("yyyy"))</Copyright>
     <RepositoryType>Git</RepositoryType>
     <RepositoryUrl>https://github.com/TrickyBestia/TrickyBot</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/TrickyBestia/TrickyBot</PackageProjectUrl>
-    <PackageLicenseExpression>CC-BY-ND-4.0</PackageLicenseExpression>
     <NoWarn>1701;1702;SA1600;SA1602;SA0001</NoWarn>
 
     <NuspecProperties>version=$(Version)</NuspecProperties>

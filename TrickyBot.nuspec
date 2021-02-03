@@ -7,7 +7,7 @@
     <authors>The TrickyBot Team</authors>
     <owners>TrickyBestia</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <license type="expression">CC-BY-ND-4.0</license>
+    <license type="expression">CC BY-ND 4.0</license>
     <projectUrl>https://github.com/TrickyBestia/TrickyBot</projectUrl>
     <repository type="Git" url="https://github.com/TrickyBestia/TrickyBot"/>
     <description>Modular single-server Discord bot framework.</description>
