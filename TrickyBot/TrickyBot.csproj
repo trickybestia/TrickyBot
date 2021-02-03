@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>TrickyBot.Core</AssemblyName>
+    <AssemblyName>TrickyBot</AssemblyName>
     <RootNamespace>TrickyBot</RootNamespace>
   </PropertyGroup>
 
@@ -12,11 +12,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;SA1600;SA1602;SA0001</NoWarn>
+    <NoWarn>1701;1702;SA1600;SA1602;1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <NoWarn>1701;1702;SA1600;SA1602;SA0001</NoWarn>
+    <NoWarn>1701;1702;SA1600;SA0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
