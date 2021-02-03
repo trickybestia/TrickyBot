@@ -20,29 +20,29 @@
         }
         public async Task StartAsync()
         {
-            Log.Info($"Starting service \"{Name}\" v{Version} by \"{Author}\"...");
+            Log.Info($"Starting service \"{Name}\"...");
             try
             {
                 await OnStart();
             }
             catch (Exception ex)
             {
-                Log.Error($"Exception thrown while starting service \"{Name}\" v{Version} by \"{Author}\": {ex}");
+                Log.Error($"Exception thrown while starting service \"{Name}\": {ex}");
             }
-            Log.Info($"Service \"{Name}\" v{Version} by \"{Author}\" started.");
+            Log.Info($"Service \"{Name}\" started.");
         }
         public async Task StopAsync()
         {
-            Log.Info($"Stopping service \"{Name}\" v{Version} by \"{Author}\"...");
+            Log.Info($"Stopping service \"{Name}\"...");
             try
             {
                 await OnStop();
             }
             catch (Exception ex)
             {
-                Log.Error($"Exception thrown while stopping service \"{Name}\" v{Version} by \"{Author}\": {ex}");
+                Log.Error($"Exception thrown while stopping service \"{Name}\": {ex}");
             }
-            Log.Info($"Service \"{Name}\" v{Version} by \"{Author}\" stopped.");
+            Log.Info($"Service \"{Name}\" stopped.");
         }
         protected abstract Task OnStart();
         protected abstract Task OnStop();
