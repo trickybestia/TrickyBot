@@ -120,7 +120,7 @@ namespace TrickyBot
                 }
                 catch
                 {
-                    Log.Warn($"Service \"{service.Name}\" v{service.Version} by \"{service.Author}\" does not have config, generating...");
+                    Log.Warn($"Service {service.Name} does not have config, generating...");
                     File.WriteAllText(configPath, JsonConvert.SerializeObject(service.Config, ConfigSerializerSettings));
                 }
             }
