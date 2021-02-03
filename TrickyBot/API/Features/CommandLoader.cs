@@ -1,14 +1,6 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="CommandLoader.cs" company="TrickyBot Team">
-// Copyright (c) TrickyBot Team. All rights reserved.
-// Licensed under the CC BY-ND 4.0 license.
-// </copyright>
-// -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-
 using TrickyBot.API.Interfaces;
 
 namespace TrickyBot.API.Features
@@ -26,7 +18,6 @@ namespace TrickyBot.API.Features
                     commands.Add((ICommand)constructor.Invoke(null));
                 }
             }
-
             return commands;
         }
     }

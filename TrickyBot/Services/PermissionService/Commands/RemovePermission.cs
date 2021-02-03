@@ -1,16 +1,7 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="RemovePermission.cs" company="TrickyBot Team">
-// Copyright (c) TrickyBot Team. All rights reserved.
-// Licensed under the CC BY-ND 4.0 license.
-// </copyright>
-// -----------------------------------------------------------------------
-
+﻿using Discord;
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
-using Discord;
-
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Conditions;
 
@@ -18,13 +9,12 @@ namespace TrickyBot.Services.PermissionService.Commands
 {
     internal class RemovePermission : ConditionCommand
     {
-        public RemovePermission()
-        {
-            this.Conditions.Add(new PermissionCondition("permissions.remove"));
-        }
-
         public override string Name { get; } = "permissions remove";
 
+        public RemovePermission()
+        {
+            Conditions.Add(new PermissionCondition("permissions.remove"));
+        }
         protected override async Task Execute(IMessage message, string parameter)
         {
             var service = Bot.Instance.ServiceManager.GetService<PermissionService>();
@@ -40,7 +30,6 @@ namespace TrickyBot.Services.PermissionService.Commands
                 {
                     service.RemoveUserPermission(guild.GetUser(ulong.Parse(match.Result("$1"))), match.Result("$2"));
                 }
-
                 await message.Channel.SendMessageAsync($"<@!{message.Author.Id}> permission removed.");
             }
             catch (Exception ex) when (ex.Message == "Permission doesn't exist!")

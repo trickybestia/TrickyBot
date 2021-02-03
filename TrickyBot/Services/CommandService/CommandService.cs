@@ -1,19 +1,10 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="CommandService.cs" company="TrickyBot Team">
-// Copyright (c) TrickyBot Team. All rights reserved.
-// Licensed under the CC BY-ND 4.0 license.
-// </copyright>
-// -----------------------------------------------------------------------
-
+﻿using Discord;
+using Discord.Commands;
+using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
-using Discord;
-using Discord.Commands;
-using Discord.WebSocket;
-
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Interfaces;
 
@@ -22,11 +13,8 @@ namespace TrickyBot.Services.CommandService
     public class CommandService : ServiceBase<CommandServiceConfig>
     {
         public override string Name { get; } = "Commands";
-
         public override List<ICommand> Commands { get; } = new List<ICommand>();
-
         public override string Author { get; } = "TrickyBot Team";
-
         public override Version Version { get; } = Bot.Instance.Version;
 
         public static bool IsCommand(IMessage message)
@@ -40,19 +28,26 @@ namespace TrickyBot.Services.CommandService
 
             return message is IUserMessage && !message.Author.IsBot && message.Content.StartsWith(service.Config.CommandPrefix);
         }
-
         protected override Task OnStart()
         {
-            Bot.Instance.Client.MessageReceived += this.OnMessageReceived;
+            Bot.Instance.Client.MessageReceived += OnMessageReceived;
             return Task.CompletedTask;
         }
-
         protected override Task OnStop()
         {
-            Bot.Instance.Client.MessageReceived -= this.OnMessageReceived;
+            Bot.Instance.Client.MessageReceived -= OnMessageReceived;
             return Task.CompletedTask;
         }
-
+        private async Task OnMessageReceived(SocketMessage message)
+        {
+            if (IsCommand(message))
+            {
+                var userMessage = (SocketUserMessage)message;
+                int argPos = 0;
+                userMessage.HasStringPrefix(Config.CommandPrefix, ref argPos);
+                await ExecuteCommandAsync(userMessage, userMessage.Content[argPos..]);
+            }
+        }
         private static Task ExecuteCommandAsync(IMessage message, string parameter)
         {
             foreach (var service in Bot.Instance.ServiceManager.Services)
@@ -69,19 +64,7 @@ namespace TrickyBot.Services.CommandService
                     }
                 }
             }
-
             return Task.CompletedTask;
-        }
-
-        private async Task OnMessageReceived(SocketMessage message)
-        {
-            if (IsCommand(message))
-            {
-                var userMessage = (SocketUserMessage)message;
-                int argPos = 0;
-                userMessage.HasStringPrefix(this.Config.CommandPrefix, ref argPos);
-                await ExecuteCommandAsync(userMessage, userMessage.Content[argPos..]);
-            }
         }
     }
 }

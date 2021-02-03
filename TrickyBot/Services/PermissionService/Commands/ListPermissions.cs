@@ -1,29 +1,19 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="ListPermissions.cs" company="TrickyBot Team">
-// Copyright (c) TrickyBot Team. All rights reserved.
-// Licensed under the CC BY-ND 4.0 license.
-// </copyright>
-// -----------------------------------------------------------------------
-
+﻿using Discord;
 using System.Text;
 using System.Threading.Tasks;
-
-using Discord;
-
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Conditions;
 
 namespace TrickyBot.Services.PermissionService.Commands
 {
-    internal class ListPermissions : ConditionCommand
+    internal class ListPermission : ConditionCommand
     {
-        public ListPermissions()
-        {
-            this.Conditions.Add(new PermissionCondition("permissions.list"));
-        }
-
         public override string Name { get; } = "permissions list";
 
+        public ListPermission()
+        {
+            Conditions.Add(new PermissionCondition("permissions.list"));
+        }
         protected override async Task Execute(IMessage message, string parameter)
         {
             var service = Bot.Instance.ServiceManager.GetService<PermissionService>();
@@ -43,25 +33,21 @@ namespace TrickyBot.Services.PermissionService.Commands
                             stringBuilder.Append(rolePermission).AppendLine(",");
                         }
                     }
-
                     responseBuilder.AddField("Roles:", stringBuilder.ToString());
                     stringBuilder.Clear();
                 }
-
                 if (service.Config.UserPermissions.Count != 0)
                 {
                     foreach (var userInfo in service.Config.UserPermissions)
                     {
-                        stringBuilder.AppendLine($"<@!{userInfo.Key}>:");
+                        stringBuilder.AppendLine($"<@!{ userInfo.Key}>:");
                         foreach (var rolePermission in userInfo.Value)
                         {
                             stringBuilder.Append(rolePermission).AppendLine(",");
                         }
                     }
-
                     responseBuilder.AddField("Users:", stringBuilder.ToString());
                 }
-
                 await message.Channel.SendMessageAsync(embed: responseBuilder.Build());
             }
             else
