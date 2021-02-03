@@ -9,14 +9,40 @@ using System.IO;
 
 namespace TrickyBot.API.Features
 {
+    /// <summary>
+    /// Provides paths to bot directories.
+    /// </summary>
     public static class Paths
     {
+        /// <summary>
+        /// Gets bot executable folder.
+        /// </summary>
         public static string BotCore { get; internal set; }
 
-        public static string ServicesRoot { get; internal set; }
+        /// <summary>
+        /// Gets data folder path.
+        /// </summary>
+        public static string Data { get; internal set; }
 
-        public static string ServiceDlls => Path.Combine(ServicesRoot, "Services");
+        /// <summary>
+        /// Gets services folder.
+        /// </summary>
+        public static string Services => Path.Combine(Data, "Services");
 
-        public static string Configs => Path.Combine(ServicesRoot, "Configs");
+        /// <summary>
+        /// Gets configs folder.
+        /// </summary>
+        public static string Configs => Path.Combine(Data, "Configs");
+
+        /// <summary>
+        /// Creates all directories.
+        /// </summary>
+        internal static void Init()
+        {
+            Directory.CreateDirectory(BotCore);
+            Directory.CreateDirectory(Data);
+            Directory.CreateDirectory(Configs);
+            Directory.CreateDirectory(Services);
+        }
     }
 }

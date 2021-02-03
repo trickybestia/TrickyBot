@@ -19,7 +19,8 @@ namespace TrickyBot
         {
             UnhandledExceptionHandler.Init();
             Paths.BotCore = Directory.GetCurrentDirectory();
-            Paths.ServicesRoot = Path.Combine(Paths.BotCore, "../TrickyBotData");
+            Paths.Data = Path.Combine(Paths.BotCore, "../TrickyBotData");
+            Paths.Init();
             var token = Environment.GetEnvironmentVariable("BotToken");
             Bot bot = new Bot();
             await bot.Start(token);
