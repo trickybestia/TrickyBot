@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>TrickyBot</id>
+    <title>TrickyBot</title>
+    <version>$version$</version>
+    <authors>The TrickyBot Team</authors>
+    <owners>TrickyBestia</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.txt</license>
+    <projectUrl>https://github.com/TrickyBestia/TrickyBot</projectUrl>
+    <repository type="Git" url="https://github.com/TrickyBestia/TrickyBot"/>
+    <description>Modular single-server Discord bot framework.</description>
+    <copyright>Copyright (c) TrickyBot Team 2020 - $year$</copyright>
+    <dependencies>
+      <group targetFramework="net5.0">
+        <dependency id="Discord.Net" version="2.2.0" />
+        <dependency id="Newtonsoft.Json" version="12.0.3" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="TrickyBot.Core\bin\Release\publish\TrickyBot.Core.dll" target="lib\net5.0"/>
+    <file src="LICENSE.txt" target=""/>
+  </files>
+</package>
