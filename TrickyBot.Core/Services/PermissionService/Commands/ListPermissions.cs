@@ -52,7 +52,7 @@ namespace TrickyBot.Services.PermissionService.Commands
                 {
                     foreach (var userInfo in service.Config.UserPermissions)
                     {
-                        stringBuilder.AppendLine($"<@!{userInfo.Key}>:");
+                        stringBuilder.AppendLine($"<@{userInfo.Key}>:");
                         foreach (var rolePermission in userInfo.Value)
                         {
                             stringBuilder.Append(rolePermission).AppendLine(",");
@@ -66,7 +66,7 @@ namespace TrickyBot.Services.PermissionService.Commands
             }
             else
             {
-                await message.Channel.SendMessageAsync($"<@!{message.Author.Id}> invalid parameters!");
+                await message.Channel.SendMessageAsync($"{message.Author.Mention} invalid parameters!");
             }
         }
     }

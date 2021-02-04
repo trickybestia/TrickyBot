@@ -88,7 +88,7 @@ namespace TrickyBot
             {
                 Assembly.GetExecutingAssembly(),
             };
-            foreach (var file in Directory.EnumerateFiles(Paths.ServiceDlls, "*.dll", SearchOption.TopDirectoryOnly))
+            foreach (var file in Directory.EnumerateFiles(Paths.Services, "*.dll", SearchOption.TopDirectoryOnly))
             {
                 assemblies.Add(Assembly.LoadFrom(file));
             }
