@@ -29,27 +29,28 @@ namespace TrickyBot.Services.PermissionService.Commands
         {
             var service = Bot.Instance.ServiceManager.GetService<PermissionService>();
             var guild = Bot.Instance.ServiceManager.GetService<SingleServerInfoProviderService.SingleServerInfoProviderService>().Guild;
-            var match = Regex.Match(parameter, @"<@&(\d+)>\s(.+)");
+            var match = Regex.Match(parameter, @"^<@&(\d+)>\s(\S+)\s*$");
             try
             {
                 if (match.Success)
                 {
                     service.RemoveRolePermission(guild.GetRole(ulong.Parse(match.Result("$1"))), match.Result("$2"));
                 }
-                else if ((match = Regex.Match(parameter, @"<@!(\d+)>\s(.+)")).Success)
+                else
                 {
+                    match = Regex.Match(parameter, @"^<@!?(\d+)>\s(\S+)\s*$");
                     service.RemoveUserPermission(guild.GetUser(ulong.Parse(match.Result("$1"))), match.Result("$2"));
                 }
 
-                await message.Channel.SendMessageAsync($"<@!{message.Author.Id}> permission removed.");
+                await message.Channel.SendMessageAsync($"{message.Author.Mention} permission removed.");
             }
             catch (Exception ex) when (ex.Message == "Permission doesn't exist!")
             {
-                await message.Channel.SendMessageAsync($"<@!{message.Author.Id}> permission doesn't exist!");
+                await message.Channel.SendMessageAsync($"{message.Author.Mention} permission doesn't exist!");
             }
             catch
             {
-                await message.Channel.SendMessageAsync($"<@!{message.Author.Id}> invalid parameters!");
+                await message.Channel.SendMessageAsync($"{message.Author.Mention} invalid parameters!");
             }
         }
     }
