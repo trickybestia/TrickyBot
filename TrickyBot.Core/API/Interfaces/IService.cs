@@ -5,9 +5,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using TrickyBot.API.Features;
 
 namespace TrickyBot.API.Interfaces
 {
@@ -29,19 +30,9 @@ namespace TrickyBot.API.Interfaces
         TConfig Config { get; }
 
         /// <summary>
-        /// Gets a service name.
+        /// Gets an info of the service.
         /// </summary>
-        string Name { get; }
-
-        /// <summary>
-        /// Gets a service author.
-        /// </summary>
-        string Author { get; }
-
-        /// <summary>
-        /// Gets a service version.
-        /// </summary>
-        Version Version { get; }
+        ServiceInfo Info { get; }
 
         /// <summary>
         /// Starts a service asynchronously.

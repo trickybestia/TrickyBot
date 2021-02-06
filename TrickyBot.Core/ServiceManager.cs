@@ -139,7 +139,7 @@ namespace TrickyBot
 
             foreach (var service in this.services)
             {
-                var configPath = Path.Combine(Paths.Configs, $"{service.Name}.json");
+                var configPath = Path.Combine(Paths.Configs, $"{service.Info.Name}.json");
                 var configType = service.GetType().BaseType.GetGenericArguments()[0];
                 try
                 {
@@ -152,7 +152,7 @@ namespace TrickyBot
                 }
                 catch
                 {
-                    Log.Warn($"Service \"{service.Name}\" v{service.Version} by \"{service.Author}\" does not have config, generating...");
+                    Log.Warn($"Service \"{service.Info.Name}\" v{service.Info.Version} by \"{service.Info.Author}\" does not have config, generating...");
                     File.WriteAllText(configPath, JsonConvert.SerializeObject(service.Config, ConfigSerializerSettings));
                 }
             }
@@ -165,7 +165,7 @@ namespace TrickyBot
         {
             foreach (var service in this.services)
             {
-                var dataPath = Path.Combine(Paths.Configs, $"{service.Name}.json");
+                var dataPath = Path.Combine(Paths.Configs, $"{service.Info.Name}.json");
                 File.WriteAllText(dataPath, JsonConvert.SerializeObject(service.Config, ConfigSerializerSettings));
             }
         }

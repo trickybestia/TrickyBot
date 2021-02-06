@@ -5,26 +5,28 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
+using TrickyBot.API.Features;
 using TrickyBot.API.Interfaces;
 
 namespace TrickyBot.Services.SingleServerInfoProviderService
 {
     public class SingleServerInfoProviderService : ServiceBase<SingleServerInfoProviderServiceConfig>
     {
-        public override string Name { get; } = "SingleServerInfoProvider";
-
         public override List<ICommand> Commands { get; } = new List<ICommand>();
 
-        public override string Author { get; } = "TrickyBot Team";
-
-        public override Version Version { get; } = Bot.Instance.Version;
+        public override ServiceInfo Info { get; } = new ServiceInfo()
+        {
+            Name = "SingleServerInfoProvider",
+            Author = "TrickyBot Team",
+            Version = Bot.Instance.Version,
+            GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
+        };
 
         public SocketGuild Guild => Bot.Instance.Client.GetGuild(this.Config.GuildId);
 

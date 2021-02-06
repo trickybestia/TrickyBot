@@ -14,6 +14,7 @@ using Discord;
 using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
+using TrickyBot.API.Features;
 using TrickyBot.API.Interfaces;
 using TrickyBot.Services.PermissionService.Commands;
 
@@ -21,8 +22,6 @@ namespace TrickyBot.Services.PermissionService
 {
     public class PermissionService : ServiceBase<PermissionServiceConfig>
     {
-        public override string Name { get; } = "Permissions";
-
         public override List<ICommand> Commands { get; } = new List<ICommand>()
         {
             new AddPermission(),
@@ -30,9 +29,13 @@ namespace TrickyBot.Services.PermissionService
             new ListPermissions(),
         };
 
-        public override string Author { get; } = "TrickyBot Team";
-
-        public override Version Version { get; } = Bot.Instance.Version;
+        public override ServiceInfo Info { get; } = new ServiceInfo()
+        {
+            Name = "Permissions",
+            Author = "TrickyBot Team",
+            Version = Bot.Instance.Version,
+            GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
+        };
 
         public static bool IsValidPermission(ReadOnlySpan<char> permission)
         {

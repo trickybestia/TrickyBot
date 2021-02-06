@@ -5,7 +5,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,19 +14,22 @@ using Discord.Commands;
 using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
+using TrickyBot.API.Features;
 using TrickyBot.API.Interfaces;
 
 namespace TrickyBot.Services.CommandService
 {
     public class CommandService : ServiceBase<CommandServiceConfig>
     {
-        public override string Name { get; } = "Commands";
-
         public override List<ICommand> Commands { get; } = new List<ICommand>();
 
-        public override string Author { get; } = "TrickyBot Team";
-
-        public override Version Version { get; } = Bot.Instance.Version;
+        public override ServiceInfo Info { get; } = new ServiceInfo()
+        {
+            Name = "Commands",
+            Author = "TrickyBot Team",
+            Version = Bot.Instance.Version,
+            GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
+        };
 
         public static bool IsCommand(IMessage message)
         {

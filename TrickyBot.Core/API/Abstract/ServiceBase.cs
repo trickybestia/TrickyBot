@@ -33,47 +33,41 @@ namespace TrickyBot.API.Abstract
         public TConfig Config { get; internal set; }
 
         /// <inheritdoc/>
-        public abstract string Name { get; }
-
-        /// <inheritdoc/>
         public abstract List<ICommand> Commands { get; }
 
         /// <inheritdoc/>
-        public abstract string Author { get; }
-
-        /// <inheritdoc/>
-        public abstract Version Version { get; }
+        public abstract ServiceInfo Info { get; }
 
         /// <inheritdoc/>
         public async Task StartAsync()
         {
-            Log.Info($"Starting service \"{this.Name}\" v{this.Version} by \"{this.Author}\"...");
+            Log.Info($"Starting service \"{this.Info.Name}\" v{this.Info.Version} by \"{this.Info.Author}\"...");
             try
             {
                 await this.OnStart();
             }
             catch (Exception ex)
             {
-                Log.Error($"Exception thrown while starting service \"{this.Name}\" v{this.Version} by \"{this.Author}\": {ex}");
+                Log.Error($"Exception thrown while starting service \"{this.Info.Name}\" v{this.Info.Version} by \"{this.Info.Author}\": {ex}");
             }
 
-            Log.Info($"Service \"{this.Name}\" v{this.Version} by \"{this.Author}\" started.");
+            Log.Info($"Service \"{this.Info.Name}\" v{this.Info.Version} by \"{this.Info.Author}\" started.");
         }
 
         /// <inheritdoc/>
         public async Task StopAsync()
         {
-            Log.Info($"Stopping service \"{this.Name}\" v{this.Version} by \"{this.Author}\"...");
+            Log.Info($"Stopping service \"{this.Info.Name}\" v{this.Info.Version} by \"{this.Info.Author}\"...");
             try
             {
                 await this.OnStop();
             }
             catch (Exception ex)
             {
-                Log.Error($"Exception thrown while stopping service \"{this.Name}\" v{this.Version} by \"{this.Author}\": {ex}");
+                Log.Error($"Exception thrown while stopping service \"{this.Info.Name}\" v{this.Info.Version} by \"{this.Info.Author}\": {ex}");
             }
 
-            Log.Info($"Service \"{this.Name}\" v{this.Version} by \"{this.Author}\" stopped.");
+            Log.Info($"Service \"{this.Info.Name}\" v{this.Info.Version} by \"{this.Info.Author}\" stopped.");
         }
 
         /// <summary>
