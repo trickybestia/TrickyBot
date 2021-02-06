@@ -14,24 +14,37 @@ using TrickyBot.API.Interfaces;
 
 namespace TrickyBot.API.Abstract
 {
+    /// <summary>
+    /// A service base class.
+    /// </summary>
+    /// <typeparam name="TConfig"><inheritdoc/></typeparam>
     public abstract class ServiceBase<TConfig> : IService<TConfig>
         where TConfig : IConfig, new()
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBase{TConfig}"/> class.
+        /// </summary>
         public ServiceBase()
         {
             this.Config = new TConfig();
         }
 
+        /// <inheritdoc/>
         public TConfig Config { get; internal set; }
 
+        /// <inheritdoc/>
         public abstract string Name { get; }
 
+        /// <inheritdoc/>
         public abstract List<ICommand> Commands { get; }
 
+        /// <inheritdoc/>
         public abstract string Author { get; }
 
+        /// <inheritdoc/>
         public abstract Version Version { get; }
 
+        /// <inheritdoc/>
         public async Task StartAsync()
         {
             Log.Info($"Starting service \"{this.Name}\" v{this.Version} by \"{this.Author}\"...");
@@ -47,6 +60,7 @@ namespace TrickyBot.API.Abstract
             Log.Info($"Service \"{this.Name}\" v{this.Version} by \"{this.Author}\" started.");
         }
 
+        /// <inheritdoc/>
         public async Task StopAsync()
         {
             Log.Info($"Stopping service \"{this.Name}\" v{this.Version} by \"{this.Author}\"...");
@@ -62,8 +76,16 @@ namespace TrickyBot.API.Abstract
             Log.Info($"Service \"{this.Name}\" v{this.Version} by \"{this.Author}\" stopped.");
         }
 
+        /// <summary>
+        /// A method that contains code that executes when the service starts.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous start operation.</returns>
         protected abstract Task OnStart();
 
+        /// <summary>
+        /// A method that contains code that executes when the service stops.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous stop operation.</returns>
         protected abstract Task OnStop();
     }
 }

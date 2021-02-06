@@ -9,8 +9,12 @@ using TrickyBot.API.Interfaces;
 
 namespace TrickyBot.API.Features
 {
+    /// <summary>
+    /// A config for services which have empty config.
+    /// </summary>
     public class EmptyConfig : IConfig
     {
+        /// <inheritdoc/>
         public bool IsEnabled { get; set; } = true;
     }
 }

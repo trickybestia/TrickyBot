@@ -11,10 +11,22 @@ using Discord;
 
 namespace TrickyBot.API.Interfaces
 {
+    /// <summary>
+    /// A command.
+    /// </summary>
     public interface ICommand
     {
+        /// <summary>
+        /// Gets the name of a command.
+        /// </summary>
         string Name { get; }
 
+        /// <summary>
+        /// Executes the command asynchronously.
+        /// </summary>
+        /// <param name="message">The message that invoked the command.</param>
+        /// <param name="parameter">Command parameter.</param>
+        /// <returns>A task that represents the asynchronous execution operation.</returns>
         Task ExecuteAsync(IMessage message, string parameter);
     }
 }

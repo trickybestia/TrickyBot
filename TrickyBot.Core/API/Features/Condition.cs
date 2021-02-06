@@ -9,5 +9,11 @@ using Discord;
 
 namespace TrickyBot.API.Features
 {
+    /// <summary>
+    /// A delegate that represents a condition.
+    /// </summary>
+    /// <param name="message">The message that invoked the command.</param>
+    /// <param name="parameter">Command parameter.</param>
+    /// <returns>A value indicating whether the condition is true or not.</returns>
     public delegate bool Condition(IMessage message, string parameter);
 }

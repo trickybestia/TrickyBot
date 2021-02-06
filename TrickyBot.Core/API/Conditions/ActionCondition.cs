@@ -12,10 +12,17 @@ using TrickyBot.API.Interfaces;
 
 namespace TrickyBot.API.Conditions
 {
+    /// <summary>
+    /// A condition based on <see cref="Features.Condition"/> delegate.
+    /// </summary>
     public class ActionCondition : ICondition
     {
+        /// <summary>
+        /// Gets or sets a <see cref="Features.Condition"/> delegate that called on every <see cref="CanExecute(IMessage, string)"/> call.
+        /// </summary>
         public Condition Condition { get; set; }
 
+        /// <inheritdoc/>
         public bool CanExecute(IMessage message, string parameter) => this.Condition(message, parameter);
     }
 }

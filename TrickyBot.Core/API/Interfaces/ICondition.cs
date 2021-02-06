@@ -9,8 +9,17 @@ using Discord;
 
 namespace TrickyBot.API.Interfaces
 {
+    /// <summary>
+    /// A command execution condition.
+    /// </summary>
     public interface ICondition
     {
+        /// <summary>
+        /// Checks the condition.
+        /// </summary>
+        /// <param name="message">The message that invoked the command.</param>
+        /// <param name="parameter">Command parameter.</param>
+        /// <returns>A value indicating whether the condition is true or not.</returns>
         bool CanExecute(IMessage message, string parameter);
     }
 }

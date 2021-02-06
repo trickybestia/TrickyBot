@@ -18,22 +18,43 @@ using TrickyBot.API.Interfaces;
 
 namespace TrickyBot
 {
+    /// <summary>
+    /// A class that helps with manipulating services.
+    /// </summary>
     public class ServiceManager
     {
+        /// <summary>
+        /// The instance of <see cref="JsonSerializerSettings"/> associated with this service manager.
+        /// </summary>
         private static readonly JsonSerializerSettings ConfigSerializerSettings = new JsonSerializerSettings()
         {
             Formatting = Formatting.Indented,
         };
 
+        /// <summary>
+        /// The list of loaded services.
+        /// </summary>
         private readonly List<IService<IConfig>> services;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceManager"/> class.
+        /// </summary>
         internal ServiceManager()
         {
             this.services = new List<IService<IConfig>>();
         }
 
+        /// <summary>
+        /// Gets a collection of loaded services.
+        /// </summary>
         public IReadOnlyCollection<IService<IConfig>> Services => this.services;
 
+        /// <summary>
+        /// Gets the instance of the loaded service.
+        /// </summary>
+        /// <typeparam name="T">A service type.</typeparam>
+        /// <param name="allowDisabled">A value indicating whether disabled service can be found.</param>
+        /// <returns>The instance of the loaded service.</returns>
         public T GetService<T>(bool allowDisabled = false)
         {
             foreach (var service in this.Services)
@@ -52,6 +73,10 @@ namespace TrickyBot
             throw new ServiceNotLoadedException(typeof(T));
         }
 
+        /// <summary>
+        /// Starts a service manager asynchronously.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous start operation.</returns>
         internal async Task StartAsync()
         {
             Log.Info("Starting services...");
@@ -67,6 +92,10 @@ namespace TrickyBot
             Log.Info("Services started.");
         }
 
+        /// <summary>
+        /// Stops a service manager asynchronously.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous start operation.</returns>
         internal async Task StopAsync()
         {
             Log.Info("Stopping services...");
@@ -82,6 +111,9 @@ namespace TrickyBot
             Log.Info("Services stopped.");
         }
 
+        /// <summary>
+        /// Loads services and their configs.
+        /// </summary>
         private void Load()
         {
             var assemblies = new List<Assembly>
@@ -126,6 +158,9 @@ namespace TrickyBot
             }
         }
 
+        /// <summary>
+        /// Saves configs of services.
+        /// </summary>
         private void Save()
         {
             foreach (var service in this.services)
