@@ -10,8 +10,6 @@
     <RepositoryType>Git</RepositoryType>
     <RepositoryUrl>https://github.com/TrickyBestia/TrickyBot</RepositoryUrl>
     <NoWarn>1701;1702;SA1600;SA1602;SA0001</NoWarn>
-
-    <NuspecProperties>version=$(Version)</NuspecProperties>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
