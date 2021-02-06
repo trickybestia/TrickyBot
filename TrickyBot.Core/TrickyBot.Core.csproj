@@ -1,12 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
-  <Import Project="../TrickyBot.targets"/>
+  <Import Project="../TrickyBot.targets" />
   
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>TrickyBot.Core</AssemblyName>
     <RootNamespace>TrickyBot</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>obj\Release\net5.0\TrickyBot.Core.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

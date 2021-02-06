@@ -9,11 +9,10 @@
     <Copyright>Copyright (c) TrickyBot Team 2020 - $([System.DateTime]::Now.ToString("yyyy"))</Copyright>
     <RepositoryType>Git</RepositoryType>
     <RepositoryUrl>https://github.com/TrickyBestia/TrickyBot</RepositoryUrl>
-    <NoWarn>1701;1702;SA1600;SA1602;SA0001</NoWarn>
+    <NoWarn>1701;1702;SA1600;SA1602;SA0001;CS1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <DebugType>None</DebugType>
   </PropertyGroup>
 </Project>
