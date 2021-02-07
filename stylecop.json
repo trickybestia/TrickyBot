@@ -6,7 +6,7 @@
             "copyrightText": "Copyright (c) {companyName}. All rights reserved.\nLicensed under the {licenseName} license.",
             "headerDecoration": "-----------------------------------------------------------------------",
             "variables": {
-                "licenseFile": "LICENSE",
+                "licenseFile": "LICENSE.txt",
                 "licenseName": "CC BY-ND 4.0"
             }
         },
