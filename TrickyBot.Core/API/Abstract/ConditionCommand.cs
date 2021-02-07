@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Discord;
-
+using TrickyBot.API.Features;
 using TrickyBot.API.Interfaces;
 
 namespace TrickyBot.API.Abstract
@@ -21,6 +21,9 @@ namespace TrickyBot.API.Abstract
     {
         /// <inheritdoc/>
         public abstract string Name { get; }
+
+        /// <inheritdoc/>
+        public abstract CommandRunMode RunMode { get; }
 
         /// <summary>
         /// Gets a list of conditions associated with this command.

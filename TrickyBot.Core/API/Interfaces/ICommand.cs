@@ -8,6 +8,7 @@
 using System.Threading.Tasks;
 
 using Discord;
+using TrickyBot.API.Features;
 
 namespace TrickyBot.API.Interfaces
 {
@@ -17,9 +18,14 @@ namespace TrickyBot.API.Interfaces
     public interface ICommand
     {
         /// <summary>
-        /// Gets the name of a command.
+        /// Gets a name of the command.
         /// </summary>
         string Name { get; }
+
+        /// <summary>
+        /// Gets a <see cref="CommandRunMode"/> of the command.
+        /// </summary>
+        CommandRunMode RunMode { get; }
 
         /// <summary>
         /// Executes the command asynchronously.

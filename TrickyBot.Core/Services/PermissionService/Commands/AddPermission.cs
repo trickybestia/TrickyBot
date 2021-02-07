@@ -13,6 +13,7 @@ using Discord;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Conditions;
+using TrickyBot.API.Features;
 
 namespace TrickyBot.Services.PermissionService.Commands
 {
@@ -24,6 +25,8 @@ namespace TrickyBot.Services.PermissionService.Commands
         }
 
         public override string Name { get; } = "permissions add";
+
+        public override CommandRunMode RunMode { get; } = CommandRunMode.Sync;
 
         protected override async Task Execute(IMessage message, string parameter)
         {
