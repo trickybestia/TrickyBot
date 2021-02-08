@@ -15,7 +15,7 @@ using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
-using TrickyBot.Services.CommandService.API.Interfaces;
+using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 using TrickyBot.Services.PermissionService.API.Features;
 using TrickyBot.Services.PermissionService.Commands;
 
@@ -23,7 +23,7 @@ namespace TrickyBot.Services.PermissionService
 {
     public class PermissionService : ServiceBase<PermissionServiceConfig>
     {
-        public override List<ICommand> Commands { get; } = new List<ICommand>()
+        public override List<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>()
         {
             new AddPermission(),
             new RemovePermission(),

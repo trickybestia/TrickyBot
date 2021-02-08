@@ -12,13 +12,13 @@ using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
-using TrickyBot.Services.CommandService.API.Interfaces;
+using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.Services.SingleServerInfoProviderService
 {
     public class SingleServerInfoProviderService : ServiceBase<SingleServerInfoProviderServiceConfig>
     {
-        public override List<ICommand> Commands { get; } = new List<ICommand>();
+        public override List<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>();
 
         public override ServiceInfo Info { get; } = new ServiceInfo()
         {

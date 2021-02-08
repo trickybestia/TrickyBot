@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="CommandService.cs" company="TrickyBot Team">
+// <copyright file="DiscordCommandService.cs" company="TrickyBot Team">
 // Copyright (c) TrickyBot Team. All rights reserved.
 // Licensed under the CC BY-ND 4.0 license.
 // </copyright>
@@ -17,16 +17,16 @@ using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
-using TrickyBot.Services.CommandService.API.Features;
-using TrickyBot.Services.CommandService.API.Interfaces;
+using TrickyBot.Services.DiscordCommandService.API.Features;
+using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
-namespace TrickyBot.Services.CommandService
+namespace TrickyBot.Services.DiscordCommandService
 {
-    public class CommandService : ServiceBase<CommandServiceConfig>
+    public class DiscordCommandService : ServiceBase<DiscordCommandServiceConfig>
     {
         private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 
-        public override List<ICommand> Commands { get; } = new List<ICommand>();
+        public override List<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>();
 
         public override ServiceInfo Info { get; } = new ServiceInfo()
         {
@@ -38,7 +38,7 @@ namespace TrickyBot.Services.CommandService
 
         public static bool IsCommand(IMessage message)
         {
-            var service = Bot.Instance.ServiceManager.GetService<CommandService>();
+            var service = Bot.Instance.ServiceManager.GetService<DiscordCommandService>();
 
             if (message.Channel is IDMChannel && !service.Config.AllowDMCommands)
             {
@@ -67,12 +67,12 @@ namespace TrickyBot.Services.CommandService
             {
                 if (service.Config.IsEnabled)
                 {
-                    foreach (var command in service.Commands)
+                    foreach (var command in service.DiscordCommands)
                     {
                         var match = Regex.Match(parameter, @$"{command.Name}\s?(.*)", RegexOptions.Singleline);
                         if (match.Success)
                         {
-                            if (command.RunMode == CommandRunMode.Sync)
+                            if (command.RunMode == DiscordCommandRunMode.Sync)
                             {
                                 try
                                 {

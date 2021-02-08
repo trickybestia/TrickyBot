@@ -1,16 +1,16 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="CommandRunMode.cs" company="TrickyBot Team">
+// <copyright file="DiscordCommandRunMode.cs" company="TrickyBot Team">
 // Copyright (c) TrickyBot Team. All rights reserved.
 // Licensed under the CC BY-ND 4.0 license.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace TrickyBot.Services.CommandService.API.Features
+namespace TrickyBot.Services.DiscordCommandService.API.Features
 {
     /// <summary>
     /// An enum that contains command run modes.
     /// </summary>
-    public enum CommandRunMode
+    public enum DiscordCommandRunMode
     {
         /// <summary>
         /// A command can be run synchronously.

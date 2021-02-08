@@ -9,22 +9,22 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Discord;
-using TrickyBot.Services.CommandService.API.Abstract;
-using TrickyBot.Services.CommandService.API.Features;
-using TrickyBot.Services.CommandService.API.Features.Conditions;
+using TrickyBot.Services.DiscordCommandService.API.Abstract;
+using TrickyBot.Services.DiscordCommandService.API.Features;
+using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;
 
 namespace TrickyBot.Services.PermissionService.Commands
 {
-    internal class ListPermissions : ConditionCommand
+    internal class ListPermissions : ConditionDiscordCommand
     {
         public ListPermissions()
         {
-            this.Conditions.Add(new PermissionCondition("permissions.list"));
+            this.Conditions.Add(new DiscordCommandPermissionCondition("permissions.list"));
         }
 
         public override string Name { get; } = "permissions list";
 
-        public override CommandRunMode RunMode { get; } = CommandRunMode.Sync;
+        public override DiscordCommandRunMode RunMode { get; } = DiscordCommandRunMode.Sync;
 
         protected override async Task Execute(IMessage message, string parameter)
         {

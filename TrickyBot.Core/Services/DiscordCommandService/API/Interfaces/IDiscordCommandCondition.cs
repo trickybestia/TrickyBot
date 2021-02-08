@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ICondition.cs" company="TrickyBot Team">
+// <copyright file="IDiscordCommandCondition.cs" company="TrickyBot Team">
 // Copyright (c) TrickyBot Team. All rights reserved.
 // Licensed under the CC BY-ND 4.0 license.
 // </copyright>
@@ -7,12 +7,12 @@
 
 using Discord;
 
-namespace TrickyBot.Services.CommandService.API.Interfaces
+namespace TrickyBot.Services.DiscordCommandService.API.Interfaces
 {
     /// <summary>
     /// A command execution condition.
     /// </summary>
-    public interface ICondition
+    public interface IDiscordCommandCondition
     {
         /// <summary>
         /// Checks the condition.

@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ICommand.cs" company="TrickyBot Team">
+// <copyright file="IDiscordCommand.cs" company="TrickyBot Team">
 // Copyright (c) TrickyBot Team. All rights reserved.
 // Licensed under the CC BY-ND 4.0 license.
 // </copyright>
@@ -8,14 +8,14 @@
 using System.Threading.Tasks;
 
 using Discord;
-using TrickyBot.Services.CommandService.API.Features;
+using TrickyBot.Services.DiscordCommandService.API.Features;
 
-namespace TrickyBot.Services.CommandService.API.Interfaces
+namespace TrickyBot.Services.DiscordCommandService.API.Interfaces
 {
     /// <summary>
     /// A command.
     /// </summary>
-    public interface ICommand
+    public interface IDiscordCommand
     {
         /// <summary>
         /// Gets a name of the command.
@@ -23,9 +23,9 @@ namespace TrickyBot.Services.CommandService.API.Interfaces
         string Name { get; }
 
         /// <summary>
-        /// Gets a <see cref="CommandRunMode"/> of the command.
+        /// Gets a <see cref="DiscordCommandRunMode"/> of the command.
         /// </summary>
-        CommandRunMode RunMode { get; }
+        DiscordCommandRunMode RunMode { get; }
 
         /// <summary>
         /// Executes the command asynchronously.

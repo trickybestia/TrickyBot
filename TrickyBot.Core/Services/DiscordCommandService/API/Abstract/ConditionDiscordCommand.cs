@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ConditionCommand.cs" company="TrickyBot Team">
+// <copyright file="ConditionDiscordCommand.cs" company="TrickyBot Team">
 // Copyright (c) TrickyBot Team. All rights reserved.
 // Licensed under the CC BY-ND 4.0 license.
 // </copyright>
@@ -9,26 +9,26 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Discord;
-using TrickyBot.Services.CommandService.API.Features;
-using TrickyBot.Services.CommandService.API.Interfaces;
+using TrickyBot.Services.DiscordCommandService.API.Features;
+using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
-namespace TrickyBot.Services.CommandService.API.Abstract
+namespace TrickyBot.Services.DiscordCommandService.API.Abstract
 {
     /// <summary>
     /// A command that executes when all conditions are successfully checked.
     /// </summary>
-    public abstract class ConditionCommand : ICommand
+    public abstract class ConditionDiscordCommand : IDiscordCommand
     {
         /// <inheritdoc/>
         public abstract string Name { get; }
 
         /// <inheritdoc/>
-        public abstract CommandRunMode RunMode { get; }
+        public abstract DiscordCommandRunMode RunMode { get; }
 
         /// <summary>
         /// Gets a list of conditions associated with this command.
         /// </summary>
-        public List<ICondition> Conditions { get; } = new List<ICondition>();
+        public List<IDiscordCommandCondition> Conditions { get; } = new List<IDiscordCommandCondition>();
 
         /// <inheritdoc/>
         public Task ExecuteAsync(IMessage message, string parameter)

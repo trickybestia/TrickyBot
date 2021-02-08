@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Condition.cs" company="TrickyBot Team">
+// <copyright file="DiscordCommandCondition.cs" company="TrickyBot Team">
 // Copyright (c) TrickyBot Team. All rights reserved.
 // Licensed under the CC BY-ND 4.0 license.
 // </copyright>
@@ -7,7 +7,7 @@
 
 using Discord;
 
-namespace TrickyBot.Services.CommandService.API.Features
+namespace TrickyBot.Services.DiscordCommandService.API.Features
 {
     /// <summary>
     /// A delegate that represents a condition.
@@ -15,5 +15,5 @@ namespace TrickyBot.Services.CommandService.API.Features
     /// <param name="message">The message that invoked the command.</param>
     /// <param name="parameter">Command parameter.</param>
     /// <returns>A value indicating whether the condition is true or not.</returns>
-    public delegate bool Condition(IMessage message, string parameter);
+    public delegate bool DiscordCommandCondition(IMessage message, string parameter);
 }

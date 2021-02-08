@@ -1,26 +1,26 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="PermissionCondition.cs" company="TrickyBot Team">
+// <copyright file="DiscordCommandPermissionCondition.cs" company="TrickyBot Team">
 // Copyright (c) TrickyBot Team. All rights reserved.
 // Licensed under the CC BY-ND 4.0 license.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using Discord;
-using TrickyBot.Services.CommandService.API.Interfaces;
+using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 using TrickyBot.Services.PermissionService.API.Features;
 
-namespace TrickyBot.Services.CommandService.API.Features.Conditions
+namespace TrickyBot.Services.DiscordCommandService.API.Features.Conditions
 {
     /// <summary>
     /// A condition that can be used for permission check.
     /// </summary>
-    public class PermissionCondition : ICondition
+    public class DiscordCommandPermissionCondition : IDiscordCommandCondition
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PermissionCondition"/> class.
+        /// Initializes a new instance of the <see cref="DiscordCommandPermissionCondition"/> class.
         /// </summary>
         /// <param name="permission">The name of permission.</param>
-        public PermissionCondition(string permission)
+        public DiscordCommandPermissionCondition(string permission)
         {
             this.Permission = permission;
         }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 using TrickyBot.API.Features;
 using TrickyBot.API.Interfaces;
-using TrickyBot.Services.CommandService.API.Interfaces;
+using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.API.Abstract
 {
@@ -34,7 +34,7 @@ namespace TrickyBot.API.Abstract
         public TConfig Config { get; internal set; }
 
         /// <inheritdoc/>
-        public abstract List<ICommand> Commands { get; }
+        public abstract List<IDiscordCommand> DiscordCommands { get; }
 
         /// <inheritdoc/>
         public abstract ServiceInfo Info { get; }

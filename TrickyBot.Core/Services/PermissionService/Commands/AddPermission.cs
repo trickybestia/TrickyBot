@@ -10,23 +10,23 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Discord;
-using TrickyBot.Services.CommandService.API.Abstract;
-using TrickyBot.Services.CommandService.API.Features;
-using TrickyBot.Services.CommandService.API.Features.Conditions;
+using TrickyBot.Services.DiscordCommandService.API.Abstract;
+using TrickyBot.Services.DiscordCommandService.API.Features;
+using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;
 using TrickyBot.Services.PermissionService.API.Features;
 
 namespace TrickyBot.Services.PermissionService.Commands
 {
-    internal class AddPermission : ConditionCommand
+    internal class AddPermission : ConditionDiscordCommand
     {
         public AddPermission()
         {
-            this.Conditions.Add(new PermissionCondition("permissions.add"));
+            this.Conditions.Add(new DiscordCommandPermissionCondition("permissions.add"));
         }
 
         public override string Name { get; } = "permissions add";
 
-        public override CommandRunMode RunMode { get; } = CommandRunMode.Sync;
+        public override DiscordCommandRunMode RunMode { get; } = DiscordCommandRunMode.Sync;
 
         protected override async Task Execute(IMessage message, string parameter)
         {

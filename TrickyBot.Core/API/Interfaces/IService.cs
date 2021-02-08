@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using TrickyBot.API.Features;
-using TrickyBot.Services.CommandService.API.Interfaces;
+using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.API.Interfaces
 {
@@ -23,7 +23,7 @@ namespace TrickyBot.API.Interfaces
         /// <summary>
         /// Gets a list of commands associated with this service.
         /// </summary>
-        List<ICommand> Commands { get; }
+        List<IDiscordCommand> DiscordCommands { get; }
 
         /// <summary>
         /// Gets a service config.
