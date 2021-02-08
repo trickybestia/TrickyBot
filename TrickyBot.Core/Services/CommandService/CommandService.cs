@@ -5,8 +5,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Discord;
@@ -15,12 +17,15 @@ using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
+using TrickyBot.Services.CommandService.API.Features;
 using TrickyBot.Services.CommandService.API.Interfaces;
 
 namespace TrickyBot.Services.CommandService
 {
     public class CommandService : ServiceBase<CommandServiceConfig>
     {
+        private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+
         public override List<ICommand> Commands { get; } = new List<ICommand>();
 
         public override ServiceInfo Info { get; } = new ServiceInfo()
@@ -55,8 +60,9 @@ namespace TrickyBot.Services.CommandService
             return Task.CompletedTask;
         }
 
-        private static Task ExecuteCommandAsync(IMessage message, string parameter)
+        private async Task ExecuteCommandAsync(IMessage message, string parameter)
         {
+            await this.semaphore.WaitAsync();
             foreach (var service in Bot.Instance.ServiceManager.Services)
             {
                 if (service.Config.IsEnabled)
@@ -66,13 +72,29 @@ namespace TrickyBot.Services.CommandService
                         var match = Regex.Match(parameter, @$"{command.Name}\s?(.*)", RegexOptions.Singleline);
                         if (match.Success)
                         {
-                            command.ExecuteAsync(message, match.Result("$1"));
+                            if (command.RunMode == CommandRunMode.Sync)
+                            {
+                                try
+                                {
+                                    await command.ExecuteAsync(message, match.Result("$1"));
+                                }
+                                catch (Exception ex)
+                                {
+                                    Log.Error($"Exception thrown while executing command \"{command.Name}\": {ex}");
+                                }
+                            }
+                            else
+                            {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                                Task.Run(() => command.ExecuteAsync(message, match.Result("$1")));
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                            }
                         }
                     }
                 }
             }
 
-            return Task.CompletedTask;
+            this.semaphore.Release();
         }
 
         private async Task OnMessageReceived(SocketMessage message)
@@ -82,7 +104,7 @@ namespace TrickyBot.Services.CommandService
                 var userMessage = (SocketUserMessage)message;
                 int argPos = 0;
                 userMessage.HasStringPrefix(this.Config.CommandPrefix, ref argPos);
-                await ExecuteCommandAsync(userMessage, userMessage.Content[argPos..]);
+                await this.ExecuteCommandAsync(userMessage, userMessage.Content[argPos..]);
             }
         }
     }
