@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 using TrickyBot.API.Features;
 using TrickyBot.API.Interfaces;
+using TrickyBot.Services.CommandService.API.Interfaces;
 
 namespace TrickyBot.API.Abstract
 {

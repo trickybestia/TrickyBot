@@ -10,10 +10,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Discord;
-
-using TrickyBot.API.Abstract;
-using TrickyBot.API.Conditions;
-using TrickyBot.API.Features;
+using TrickyBot.Services.CommandService.API.Abstract;
+using TrickyBot.Services.CommandService.API.Features;
+using TrickyBot.Services.CommandService.API.Features.Conditions;
+using TrickyBot.Services.PermissionService.API.Features;
 
 namespace TrickyBot.Services.PermissionService.Commands
 {
@@ -30,19 +30,18 @@ namespace TrickyBot.Services.PermissionService.Commands
 
         protected override async Task Execute(IMessage message, string parameter)
         {
-            var service = Bot.Instance.ServiceManager.GetService<PermissionService>();
             var guild = Bot.Instance.ServiceManager.GetService<SingleServerInfoProviderService.SingleServerInfoProviderService>().Guild;
             var match = Regex.Match(parameter, @"^<@&(\d+)>\s(\S+)\s*$");
             try
             {
                 if (match.Success)
                 {
-                    service.AddRolePermission(guild.GetRole(ulong.Parse(match.Result("$1"))), match.Result("$2"));
+                    Permissions.AddRolePermission(guild.GetRole(ulong.Parse(match.Result("$1"))), match.Result("$2"));
                 }
                 else
                 {
                     match = Regex.Match(parameter, @"^<@!?(\d+)>\s(\S+)\s*$");
-                    service.AddUserPermission(guild.GetUser(ulong.Parse(match.Result("$1"))), match.Result("$2"));
+                    Permissions.AddUserPermission(guild.GetUser(ulong.Parse(match.Result("$1"))), match.Result("$2"));
                 }
 
                 await message.Channel.SendMessageAsync($"{message.Author.Mention} permission added.");

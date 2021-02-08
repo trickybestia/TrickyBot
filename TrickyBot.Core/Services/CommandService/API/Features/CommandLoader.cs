@@ -9,9 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-using TrickyBot.API.Interfaces;
+using TrickyBot.Services.CommandService.API.Interfaces;
 
-namespace TrickyBot.API.Features
+namespace TrickyBot.Services.CommandService.API.Features
 {
     /// <summary>
     /// A class that provides API for loading commands from assembly.

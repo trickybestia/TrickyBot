@@ -7,7 +7,7 @@
 
 using Discord;
 
-namespace TrickyBot.API.Features
+namespace TrickyBot.Services.CommandService.API.Features
 {
     /// <summary>
     /// A delegate that represents a condition.

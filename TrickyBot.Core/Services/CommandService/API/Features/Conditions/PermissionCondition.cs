@@ -6,11 +6,10 @@
 // -----------------------------------------------------------------------
 
 using Discord;
+using TrickyBot.Services.CommandService.API.Interfaces;
+using TrickyBot.Services.PermissionService.API.Features;
 
-using TrickyBot.API.Interfaces;
-using TrickyBot.Services.PermissionService;
-
-namespace TrickyBot.API.Conditions
+namespace TrickyBot.Services.CommandService.API.Features.Conditions
 {
     /// <summary>
     /// A condition that can be used for permission check.
@@ -32,6 +31,6 @@ namespace TrickyBot.API.Conditions
         public string Permission { get; }
 
         /// <inheritdoc/>
-        public bool CanExecute(IMessage message, string parameter) => PermissionService.HasPermission((IGuildUser)message.Author, this.Permission);
+        public bool CanExecute(IMessage message, string parameter) => Permissions.HasPermission((IGuildUser)message.Author, this.Permission);
     }
 }

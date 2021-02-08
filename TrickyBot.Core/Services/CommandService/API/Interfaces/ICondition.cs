@@ -7,7 +7,7 @@
 
 using Discord;
 
-namespace TrickyBot.API.Interfaces
+namespace TrickyBot.Services.CommandService.API.Interfaces
 {
     /// <summary>
     /// A command execution condition.

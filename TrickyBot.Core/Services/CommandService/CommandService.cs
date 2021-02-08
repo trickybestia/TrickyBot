@@ -15,7 +15,7 @@ using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
-using TrickyBot.API.Interfaces;
+using TrickyBot.Services.CommandService.API.Interfaces;
 
 namespace TrickyBot.Services.CommandService
 {

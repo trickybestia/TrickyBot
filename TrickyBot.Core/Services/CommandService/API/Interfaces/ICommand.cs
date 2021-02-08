@@ -8,9 +8,9 @@
 using System.Threading.Tasks;
 
 using Discord;
-using TrickyBot.API.Features;
+using TrickyBot.Services.CommandService.API.Features;
 
-namespace TrickyBot.API.Interfaces
+namespace TrickyBot.Services.CommandService.API.Interfaces
 {
     /// <summary>
     /// A command.

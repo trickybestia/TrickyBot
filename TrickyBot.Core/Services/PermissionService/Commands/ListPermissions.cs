@@ -9,10 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Discord;
-
-using TrickyBot.API.Abstract;
-using TrickyBot.API.Conditions;
-using TrickyBot.API.Features;
+using TrickyBot.Services.CommandService.API.Abstract;
+using TrickyBot.Services.CommandService.API.Features;
+using TrickyBot.Services.CommandService.API.Features.Conditions;
 
 namespace TrickyBot.Services.PermissionService.Commands
 {

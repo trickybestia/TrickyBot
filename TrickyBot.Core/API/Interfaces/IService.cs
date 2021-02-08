@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using TrickyBot.API.Features;
+using TrickyBot.Services.CommandService.API.Interfaces;
 
 namespace TrickyBot.API.Interfaces
 {

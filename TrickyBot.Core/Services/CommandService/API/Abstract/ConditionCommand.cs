@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Discord;
-using TrickyBot.API.Features;
-using TrickyBot.API.Interfaces;
+using TrickyBot.Services.CommandService.API.Features;
+using TrickyBot.Services.CommandService.API.Interfaces;
 
-namespace TrickyBot.API.Abstract
+namespace TrickyBot.Services.CommandService.API.Abstract
 {
     /// <summary>
     /// A command that executes when all conditions are successfully checked.

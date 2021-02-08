@@ -6,11 +6,9 @@
 // -----------------------------------------------------------------------
 
 using Discord;
+using TrickyBot.Services.CommandService.API.Interfaces;
 
-using TrickyBot.API.Features;
-using TrickyBot.API.Interfaces;
-
-namespace TrickyBot.API.Conditions
+namespace TrickyBot.Services.CommandService.API.Features.Conditions
 {
     /// <summary>
     /// A condition based on <see cref="Features.Condition"/> delegate.

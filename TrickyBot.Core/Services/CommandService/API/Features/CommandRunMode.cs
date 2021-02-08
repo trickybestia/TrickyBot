@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace TrickyBot.API.Features
+namespace TrickyBot.Services.CommandService.API.Features
 {
     /// <summary>
     /// An enum that contains command run modes.

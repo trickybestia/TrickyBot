@@ -15,7 +15,8 @@ using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
-using TrickyBot.API.Interfaces;
+using TrickyBot.Services.CommandService.API.Interfaces;
+using TrickyBot.Services.PermissionService.API.Features;
 using TrickyBot.Services.PermissionService.Commands;
 
 namespace TrickyBot.Services.PermissionService
@@ -37,57 +38,21 @@ namespace TrickyBot.Services.PermissionService
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
         };
 
-        public static bool IsValidPermission(ReadOnlySpan<char> permission)
+        internal bool HasPermission(IGuildUser user, string permission)
         {
-            if (permission.IsEmpty)
-            {
-                return false;
-            }
-
-            bool hasWildcard = false;
-            for (int i = 0; i < permission.Length; i++)
-            {
-                if (permission[i] == '*')
-                {
-                    if (hasWildcard)
-                    {
-                        return false;
-                    }
-
-                    hasWildcard = true;
-                }
-                else if (permission[i] == '.')
-                {
-                    if (hasWildcard)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        return IsValidPermission(permission.Slice(i + 1));
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        public static bool HasPermission(IGuildUser user, string permission)
-        {
-            var service = Bot.Instance.ServiceManager.GetService<PermissionService>();
             if (user is null)
             {
                 throw new ArgumentException(null, nameof(user), new NullReferenceException());
             }
 
-            if (!IsValidPermission(permission))
+            if (!Permissions.IsValidPermission(permission))
             {
                 throw new ArgumentException(null, nameof(permission), new InvalidPermissionException(permission));
             }
 
-            if (service.Config.UserPermissions.ContainsKey(user.Id))
+            if (this.Config.UserPermissions.ContainsKey(user.Id))
             {
-                foreach (var parentPermission in service.Config.UserPermissions[user.Id])
+                foreach (var parentPermission in this.Config.UserPermissions[user.Id])
                 {
                     if (IsSubpermission(parentPermission, permission))
                     {
@@ -96,9 +61,9 @@ namespace TrickyBot.Services.PermissionService
                 }
             }
 
-            foreach (var roleId in user.RoleIds.Intersect(service.Config.RolePermissions.Keys))
+            foreach (var roleId in user.RoleIds.Intersect(this.Config.RolePermissions.Keys))
             {
-                foreach (var parentPermission in service.Config.RolePermissions[roleId])
+                foreach (var parentPermission in this.Config.RolePermissions[roleId])
                 {
                     if (IsSubpermission(parentPermission, permission))
                     {
@@ -110,14 +75,14 @@ namespace TrickyBot.Services.PermissionService
             return false;
         }
 
-        public void AddUserPermission(IGuildUser user, string permission)
+        internal void AddUserPermission(IGuildUser user, string permission)
         {
             if (user is null)
             {
                 throw new ArgumentException(null, nameof(user), new NullReferenceException());
             }
 
-            if (!IsValidPermission(permission))
+            if (!Permissions.IsValidPermission(permission))
             {
                 throw new ArgumentException(null, nameof(permission), new InvalidPermissionException(permission));
             }
@@ -133,14 +98,14 @@ namespace TrickyBot.Services.PermissionService
             }
         }
 
-        public void RemoveUserPermission(IGuildUser user, string permission)
+        internal void RemoveUserPermission(IGuildUser user, string permission)
         {
             if (user is null)
             {
                 throw new ArgumentException(null, nameof(user), new NullReferenceException());
             }
 
-            if (!IsValidPermission(permission))
+            if (!Permissions.IsValidPermission(permission))
             {
                 throw new ArgumentException(null, nameof(permission), new InvalidPermissionException(permission));
             }
@@ -156,14 +121,14 @@ namespace TrickyBot.Services.PermissionService
             }
         }
 
-        public void AddRolePermission(IRole role, string permission)
+        internal void AddRolePermission(IRole role, string permission)
         {
             if (role is null)
             {
                 throw new ArgumentException(null, nameof(role), new NullReferenceException());
             }
 
-            if (!IsValidPermission(permission))
+            if (!Permissions.IsValidPermission(permission))
             {
                 throw new ArgumentException(null, nameof(permission), new InvalidPermissionException(permission));
             }
@@ -179,14 +144,14 @@ namespace TrickyBot.Services.PermissionService
             }
         }
 
-        public void RemoveRolePermission(IRole role, string permission)
+        internal void RemoveRolePermission(IRole role, string permission)
         {
             if (role is null)
             {
                 throw new ArgumentException(null, nameof(role), new NullReferenceException());
             }
 
-            if (!IsValidPermission(permission))
+            if (!Permissions.IsValidPermission(permission))
             {
                 throw new ArgumentException(null, nameof(permission), new InvalidPermissionException(permission));
             }
