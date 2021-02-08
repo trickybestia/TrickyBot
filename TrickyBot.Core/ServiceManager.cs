@@ -53,6 +53,8 @@ namespace TrickyBot
         /// </summary>
         /// <typeparam name="T">A service type.</typeparam>
         /// <param name="allowDisabled">A value indicating whether disabled service can be found.</param>
+        /// <exception cref="ServiceNotEnabledException">Requested service is not enabled.</exception>
+        /// <exception cref="ServiceNotLoadedException">Requested service is not loaded.</exception>
         /// <returns>The instance of the loaded service.</returns>
         public T GetService<T>(bool allowDisabled = false)
         {
