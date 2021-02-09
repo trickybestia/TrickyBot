@@ -17,6 +17,7 @@ using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
+using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.Commands;
@@ -31,6 +32,8 @@ namespace TrickyBot.Services.DiscordCommandService
         {
             new SetCommandPrefix(),
         };
+
+        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = new List<IConsoleCommand>();
 
         public override ServiceInfo Info { get; } = new ServiceInfo()
         {

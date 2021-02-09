@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 using TrickyBot.API.Features;
 using TrickyBot.API.Interfaces;
+using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.API.Abstract
@@ -35,6 +36,9 @@ namespace TrickyBot.API.Abstract
 
         /// <inheritdoc/>
         public abstract IReadOnlyList<IDiscordCommand> DiscordCommands { get; }
+
+        /// <inheritdoc/>
+        public abstract IReadOnlyList<IConsoleCommand> ConsoleCommands { get; }
 
         /// <inheritdoc/>
         public abstract ServiceInfo Info { get; }

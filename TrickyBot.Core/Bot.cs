@@ -7,10 +7,12 @@
 
 using System;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Discord;
 using Discord.WebSocket;
+using TrickyBot.API.Features;
 
 namespace TrickyBot
 {
@@ -19,6 +21,8 @@ namespace TrickyBot
     /// </summary>
     public class Bot
     {
+        private readonly ManualResetEventSlim manualResetEvent = new ManualResetEventSlim(true);
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Bot"/> class.
         /// </summary>
@@ -56,9 +60,12 @@ namespace TrickyBot
         /// <returns>A task that represents the asynchronous start operation.</returns>
         public async Task Start(string token)
         {
+            this.manualResetEvent.Reset();
+            Log.Info("Starting bot...");
             await this.Client.LoginAsync(TokenType.Bot, token);
             await this.Client.StartAsync();
             await this.ServiceManager.StartAsync();
+            Log.Info("Bot started!");
         }
 
         /// <summary>
@@ -67,9 +74,17 @@ namespace TrickyBot
         /// <returns>A task that represents the asynchronous stop operation.</returns>
         public async Task Stop()
         {
+            Log.Info("Stopping bot...");
             await this.ServiceManager.StopAsync();
             await this.Client.LogoutAsync();
             await this.Client.StopAsync();
+            Log.Info("Bot stopped.");
+            this.manualResetEvent.Set();
+        }
+
+        internal async Task WaitToStopAsync()
+        {
+            await Task.Run(this.manualResetEvent.Wait);
         }
     }
 }

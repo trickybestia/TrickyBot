@@ -24,13 +24,8 @@ namespace TrickyBot
             var token = Environment.GetEnvironmentVariable("BotToken");
             Bot bot = new Bot();
             await bot.Start(token);
-            Log.Info("Type 'stop' to stop.");
-            while (Console.ReadLine() != "stop")
-            {
-            }
-
-            Log.Info("Stopping...");
-            await bot.Stop();
+            Log.Info("Type \"exit\" to stop bot.");
+            await bot.WaitToStopAsync();
         }
     }
 }

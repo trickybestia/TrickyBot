@@ -12,6 +12,7 @@ using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
+using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.Services.SingleServerInfoProviderService
@@ -19,6 +20,8 @@ namespace TrickyBot.Services.SingleServerInfoProviderService
     public class SingleServerInfoProviderService : ServiceBase<SingleServerInfoProviderServiceConfig>
     {
         public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>();
+
+        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = new List<IConsoleCommand>();
 
         public override ServiceInfo Info { get; } = new ServiceInfo()
         {

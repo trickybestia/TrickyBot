@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using TrickyBot.API.Features;
+using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.API.Interfaces
@@ -21,9 +22,14 @@ namespace TrickyBot.API.Interfaces
         where TConfig : IConfig
     {
         /// <summary>
-        /// Gets a list of commands associated with this service.
+        /// Gets a list of discord commands associated with this service.
         /// </summary>
         IReadOnlyList<IDiscordCommand> DiscordCommands { get; }
+
+        /// <summary>
+        /// Gets a list of console commands associated with this service.
+        /// </summary>
+        IReadOnlyList<IConsoleCommand> ConsoleCommands { get; }
 
         /// <summary>
         /// Gets a service config.

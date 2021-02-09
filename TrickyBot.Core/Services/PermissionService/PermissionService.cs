@@ -15,6 +15,7 @@ using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
+using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 using TrickyBot.Services.PermissionService.API.Features;
 using TrickyBot.Services.PermissionService.Commands;
@@ -29,6 +30,8 @@ namespace TrickyBot.Services.PermissionService
             new RemovePermission(),
             new ListPermissions(),
         };
+
+        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = new List<IConsoleCommand>();
 
         public override ServiceInfo Info { get; } = new ServiceInfo()
         {
