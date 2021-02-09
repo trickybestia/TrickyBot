@@ -27,7 +27,7 @@ namespace TrickyBot.Services.DiscordCommandService
     {
         private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 
-        public override List<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>()
+        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>()
         {
             new SetCommandPrefix(),
         };

@@ -23,7 +23,7 @@ namespace TrickyBot.API.Interfaces
         /// <summary>
         /// Gets a list of commands associated with this service.
         /// </summary>
-        List<IDiscordCommand> DiscordCommands { get; }
+        IReadOnlyList<IDiscordCommand> DiscordCommands { get; }
 
         /// <summary>
         /// Gets a service config.

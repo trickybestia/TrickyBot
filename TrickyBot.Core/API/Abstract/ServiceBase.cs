@@ -34,7 +34,7 @@ namespace TrickyBot.API.Abstract
         public TConfig Config { get; internal set; }
 
         /// <inheritdoc/>
-        public abstract List<IDiscordCommand> DiscordCommands { get; }
+        public abstract IReadOnlyList<IDiscordCommand> DiscordCommands { get; }
 
         /// <inheritdoc/>
         public abstract ServiceInfo Info { get; }

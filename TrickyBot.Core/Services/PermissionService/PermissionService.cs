@@ -23,7 +23,7 @@ namespace TrickyBot.Services.PermissionService
 {
     public class PermissionService : ServiceBase<PermissionServiceConfig>
     {
-        public override List<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>()
+        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>()
         {
             new AddPermission(),
             new RemovePermission(),

@@ -18,7 +18,7 @@ namespace TrickyBot.Services.SingleServerInfoProviderService
 {
     public class SingleServerInfoProviderService : ServiceBase<SingleServerInfoProviderServiceConfig>
     {
-        public override List<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>();
+        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>();
 
         public override ServiceInfo Info { get; } = new ServiceInfo()
         {
