@@ -13,7 +13,7 @@ using TrickyBot.Services.DiscordCommandService.API.Features;
 namespace TrickyBot.Services.DiscordCommandService.API.Interfaces
 {
     /// <summary>
-    /// A command.
+    /// A Discord command.
     /// </summary>
     public interface IDiscordCommand
     {
