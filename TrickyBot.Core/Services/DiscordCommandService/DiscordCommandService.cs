@@ -34,7 +34,7 @@ namespace TrickyBot.Services.DiscordCommandService
 
         public override ServiceInfo Info { get; } = new ServiceInfo()
         {
-            Name = "Commands",
+            Name = "DiscordCommands",
             Author = "TrickyBot Team",
             Version = Bot.Instance.Version,
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
