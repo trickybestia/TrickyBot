@@ -38,19 +38,21 @@ namespace TrickyBot.Services.ConsoleCommandService
 
         protected override Task OnStart()
         {
-            Task.Run(ParseCommandsAsync);
+            Task.Run(this.ParseCommandsAsync);
             return Task.CompletedTask;
         }
 
         protected override Task OnStop() => Task.CompletedTask;
 
-        private static async Task ParseCommandsAsync()
+        private async Task ParseCommandsAsync()
         {
             while (true)
             {
                 var input = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(input))
                 {
+                    Log.Info(this, $"Handling command \"{input}\"...");
+                    bool commandHandled = false;
                     foreach (var service in Bot.Instance.ServiceManager.Services)
                     {
                         if (service.Config.IsEnabled)
@@ -60,6 +62,7 @@ namespace TrickyBot.Services.ConsoleCommandService
                                 var match = Regex.Match(input, @$"{command.Name}\s?(.*)", RegexOptions.Singleline);
                                 if (match.Success)
                                 {
+                                    commandHandled = true;
                                     if (command.RunMode == ConsoleCommandRunMode.Sync)
                                     {
                                         await command.ExecuteAsync(match.Result("$1"));
@@ -73,6 +76,10 @@ namespace TrickyBot.Services.ConsoleCommandService
                                 }
                             }
                         }
+                    }
+                    if (!commandHandled)
+                    {
+                        Log.Error(this, $"Unrecognized command \"{input}\"!");
                     }
                 }
             }
