@@ -20,8 +20,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="TrickyBot.Core\bin\Release\publish\TrickyBot.Core.dll" target="lib\net5.0"/>
-    <file src="TrickyBot.Core\obj\Release\net5.0\TrickyBot.Core.xml" target="lib\net5.0"/>
+    <file src="TrickyBot.Core\bin\Release\TrickyBot.Core.dll" target="lib\net5.0"/>
+    <file src="TrickyBot.Core\obj\Release\TrickyBot.Core.xml" target="lib\net5.0"/>
     <file src="LICENSE.txt" target=""/>
   </files>
 </package>

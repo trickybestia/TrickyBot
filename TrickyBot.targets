@@ -10,6 +10,7 @@
     <RepositoryType>Git</RepositoryType>
     <RepositoryUrl>https://github.com/TrickyBestia/TrickyBot</RepositoryUrl>
     <NoWarn>1701;1702;SA1600;SA1602;SA0001;CS1591</NoWarn>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
