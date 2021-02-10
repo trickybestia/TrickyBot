@@ -5,7 +5,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -19,9 +18,18 @@ namespace TrickyBot
         {
             UnhandledExceptionHandler.Init();
             Paths.BotCore = Directory.GetCurrentDirectory();
-            Paths.Data = Path.Combine(Paths.BotCore, "../TrickyBotData");
+            var dataDirectory = CommandLineArgsParser.Args["data"];
+            if (Path.IsPathFullyQualified(dataDirectory))
+            {
+                Paths.Data = dataDirectory;
+            }
+            else
+            {
+                Paths.Data = Path.Combine(Paths.BotCore, dataDirectory);
+            }
+
             Paths.Init();
-            var token = Environment.GetEnvironmentVariable("BotToken");
+            var token = TokenProvider.GetToken();
             Bot bot = new Bot();
             await bot.Start(token);
             Log.Info("Type \"exit\" to stop bot.");
