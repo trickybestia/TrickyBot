@@ -77,6 +77,7 @@ namespace TrickyBot.Services.ConsoleCommandService
                             }
                         }
                     }
+
                     if (!commandHandled)
                     {
                         Log.Error(this, $"Unrecognized command \"{input}\"!");
