@@ -20,7 +20,7 @@ namespace TrickyBot.Services.ConsoleCommandService.ConsoleCommands
 
         public async Task ExecuteAsync(string parameter)
         {
-            await Bot.Instance.Stop();
+            await Bot.Instance.StopAsync();
         }
     }
 }

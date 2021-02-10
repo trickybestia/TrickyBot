@@ -58,7 +58,7 @@ namespace TrickyBot
         /// </summary>
         /// <param name="token">The bot token to login.</param>
         /// <returns>A task that represents the asynchronous start operation.</returns>
-        public async Task Start(string token)
+        public async Task StartAsync(string token)
         {
             this.manualResetEvent.Reset();
             Log.Info("Starting bot...");
@@ -72,7 +72,7 @@ namespace TrickyBot
         /// Stops a bot asynchronously.
         /// </summary>
         /// <returns>A task that represents the asynchronous stop operation.</returns>
-        public async Task Stop()
+        public async Task StopAsync()
         {
             Log.Info("Stopping bot...");
             await this.ServiceManager.StopAsync();

@@ -31,7 +31,7 @@ namespace TrickyBot
             Paths.Init();
             var token = TokenProvider.GetToken();
             Bot bot = new Bot();
-            await bot.Start(token);
+            await bot.StartAsync(token);
             Log.Info("Type \"exit\" to stop bot.");
             await bot.WaitToStopAsync();
         }
