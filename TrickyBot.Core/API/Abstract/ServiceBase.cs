@@ -46,33 +46,33 @@ namespace TrickyBot.API.Abstract
         /// <inheritdoc/>
         public async Task StartAsync()
         {
-            Log.Info(this, $"Starting service \"{this.Info.Name}\" v{this.Info.Version} by \"{this.Info.Author}\"...");
+            Log.Info(this, $"Starting service \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} by \"{this.Info.Author}\"...");
             try
             {
                 await this.OnStart();
             }
             catch (Exception ex)
             {
-                Log.Error(this, $"Exception thrown while starting service \"{this.Info.Name}\" v{this.Info.Version} by \"{this.Info.Author}\": {ex}");
+                Log.Error(this, $"Exception thrown while starting service \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} by \"{this.Info.Author}\": {ex}");
             }
 
-            Log.Info(this, $"Service \"{this.Info.Name}\" v{this.Info.Version} by \"{this.Info.Author}\" started.");
+            Log.Info(this, $"Service \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} by \"{this.Info.Author}\" started.");
         }
 
         /// <inheritdoc/>
         public async Task StopAsync()
         {
-            Log.Info(this, $"Stopping service \"{this.Info.Name}\" v{this.Info.Version} by \"{this.Info.Author}\"...");
+            Log.Info(this, $"Stopping service \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} by \"{this.Info.Author}\"...");
             try
             {
                 await this.OnStop();
             }
             catch (Exception ex)
             {
-                Log.Error(this, $"Exception thrown while stopping service \"{this.Info.Name}\" v{this.Info.Version} by \"{this.Info.Author}\": {ex}");
+                Log.Error(this, $"Exception thrown while stopping service \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} by \"{this.Info.Author}\": {ex}");
             }
 
-            Log.Info(this, $"Service \"{this.Info.Name}\" v{this.Info.Version} by \"{this.Info.Author}\" stopped.");
+            Log.Info(this, $"Service \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} by \"{this.Info.Author}\" stopped.");
         }
 
         /// <summary>
