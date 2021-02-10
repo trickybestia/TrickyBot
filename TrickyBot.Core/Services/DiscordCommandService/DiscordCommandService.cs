@@ -87,7 +87,7 @@ namespace TrickyBot.Services.DiscordCommandService
                                 }
                                 catch (Exception ex)
                                 {
-                                    Log.Error($"Exception thrown while executing command \"{command.Name}\": {ex}");
+                                    Log.Error(this, $"Exception thrown while executing command \"{command.Name}\": {ex}");
                                 }
                             }
                             else

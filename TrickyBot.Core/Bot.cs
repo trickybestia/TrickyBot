@@ -61,11 +61,11 @@ namespace TrickyBot
         public async Task StartAsync(string token)
         {
             this.manualResetEvent.Reset();
-            Log.Info("Starting bot...");
+            Log.Info(this, "Starting bot...");
             await this.Client.LoginAsync(TokenType.Bot, token);
             await this.Client.StartAsync();
             await this.ServiceManager.StartAsync();
-            Log.Info("Bot started!");
+            Log.Info(this, "Bot started!");
         }
 
         /// <summary>
@@ -74,11 +74,11 @@ namespace TrickyBot
         /// <returns>A task that represents the asynchronous stop operation.</returns>
         public async Task StopAsync()
         {
-            Log.Info("Stopping bot...");
+            Log.Info(this, "Stopping bot...");
             await this.ServiceManager.StopAsync();
             await this.Client.LogoutAsync();
             await this.Client.StopAsync();
-            Log.Info("Bot stopped.");
+            Log.Info(this, "Bot stopped.");
             this.manualResetEvent.Set();
         }
 

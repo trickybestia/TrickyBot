@@ -24,7 +24,7 @@ namespace TrickyBot
 
         private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Log.Error($"Unhandled exception (terminating: {e.IsTerminating}):\n{e.ExceptionObject}");
+            Log.Error(typeof(UnhandledExceptionHandler), $"Unhandled exception (terminating: {e.IsTerminating}):\n{e.ExceptionObject}");
         }
     }
 }

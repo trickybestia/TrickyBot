@@ -32,7 +32,7 @@ namespace TrickyBot
             var token = TokenProvider.GetToken();
             Bot bot = new Bot();
             await bot.StartAsync(token);
-            Log.Info("Type \"exit\" to stop bot.");
+            Log.Info(typeof(Program), "Type \"exit\" to stop bot.");
             await bot.WaitToStopAsync();
         }
     }

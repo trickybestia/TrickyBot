@@ -80,7 +80,7 @@ namespace TrickyBot
         /// <returns>A task that represents the asynchronous start operation.</returns>
         internal async Task StartAsync()
         {
-            Log.Info("Starting services...");
+            Log.Info(this, "Starting services...");
             this.Load();
             foreach (var service in this.Services)
             {
@@ -90,7 +90,7 @@ namespace TrickyBot
                 }
             }
 
-            Log.Info("Services started.");
+            Log.Info(this, "Services started.");
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace TrickyBot
         /// <returns>A task that represents the asynchronous start operation.</returns>
         internal async Task StopAsync()
         {
-            Log.Info("Stopping services...");
+            Log.Info(this, "Stopping services...");
             foreach (var service in this.Services)
             {
                 if (service.Config.IsEnabled)
@@ -109,7 +109,7 @@ namespace TrickyBot
             }
 
             this.Save();
-            Log.Info("Services stopped.");
+            Log.Info(this, "Services stopped.");
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace TrickyBot
             }
             catch
             {
-                Log.Warn($"Service \"{service.Info.Name}\" v{service.Info.Version} by \"{service.Info.Author}\" does not have config, generating...");
+                Log.Warn(typeof(ServiceLoader), $"Service \"{service.Info.Name}\" v{service.Info.Version} by \"{service.Info.Author}\" does not have config, generating...");
                 File.WriteAllText(configPath, JsonConvert.SerializeObject(service.Config, ConfigSerializerSettings));
             }
         }
