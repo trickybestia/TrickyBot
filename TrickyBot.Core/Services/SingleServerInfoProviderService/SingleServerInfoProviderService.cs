@@ -35,9 +35,26 @@ namespace TrickyBot.Services.SingleServerInfoProviderService
 
         protected override Task OnStart()
         {
+            Bot.Instance.Client.GuildAvailable += this.OnGuildAvailable;
             return Task.CompletedTask;
         }
 
-        protected override Task OnStop() => Task.CompletedTask;
+        protected override Task OnStop()
+        {
+            Bot.Instance.Client.GuildAvailable -= this.OnGuildAvailable;
+            return Task.CompletedTask;
+        }
+
+        private async Task OnGuildAvailable(SocketGuild arg)
+        {
+            if (this.Config.GuildId == 0)
+            {
+                this.Config.GuildId = arg.Id;
+            }
+            else if (this.Config.GuildId != arg.Id)
+            {
+                await arg.LeaveAsync();
+            }
+        }
     }
 }
