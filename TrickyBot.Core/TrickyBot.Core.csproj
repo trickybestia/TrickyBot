@@ -11,7 +11,7 @@
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>obj\Release\net5.0\TrickyBot.Core.xml</DocumentationFile>
+    <DocumentationFile>obj\Release\TrickyBot.Core.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
