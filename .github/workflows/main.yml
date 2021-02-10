@@ -26,10 +26,14 @@ jobs:
           $version = $Version[0].Trim()
           nuget pack -Version $version
 
-      - name: Upload artifacts
+      - name: Upload build
         uses: actions/upload-artifact@v2
         with:
-          - name: TrickyBot
-            path: TrickyBot.Core\bin\Release
-          - name: NuGet package
-            path: TrickyBot.*.nupkg
+          name: TrickyBot
+          path: TrickyBot.Core\bin\Release
+
+      - name: Upload NuGet package
+        uses: actions/upload-artifact@v2
+        with:
+          name: NuGet package
+          path: TrickyBot.*.nupkg
