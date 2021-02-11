@@ -25,7 +25,7 @@ Then create a bot start script, e.g. `run.sh`, in the $HOME/Bot/ with the follow
 ```bash
 chmod -R 700 *
 cd TrickyBot
-screen -S TrickyBot -d -m dotnet TrickyBot.Core.dll --data "../TrickyBot" --tokenprovidertype "commandlinearg" --token "your bot token here"
+screen -S TrickyBot -d -m dotnet TrickyBot.Core.dll --data "../TrickyBotData" --tokenprovidertype "commandlinearg" --token "your bot token here"
 ```
 After executing `./run.sh` type `screen -r` to get access to the bot console. Type `exit` to stop the bot.  
 After the first launch you will have the following file structure:
