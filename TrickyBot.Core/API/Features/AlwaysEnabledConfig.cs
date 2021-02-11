@@ -9,8 +9,12 @@ using TrickyBot.API.Interfaces;
 
 namespace TrickyBot.API.Features
 {
+    /// <summary>
+    /// A config that is always enabled.
+    /// </summary>
     public class AlwaysEnabledConfig : IConfig
     {
+        /// <inheritdoc/>
         public bool IsEnabled
         {
             get { return true; }

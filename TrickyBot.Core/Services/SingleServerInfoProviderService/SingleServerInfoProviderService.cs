@@ -5,34 +5,56 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
-using TrickyBot.API.Interfaces;
+using TrickyBot.API.Features;
+using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
+using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.Services.SingleServerInfoProviderService
 {
     public class SingleServerInfoProviderService : ServiceBase<SingleServerInfoProviderServiceConfig>
     {
-        public override string Name { get; } = "SingleServerInfoProvider";
+        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>();
 
-        public override List<ICommand> Commands { get; } = new List<ICommand>();
+        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = new List<IConsoleCommand>();
 
-        public override string Author { get; } = "TrickyBot Team";
-
-        public override Version Version { get; } = Bot.Instance.Version;
+        public override ServiceInfo Info { get; } = new ServiceInfo()
+        {
+            Name = "SingleServerInfoProvider",
+            Author = "TrickyBot Team",
+            Version = Bot.Instance.Version,
+            GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
+        };
 
         public SocketGuild Guild => Bot.Instance.Client.GetGuild(this.Config.GuildId);
 
         protected override Task OnStart()
         {
+            Bot.Instance.Client.GuildAvailable += this.OnGuildAvailable;
             return Task.CompletedTask;
         }
 
-        protected override Task OnStop() => Task.CompletedTask;
+        protected override Task OnStop()
+        {
+            Bot.Instance.Client.GuildAvailable -= this.OnGuildAvailable;
+            return Task.CompletedTask;
+        }
+
+        private async Task OnGuildAvailable(SocketGuild arg)
+        {
+            if (this.Config.GuildId == 0)
+            {
+                this.Config.GuildId = arg.Id;
+            }
+            else if (this.Config.GuildId != arg.Id)
+            {
+                await arg.LeaveAsync();
+            }
+        }
     }
 }

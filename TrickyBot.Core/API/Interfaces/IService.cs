@@ -5,27 +5,52 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using TrickyBot.API.Features;
+using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
+using TrickyBot.Services.DiscordCommandService.API.Interfaces;
+
 namespace TrickyBot.API.Interfaces
 {
+    /// <summary>
+    /// A service.
+    /// </summary>
+    /// <typeparam name="TConfig">A service config.</typeparam>
     public interface IService<out TConfig>
         where TConfig : IConfig
     {
-        List<ICommand> Commands { get; }
+        /// <summary>
+        /// Gets a list of discord commands associated with this service.
+        /// </summary>
+        IReadOnlyList<IDiscordCommand> DiscordCommands { get; }
 
+        /// <summary>
+        /// Gets a list of console commands associated with this service.
+        /// </summary>
+        IReadOnlyList<IConsoleCommand> ConsoleCommands { get; }
+
+        /// <summary>
+        /// Gets a service config.
+        /// </summary>
         TConfig Config { get; }
 
-        string Name { get; }
+        /// <summary>
+        /// Gets an info of the service.
+        /// </summary>
+        ServiceInfo Info { get; }
 
-        string Author { get; }
-
-        Version Version { get; }
-
+        /// <summary>
+        /// Starts a service asynchronously.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous start operation.</returns>
         Task StartAsync();
 
+        /// <summary>
+        /// Stops a service asynchronously.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous stop operation.</returns>
         Task StopAsync();
     }
 }

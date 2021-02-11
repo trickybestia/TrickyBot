@@ -15,19 +15,8 @@ jobs:
         with:
           dotnet-version: 5.0.x
 
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Publish
-        run: |
-          dotnet publish -c Release -p:PublishProfile=Release
-          if ($? -eq $false) { Exit 1 }
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: TrickyBot
-          path: TrickyBot.Core\bin\Release\publish
+      - name: Build
+        run: dotnet build -c Release
 
       - name: Create NuGet package
         shell: pwsh
@@ -36,6 +25,12 @@ jobs:
           $version = $TargetsFile.Project.PropertyGroup.Version
           $version = $Version[0].Trim()
           nuget pack -Version $version
+
+      - name: Upload build
+        uses: actions/upload-artifact@v2
+        with:
+          name: TrickyBot
+          path: TrickyBot.Core\bin\Release
 
       - name: Upload NuGet package
         uses: actions/upload-artifact@v2

@@ -6,32 +6,83 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace TrickyBot.API.Features
 {
+    /// <summary>
+    /// A class that provides API for logging.
+    /// </summary>
     public static class Log
     {
-        public static void Debug(object message) => SendPrivate(message, LogLevel.Debug, ConsoleColor.Green);
+        /// <summary>
+        /// Logs the debug message.
+        /// </summary>
+        /// <param name="sender">A sender of the message.</param>
+        /// <param name="message">The message to log.</param>
+        public static void Debug(object sender, string message) => Send(sender, message, LogLevel.Debug);
 
-        public static void Info(object message) => SendPrivate(message, LogLevel.Info, ConsoleColor.Cyan);
+        /// <summary>
+        /// Logs the info message.
+        /// </summary>
+        /// <param name="sender">A sender of the message.</param>
+        /// <param name="message">The message to log.</param>
+        public static void Info(object sender, string message) => Send(sender, message, LogLevel.Info);
 
-        public static void Warn(object message) => SendPrivate(message, LogLevel.Warn, ConsoleColor.Magenta);
+        /// <summary>
+        /// Logs the warn message.
+        /// </summary>
+        /// <param name="sender">A sender of the message.</param>
+        /// <param name="message">The message to log.</param>
+        public static void Warn(object sender, string message) => Send(sender, message, LogLevel.Warn);
 
-        public static void Error(object message) => SendPrivate(message, LogLevel.Error, ConsoleColor.Red);
+        /// <summary>
+        /// Logs the error message.
+        /// </summary>
+        /// <param name="sender">A sender of the message.</param>
+        /// <param name="message">The message to log.</param>
+        public static void Error(object sender, string message) => Send(sender, message, LogLevel.Error);
 
-        public static void Send(object message, LogLevel logLevel, ConsoleColor color) => SendPrivate(message, logLevel, color);
-
+        /// <summary>
+        /// Logs the message.
+        /// </summary>
+        /// <param name="sender">A sender of the message.</param>
+        /// <param name="message">The message to log.</param>
+        /// <param name="logLevel"><see cref="LogLevel"/> of the message.</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void SendPrivate(object message, LogLevel logLevel, ConsoleColor color)
+        public static void Send(object sender, string message, LogLevel logLevel)
         {
+            if (sender is null)
+            {
+                throw new ArgumentException("Value can not be null!", nameof(sender), new NullReferenceException());
+            }
+
+            if (string.IsNullOrEmpty(message))
+            {
+                throw new ArgumentException("String can not be null or empty!", nameof(message));
+            }
+
             var previousColor = Console.ForegroundColor;
-            Console.ForegroundColor = color;
-            var stackTrace = new StackTrace();
-            var callingAssembly = stackTrace.GetFrame(2).GetMethod().DeclaringType.Assembly;
-            var assemblyName = callingAssembly.GetName().Name;
-            Console.WriteLine($"[{DateTime.Now:dd.MM.yyyy HH:mm:ss}] [{logLevel.ToString().ToUpper()}] [{assemblyName}] {message}");
+#pragma warning disable CS8524 // The switch expression does not handle some values of its input type (it is not exhaustive) involving an unnamed enum value.
+            Console.ForegroundColor = logLevel switch
+#pragma warning restore CS8524 // The switch expression does not handle some values of its input type (it is not exhaustive) involving an unnamed enum value.
+            {
+                LogLevel.Debug => ConsoleColor.Green,
+                LogLevel.Info => ConsoleColor.Cyan,
+                LogLevel.Warn => ConsoleColor.Magenta,
+                LogLevel.Error => ConsoleColor.Red,
+            };
+            string senderName;
+            if (sender is Type senderType)
+            {
+                senderName = senderType.FullName;
+            }
+            else
+            {
+                senderName = sender.GetType().FullName;
+            }
+
+            Console.WriteLine($"[{DateTime.Now:dd.MM.yyyy HH:mm:ss}] [{logLevel.ToString().ToUpper()}] [{senderName}] {message}");
             Console.ForegroundColor = previousColor;
         }
     }

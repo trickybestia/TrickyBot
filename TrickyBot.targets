@@ -4,18 +4,16 @@
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9.0</LangVersion>
     <PlatformTarget>anycpu</PlatformTarget>
-    <Version>0.1.1</Version>
+    <Version>1.0.0</Version>
     <Company>TrickyBot Team</Company>
     <Copyright>Copyright (c) TrickyBot Team 2020 - $([System.DateTime]::Now.ToString("yyyy"))</Copyright>
     <RepositoryType>Git</RepositoryType>
     <RepositoryUrl>https://github.com/TrickyBestia/TrickyBot</RepositoryUrl>
-    <NoWarn>1701;1702;SA1600;SA1602;SA0001</NoWarn>
-
-    <NuspecProperties>version=$(Version)</NuspecProperties>
+    <NoWarn>1701;1702;SA1600;SA1602;SA0001;CS1591</NoWarn>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <DebugType>None</DebugType>
   </PropertyGroup>
 </Project>
