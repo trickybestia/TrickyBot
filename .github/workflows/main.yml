@@ -24,7 +24,8 @@ jobs:
           [XML]$TargetsFile = Get-Content TrickyBot.targets
           $version = $TargetsFile.Project.PropertyGroup.Version
           $version = $Version[0].Trim()
-          nuget pack -Version $version
+          $year = [System.DateTime]::Now.ToString("yyyy")
+          nuget pack -Version $version -Properties Year=$year
 
       - name: Upload build
         uses: actions/upload-artifact@v2
