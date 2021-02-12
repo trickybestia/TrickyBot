@@ -46,6 +46,8 @@ namespace TrickyBot.Services.PermissionService.Commands
                         }
                     }
 
+                    stringBuilder.Replace("*", @"\*");
+
                     responseBuilder.AddField("Roles:", stringBuilder.ToString());
                     stringBuilder.Clear();
                 }
@@ -60,6 +62,8 @@ namespace TrickyBot.Services.PermissionService.Commands
                             stringBuilder.Append(rolePermission).AppendLine(",");
                         }
                     }
+
+                    stringBuilder.Replace("*", @"\*");
 
                     responseBuilder.AddField("Users:", stringBuilder.ToString());
                 }
