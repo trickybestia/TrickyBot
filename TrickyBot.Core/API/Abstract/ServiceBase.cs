@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 
 using TrickyBot.API.Features;
 using TrickyBot.API.Interfaces;
+using TrickyBot.Services.ConsoleCommandService.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
+using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.API.Abstract
@@ -29,16 +31,18 @@ namespace TrickyBot.API.Abstract
         public ServiceBase()
         {
             this.Config = new TConfig();
+            this.DiscordCommands = DiscordCommandLoader.GetCommands(this.GetType().Assembly);
+            this.ConsoleCommands = ConsoleCommandLoader.GetCommands(this.GetType().Assembly);
         }
 
         /// <inheritdoc/>
         public TConfig Config { get; internal set; }
 
         /// <inheritdoc/>
-        public abstract IReadOnlyList<IDiscordCommand> DiscordCommands { get; }
+        public virtual IReadOnlyList<IDiscordCommand> DiscordCommands { get; }
 
         /// <inheritdoc/>
-        public abstract IReadOnlyList<IConsoleCommand> ConsoleCommands { get; }
+        public virtual IReadOnlyList<IConsoleCommand> ConsoleCommands { get; }
 
         /// <inheritdoc/>
         public abstract ServiceInfo Info { get; }
