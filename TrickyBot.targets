@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9.0</LangVersion>
     <PlatformTarget>anycpu</PlatformTarget>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
     <Company>TrickyBot Team</Company>
     <Copyright>Copyright (c) TrickyBot Team 2020 - $([System.DateTime]::Now.ToString("yyyy"))</Copyright>
     <RepositoryType>Git</RepositoryType>
