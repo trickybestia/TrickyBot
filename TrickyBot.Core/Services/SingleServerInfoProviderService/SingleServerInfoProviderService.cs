@@ -25,7 +25,7 @@ namespace TrickyBot.Services.SingleServerInfoProviderService
 
         public override ServiceInfo Info { get; } = new ServiceInfo()
         {
-            Name = "SingleServerInfoProvider",
+            Name = nameof(SingleServerInfoProviderService),
             Author = "TrickyBot Team",
             Version = Bot.Instance.Version,
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",

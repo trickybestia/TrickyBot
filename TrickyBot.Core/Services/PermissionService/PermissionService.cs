@@ -35,7 +35,7 @@ namespace TrickyBot.Services.PermissionService
 
         public override ServiceInfo Info { get; } = new ServiceInfo()
         {
-            Name = "Permissions",
+            Name = nameof(PermissionService),
             Author = "TrickyBot Team",
             Version = Bot.Instance.Version,
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
