@@ -9,9 +9,14 @@ using Discord.WebSocket;
 
 namespace TrickyBot.Services.SingleServerInfoProviderService.API.Features
 {
-    // I think "SingleServerInfoProvider" is too long so "SSIP".
+    /// <summary>
+    /// A class that provides API for the <see cref="SingleServerInfoProviderService"/>.
+    /// </summary>
     public static class SSIP
     {
+        /// <summary>
+        /// Gets a bot guild.
+        /// </summary>
         public static SocketGuild Guild => Bot.Instance.ServiceManager.GetService<SingleServerInfoProviderService>().Guild;
     }
 }
