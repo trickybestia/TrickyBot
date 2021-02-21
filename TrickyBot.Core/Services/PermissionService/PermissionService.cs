@@ -18,7 +18,7 @@ using TrickyBot.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 using TrickyBot.Services.PermissionService.API.Features;
-using TrickyBot.Services.PermissionService.Commands;
+using TrickyBot.Services.PermissionService.DiscordCommands;
 
 namespace TrickyBot.Services.PermissionService
 {

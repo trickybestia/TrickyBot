@@ -12,7 +12,7 @@ using TrickyBot.Services.DiscordCommandService.API.Abstract;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;
 
-namespace TrickyBot.Services.DiscordCommandService.Commands
+namespace TrickyBot.Services.DiscordCommandService.DiscordCommands
 {
     internal class SetCommandPrefix : ConditionDiscordCommand
     {

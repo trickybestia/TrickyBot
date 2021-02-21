@@ -15,7 +15,7 @@ using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;
 using TrickyBot.Services.PermissionService.API.Features;
 
-namespace TrickyBot.Services.PermissionService.Commands
+namespace TrickyBot.Services.PermissionService.DiscordCommands
 {
     internal class AddPermission : ConditionDiscordCommand
     {
