@@ -20,7 +20,7 @@ using TrickyBot.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
-using TrickyBot.Services.DiscordCommandService.Commands;
+using TrickyBot.Services.DiscordCommandService.DiscordCommands;
 
 namespace TrickyBot.Services.DiscordCommandService
 {
@@ -37,7 +37,7 @@ namespace TrickyBot.Services.DiscordCommandService
 
         public override ServiceInfo Info { get; } = new ServiceInfo()
         {
-            Name = "DiscordCommands",
+            Name = nameof(DiscordCommandService),
             Author = "TrickyBot Team",
             Version = Bot.Instance.Version,
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",

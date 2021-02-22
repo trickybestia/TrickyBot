@@ -30,7 +30,7 @@ namespace TrickyBot.Services.ConsoleCommandService
 
         public override ServiceInfo Info { get; } = new ServiceInfo()
         {
-            Name = "ConsoleCommands",
+            Name = nameof(ConsoleCommandService),
             Author = "TrickyBot Team",
             Version = Bot.Instance.Version,
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",

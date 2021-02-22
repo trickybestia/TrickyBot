@@ -18,7 +18,7 @@ using TrickyBot.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 using TrickyBot.Services.PermissionService.API.Features;
-using TrickyBot.Services.PermissionService.Commands;
+using TrickyBot.Services.PermissionService.DiscordCommands;
 
 namespace TrickyBot.Services.PermissionService
 {
@@ -35,7 +35,7 @@ namespace TrickyBot.Services.PermissionService
 
         public override ServiceInfo Info { get; } = new ServiceInfo()
         {
-            Name = "Permissions",
+            Name = nameof(PermissionService),
             Author = "TrickyBot Team",
             Version = Bot.Instance.Version,
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",

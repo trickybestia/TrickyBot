@@ -13,7 +13,7 @@ using TrickyBot.Services.DiscordCommandService.API.Abstract;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;
 
-namespace TrickyBot.Services.PermissionService.Commands
+namespace TrickyBot.Services.PermissionService.DiscordCommands
 {
     internal class ListPermissions : ConditionDiscordCommand
     {
