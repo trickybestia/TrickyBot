@@ -24,7 +24,7 @@ namespace TrickyBot
 
         private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Log.Error(typeof(UnhandledExceptionHandler), $"Необработанное исключение (terminating: {e.IsTerminating}):\n{e.ExceptionObject}");
+            Log.Error(typeof(UnhandledExceptionHandler), $"РќРµРѕР±СЂР°Р±РѕС‚Р°РЅРЅРѕРµ РёСЃРєР»СЋС‡РµРЅРёРµ (terminating: {e.IsTerminating}):\n{e.ExceptionObject}");
         }
     }
 }

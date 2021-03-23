@@ -18,12 +18,12 @@ using TrickyBot.API.Interfaces;
 namespace TrickyBot
 {
     /// <summary>
-    /// Обёртка над списком сервисов, созданная для удобного управления ими.
+    /// РћР±С‘СЂС‚РєР° РЅР°Рґ СЃРїРёСЃРєРѕРј СЃРµСЂРІРёСЃРѕРІ, СЃРѕР·РґР°РЅРЅР°СЏ РґР»СЏ СѓРґРѕР±РЅРѕРіРѕ СѓРїСЂР°РІР»РµРЅРёСЏ РёРјРё.
     /// </summary>
     public class ServiceManager
     {
         /// <summary>
-        /// Настройки сериализатора конфигов.
+        /// РќР°СЃС‚СЂРѕР№РєРё СЃРµСЂРёР°Р»РёР·Р°С‚РѕСЂР° РєРѕРЅС„РёРіРѕРІ.
         /// </summary>
         private static readonly JsonSerializerSettings ConfigSerializerSettings = new JsonSerializerSettings()
         {
@@ -31,12 +31,12 @@ namespace TrickyBot
         };
 
         /// <summary>
-        /// Список загруженных сервисов.
+        /// РЎРїРёСЃРѕРє Р·Р°РіСЂСѓР¶РµРЅРЅС‹С… СЃРµСЂРІРёСЃРѕРІ.
         /// </summary>
         private readonly List<IService<IConfig>> services;
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="ServiceManager"/>.
+        /// РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ РЅРѕРІС‹Р№ СЌРєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° <see cref="ServiceManager"/>.
         /// </summary>
         internal ServiceManager()
         {
@@ -44,18 +44,24 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Получает коллекцию загруженных сервисов.
+        /// РџРѕР»СѓС‡Р°РµС‚ РєРѕР»Р»РµРєС†РёСЋ Р·Р°РіСЂСѓР¶РµРЅРЅС‹С… СЃРµСЂРІРёСЃРѕРІ.
         /// </summary>
-        public IReadOnlyCollection<IService<IConfig>> Services => this.services;
+        public IReadOnlyCollection<IService<IConfig>> Services
+        {
+            get
+            {
+                return this.services;
+            }
+        }
 
         /// <summary>
-        /// Возвращает экземпляр загруженного сервиса.
+        /// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЌРєР·РµРјРїР»СЏСЂ Р·Р°РіСЂСѓР¶РµРЅРЅРѕРіРѕ СЃРµСЂРІРёСЃР°.
         /// </summary>
-        /// <typeparam name="T">Тип сервиса.</typeparam>
-        /// <param name="allowDisabled">Значение, указывающее на возможность возврата не включённого сервиса.</param>
-        /// <exception cref="ServiceNotEnabledException">Запрашиваемый сервис не включен.</exception>
-        /// <exception cref="ServiceNotLoadedException">Запрашиваемый сервис не загружен.</exception>
-        /// <returns>Экземпляр загруженного сервиса.</returns>
+        /// <typeparam name="T">РўРёРї СЃРµСЂРІРёСЃР°.</typeparam>
+        /// <param name="allowDisabled">Р—РЅР°С‡РµРЅРёРµ, СѓРєР°Р·С‹РІР°СЋС‰РµРµ РЅР° РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РІРѕР·РІСЂР°С‚Р° РЅРµ РІРєР»СЋС‡С‘РЅРЅРѕРіРѕ СЃРµСЂРІРёСЃР°.</param>
+        /// <exception cref="ServiceNotEnabledException">Р—Р°РїСЂР°С€РёРІР°РµРјС‹Р№ СЃРµСЂРІРёСЃ РЅРµ РІРєР»СЋС‡РµРЅ.</exception>
+        /// <exception cref="ServiceNotLoadedException">Р—Р°РїСЂР°С€РёРІР°РµРјС‹Р№ СЃРµСЂРІРёСЃ РЅРµ Р·Р°РіСЂСѓР¶РµРЅ.</exception>
+        /// <returns>Р­РєР·РµРјРїР»СЏСЂ Р·Р°РіСЂСѓР¶РµРЅРЅРѕРіРѕ СЃРµСЂРІРёСЃР°.</returns>
         public T GetService<T>(bool allowDisabled = false)
         {
             foreach (var service in this.Services)
@@ -75,9 +81,9 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Асинхронно запускает менеджер сервисов.
+        /// РђСЃРёРЅС…СЂРѕРЅРЅРѕ Р·Р°РїСѓСЃРєР°РµС‚ РјРµРЅРµРґР¶РµСЂ СЃРµСЂРІРёСЃРѕРІ.
         /// </summary>
-        /// <returns>Задача, представляющая асинхронную операцию.</returns>
+        /// <returns>Р—Р°РґР°С‡Р°, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰Р°СЏ Р°СЃРёРЅС…СЂРѕРЅРЅСѓСЋ РѕРїРµСЂР°С†РёСЋ.</returns>
         internal async Task StartAsync()
         {
             Log.Info(this, "Starting services...");
@@ -94,9 +100,9 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Асинхронно останавливает менеджер сервисов.
+        /// РђСЃРёРЅС…СЂРѕРЅРЅРѕ РѕСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РјРµРЅРµРґР¶РµСЂ СЃРµСЂРІРёСЃРѕРІ.
         /// </summary>
-        /// <returns>Задача, представляющая асинхронную операцию.</returns>
+        /// <returns>Р—Р°РґР°С‡Р°, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰Р°СЏ Р°СЃРёРЅС…СЂРѕРЅРЅСѓСЋ РѕРїРµСЂР°С†РёСЋ.</returns>
         internal async Task StopAsync()
         {
             Log.Info(this, "Stopping services...");
@@ -113,9 +119,9 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Загружает конфиг сервиса.
+        /// Р—Р°РіСЂСѓР¶Р°РµС‚ РєРѕРЅС„РёРі СЃРµСЂРІРёСЃР°.
         /// </summary>
-        /// <param name="service">Сервис, конфиг которого будет загружен.</param>
+        /// <param name="service">РЎРµСЂРІРёСЃ, РєРѕРЅС„РёРі РєРѕС‚РѕСЂРѕРіРѕ Р±СѓРґРµС‚ Р·Р°РіСЂСѓР¶РµРЅ.</param>
         private static void LoadService(IService<IConfig> service)
         {
             var configPath = Path.Combine(Paths.Configs, $"{service.Info.Name}.json");
@@ -136,9 +142,9 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Сохраняет конфиг сервиса.
+        /// РЎРѕС…СЂР°РЅСЏРµС‚ РєРѕРЅС„РёРі СЃРµСЂРІРёСЃР°.
         /// </summary>
-        /// <param name="service">Сервис, конфиг которого будет сохранён.</param>
+        /// <param name="service">РЎРµСЂРІРёСЃ, РєРѕРЅС„РёРі РєРѕС‚РѕСЂРѕРіРѕ Р±СѓРґРµС‚ СЃРѕС…СЂР°РЅС‘РЅ.</param>
         private static void SaveService(IService<IConfig> service)
         {
             var configPath = Path.Combine(Paths.Configs, $"{service.Info.Name}.json");
@@ -146,7 +152,7 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Загружает сервисы и их конфиги.
+        /// Р—Р°РіСЂСѓР¶Р°РµС‚ СЃРµСЂРІРёСЃС‹ Рё РёС… РєРѕРЅС„РёРіРё.
         /// </summary>
         private void Load()
         {
@@ -168,7 +174,7 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Сохраняет конфиги всех сервисов.
+        /// РЎРѕС…СЂР°РЅСЏРµС‚ РєРѕРЅС„РёРіРё РІСЃРµС… СЃРµСЂРІРёСЃРѕРІ.
         /// </summary>
         private void Save()
         {
