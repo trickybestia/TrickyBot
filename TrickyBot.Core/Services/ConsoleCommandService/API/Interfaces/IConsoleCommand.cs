@@ -12,25 +12,25 @@ using TrickyBot.Services.ConsoleCommandService.API.Features;
 namespace TrickyBot.Services.ConsoleCommandService.API.Interfaces
 {
     /// <summary>
-    /// A server console command.
+    /// Серверная консольная команда.
     /// </summary>
     public interface IConsoleCommand
     {
         /// <summary>
-        /// Gets a name of the command.
+        /// Получает название команды.
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        /// Gets a command run mode.
+        /// Получает способ выполнения команды.
         /// </summary>
         ConsoleCommandRunMode RunMode { get; }
 
         /// <summary>
-        /// Executes the command asynchronously.
+        /// Выполняет команду асинхронно.
         /// </summary>
-        /// <param name="parameter">A command parameter.</param>
-        /// <returns>A task that represents the asynchronous execution operation.</returns>
+        /// <param name="parameter">Параметр команды.</param>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
         Task ExecuteAsync(string parameter);
     }
 }

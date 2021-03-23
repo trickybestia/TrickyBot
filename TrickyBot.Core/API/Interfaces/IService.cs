@@ -15,42 +15,42 @@ using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 namespace TrickyBot.API.Interfaces
 {
     /// <summary>
-    /// A service.
+    /// Сервис бота.
     /// </summary>
-    /// <typeparam name="TConfig">A service config.</typeparam>
+    /// <typeparam name="TConfig">Конфиг сервиса.</typeparam>
     public interface IService<out TConfig>
         where TConfig : IConfig
     {
         /// <summary>
-        /// Gets a list of discord commands associated with this service.
+        /// Получает список дискорд-команд, связанных с этим сервисом.
         /// </summary>
         IReadOnlyList<IDiscordCommand> DiscordCommands { get; }
 
         /// <summary>
-        /// Gets a list of console commands associated with this service.
+        /// Получает список серверных консольных команд, связанных с этим сервисом.
         /// </summary>
         IReadOnlyList<IConsoleCommand> ConsoleCommands { get; }
 
         /// <summary>
-        /// Gets a service config.
+        /// Получает конфиг сервиса.
         /// </summary>
         TConfig Config { get; }
 
         /// <summary>
-        /// Gets an info of the service.
+        /// Получает информацию о сервисе.
         /// </summary>
         ServiceInfo Info { get; }
 
         /// <summary>
-        /// Starts a service asynchronously.
+        /// Запускает сервис асинхронно.
         /// </summary>
-        /// <returns>A task that represents the asynchronous start operation.</returns>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
         Task StartAsync();
 
         /// <summary>
-        /// Stops a service asynchronously.
+        /// Останавливает сервис асинхронно.
         /// </summary>
-        /// <returns>A task that represents the asynchronous stop operation.</returns>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
         Task StopAsync();
     }
 }

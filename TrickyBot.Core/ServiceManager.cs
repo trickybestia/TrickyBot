@@ -18,12 +18,12 @@ using TrickyBot.API.Interfaces;
 namespace TrickyBot
 {
     /// <summary>
-    /// A class that helps with manipulating services.
+    /// Обёртка над списком сервисов, созданная для удобного управления ими.
     /// </summary>
     public class ServiceManager
     {
         /// <summary>
-        /// The instance of <see cref="JsonSerializerSettings"/> associated with this service manager.
+        /// Настройки сериализатора конфигов.
         /// </summary>
         private static readonly JsonSerializerSettings ConfigSerializerSettings = new JsonSerializerSettings()
         {
@@ -31,12 +31,12 @@ namespace TrickyBot
         };
 
         /// <summary>
-        /// The list of loaded services.
+        /// Список загруженных сервисов.
         /// </summary>
         private readonly List<IService<IConfig>> services;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceManager"/> class.
+        /// Инициализирует новый экземпляр класса <see cref="ServiceManager"/>.
         /// </summary>
         internal ServiceManager()
         {
@@ -44,18 +44,18 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Gets a collection of loaded services.
+        /// Получает коллекцию загруженных сервисов.
         /// </summary>
         public IReadOnlyCollection<IService<IConfig>> Services => this.services;
 
         /// <summary>
-        /// Gets the instance of the loaded service.
+        /// Возвращает экземпляр загруженного сервиса.
         /// </summary>
-        /// <typeparam name="T">A service type.</typeparam>
-        /// <param name="allowDisabled">A value indicating whether disabled service can be found.</param>
-        /// <exception cref="ServiceNotEnabledException">Requested service is not enabled.</exception>
-        /// <exception cref="ServiceNotLoadedException">Requested service is not loaded.</exception>
-        /// <returns>The instance of the loaded service.</returns>
+        /// <typeparam name="T">Тип сервиса.</typeparam>
+        /// <param name="allowDisabled">Значение, указывающее на возможность возврата не включённого сервиса.</param>
+        /// <exception cref="ServiceNotEnabledException">Запрашиваемый сервис не включен.</exception>
+        /// <exception cref="ServiceNotLoadedException">Запрашиваемый сервис не загружен.</exception>
+        /// <returns>Экземпляр загруженного сервиса.</returns>
         public T GetService<T>(bool allowDisabled = false)
         {
             foreach (var service in this.Services)
@@ -75,9 +75,9 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Starts a service manager asynchronously.
+        /// Асинхронно запускает менеджер сервисов.
         /// </summary>
-        /// <returns>A task that represents the asynchronous start operation.</returns>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
         internal async Task StartAsync()
         {
             Log.Info(this, "Starting services...");
@@ -94,9 +94,9 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Stops a service manager asynchronously.
+        /// Асинхронно останавливает менеджер сервисов.
         /// </summary>
-        /// <returns>A task that represents the asynchronous start operation.</returns>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
         internal async Task StopAsync()
         {
             Log.Info(this, "Stopping services...");
@@ -113,9 +113,9 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Loads the config of the service.
+        /// Загружает конфиг сервиса.
         /// </summary>
-        /// <param name="service">Service which config will be loaded.</param>
+        /// <param name="service">Сервис, конфиг которого будет загружен.</param>
         private static void LoadService(IService<IConfig> service)
         {
             var configPath = Path.Combine(Paths.Configs, $"{service.Info.Name}.json");
@@ -136,9 +136,9 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Saves the config of the service.
+        /// Сохраняет конфиг сервиса.
         /// </summary>
-        /// <param name="service">Service which config will be saved.</param>
+        /// <param name="service">Сервис, конфиг которого будет сохранён.</param>
         private static void SaveService(IService<IConfig> service)
         {
             var configPath = Path.Combine(Paths.Configs, $"{service.Info.Name}.json");
@@ -146,7 +146,7 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Loads services and their configs.
+        /// Загружает сервисы и их конфиги.
         /// </summary>
         private void Load()
         {
@@ -168,7 +168,7 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Saves configs of services.
+        /// Сохраняет конфиги всех сервисов.
         /// </summary>
         private void Save()
         {

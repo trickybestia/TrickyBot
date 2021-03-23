@@ -10,12 +10,12 @@ using Discord.WebSocket;
 namespace TrickyBot.Services.SingleServerInfoProviderService.API.Features
 {
     /// <summary>
-    /// A class that provides API for the <see cref="SingleServerInfoProviderService"/>.
+    /// API для <see cref="SingleServerInfoProviderService"/>.
     /// </summary>
     public static class SSIP
     {
         /// <summary>
-        /// Gets a bot guild.
+        /// Получает "привязанный" к боту сервер.
         /// </summary>
         public static SocketGuild Guild => Bot.Instance.ServiceManager.GetService<SingleServerInfoProviderService>().Guild;
     }

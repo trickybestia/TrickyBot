@@ -19,14 +19,14 @@ using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 namespace TrickyBot.API.Abstract
 {
     /// <summary>
-    /// A service base class.
+    /// Базовый класс сервиса.
     /// </summary>
     /// <typeparam name="TConfig"><inheritdoc/></typeparam>
     public abstract class ServiceBase<TConfig> : IService<TConfig>
         where TConfig : IConfig, new()
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceBase{TConfig}"/> class.
+        /// Инициализирует новый экземпляр класса <see cref="ServiceBase{TConfig}"/>.
         /// </summary>
         public ServiceBase()
         {
@@ -50,45 +50,45 @@ namespace TrickyBot.API.Abstract
         /// <inheritdoc/>
         public async Task StartAsync()
         {
-            Log.Info(this, $"Starting service \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} by \"{this.Info.Author}\"...");
+            Log.Info(this, $"Запуск сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\"...");
             try
             {
                 await this.OnStart();
             }
             catch (Exception ex)
             {
-                Log.Error(this, $"Exception thrown while starting service \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} by \"{this.Info.Author}\": {ex}");
+                Log.Error(this, $"Exception во время запуска сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\": {ex}");
             }
 
-            Log.Info(this, $"Service \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} by \"{this.Info.Author}\" started.");
+            Log.Info(this, $"Сервис \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\" запущен.");
         }
 
         /// <inheritdoc/>
         public async Task StopAsync()
         {
-            Log.Info(this, $"Stopping service \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} by \"{this.Info.Author}\"...");
+            Log.Info(this, $"Остановка сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\"...");
             try
             {
                 await this.OnStop();
             }
             catch (Exception ex)
             {
-                Log.Error(this, $"Exception thrown while stopping service \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} by \"{this.Info.Author}\": {ex}");
+                Log.Error(this, $"Exception во время остановки сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\": {ex}");
             }
 
-            Log.Info(this, $"Service \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} by \"{this.Info.Author}\" stopped.");
+            Log.Info(this, $"Сервис \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\" остановлен.");
         }
 
         /// <summary>
-        /// A method that contains code that executes when the service starts.
+        /// Метод, который выполняется при запуске сервиса.
         /// </summary>
-        /// <returns>A task that represents the asynchronous start operation.</returns>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
         protected abstract Task OnStart();
 
         /// <summary>
-        /// A method that contains code that executes when the service stops.
+        /// Метод, который выполняется при остановке сервиса.
         /// </summary>
-        /// <returns>A task that represents the asynchronous stop operation.</returns>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
         protected abstract Task OnStop();
     }
 }

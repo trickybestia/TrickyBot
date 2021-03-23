@@ -14,15 +14,15 @@ using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 namespace TrickyBot.Services.ConsoleCommandService.API.Features
 {
     /// <summary>
-    /// A class that provides API for loading commands from assembly.
+    /// API для загрузки консольных серверных команд через рефлексию.
     /// </summary>
     public static class ConsoleCommandLoader
     {
         /// <summary>
-        /// Searchs for classes which implements <see cref="IConsoleCommand"/> interface in the provided <see cref="Assembly"/> and instantiates them.
+        /// Создаёт экземпляры классов, реализующих интерфейс <see cref="IConsoleCommand"/>, и находящихся в определённой сборке.
         /// </summary>
-        /// <param name="assembly"><see cref="Assembly"/> which contains commands.</param>
-        /// <returns>The <see cref="List{T}"/> containing loaded commands.</returns>
+        /// <param name="assembly">Сборка, содержащая классы загружаемых команд.</param>
+        /// <returns>Список экземпляров загруженных команд.</returns>
         public static List<IConsoleCommand> GetCommands(Assembly assembly)
         {
             var commands = new List<IConsoleCommand>();

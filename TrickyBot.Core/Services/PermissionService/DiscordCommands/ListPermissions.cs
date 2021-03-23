@@ -72,7 +72,7 @@ namespace TrickyBot.Services.PermissionService.DiscordCommands
             }
             else
             {
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} invalid parameters!");
+                await message.Channel.SendMessageAsync($"{message.Author.Mention} неправильные аргументы!");
             }
         }
     }

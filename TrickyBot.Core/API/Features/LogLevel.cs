@@ -8,27 +8,27 @@
 namespace TrickyBot.API.Features
 {
     /// <summary>
-    /// Enum of log levels.
+    /// Перечисление "уровней" логирования.
     /// </summary>
     public enum LogLevel
     {
         /// <summary>
-        /// A message is info message.
+        /// Информация.
         /// </summary>
         Info,
 
         /// <summary>
-        /// A message is debug message.
+        /// Отладка.
         /// </summary>
         Debug,
 
         /// <summary>
-        /// A message is warn message.
+        /// Предупреждение.
         /// </summary>
         Warn,
 
         /// <summary>
-        /// A message is error message.
+        /// Ошибка.
         /// </summary>
         Error,
     }

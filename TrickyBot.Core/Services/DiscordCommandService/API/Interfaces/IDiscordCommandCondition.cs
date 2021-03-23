@@ -10,16 +10,16 @@ using Discord;
 namespace TrickyBot.Services.DiscordCommandService.API.Interfaces
 {
     /// <summary>
-    /// A command execution condition.
+    /// Условие выполнения дискорд-команды.
     /// </summary>
     public interface IDiscordCommandCondition
     {
         /// <summary>
-        /// Checks the condition.
+        /// Проверяет условие на истинность.
         /// </summary>
-        /// <param name="message">The message that invoked the command.</param>
-        /// <param name="parameter">Command parameter.</param>
-        /// <returns>A value indicating whether the condition is true or not.</returns>
+        /// <param name="message">Сообщение, которое вызвало команду.</param>
+        /// <param name="parameter">Параметр команды.</param>
+        /// <returns>Значение, указывающее на истинность или ложность условия.</returns>
         bool CanExecute(IMessage message, string parameter);
     }
 }

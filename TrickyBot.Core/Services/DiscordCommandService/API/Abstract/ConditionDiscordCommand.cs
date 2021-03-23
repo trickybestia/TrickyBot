@@ -15,7 +15,7 @@ using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 namespace TrickyBot.Services.DiscordCommandService.API.Abstract
 {
     /// <summary>
-    /// A command that executes when all conditions are successfully checked.
+    /// Команда, которая выполняется при успешном выполнении всех условий.
     /// </summary>
     public abstract class ConditionDiscordCommand : IDiscordCommand
     {
@@ -26,7 +26,7 @@ namespace TrickyBot.Services.DiscordCommandService.API.Abstract
         public abstract DiscordCommandRunMode RunMode { get; }
 
         /// <summary>
-        /// Gets a list of conditions associated with this command.
+        /// Получает список условий, необходимых для выполнения команды.
         /// </summary>
         public List<IDiscordCommandCondition> Conditions { get; } = new List<IDiscordCommandCondition>();
 
@@ -45,11 +45,11 @@ namespace TrickyBot.Services.DiscordCommandService.API.Abstract
         }
 
         /// <summary>
-        /// A method that executes when all conditions are successfully checked.
+        /// Метод, вызываемый при выполнении команды после успешной проверки всех условий.
         /// </summary>
-        /// <param name="message">The message that invoked the command.</param>
-        /// <param name="parameter">Command parameter.</param>
-        /// <returns>A task that represents the asynchronous execution operation.</returns>
+        /// <param name="message">Сообщение, которое вызвало команду.</param>
+        /// <param name="parameter">Параметр команды.</param>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
         protected abstract Task Execute(IMessage message, string parameter);
     }
 }

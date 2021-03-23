@@ -8,47 +8,49 @@
 using System;
 using System.Runtime.CompilerServices;
 
+using TrickyBot.API.Extensions;
+
 namespace TrickyBot.API.Features
 {
     /// <summary>
-    /// A class that provides API for logging.
+    /// API для логирования.
     /// </summary>
     public static class Log
     {
         /// <summary>
-        /// Logs the debug message.
+        /// Логирует отладочное сообщение.
         /// </summary>
-        /// <param name="sender">A sender of the message.</param>
-        /// <param name="message">The message to log.</param>
+        /// <param name="sender">Объект или тип объекта, вызвавшего метод.</param>
+        /// <param name="message">Сообщение.</param>
         public static void Debug(object sender, string message) => Send(sender, message, LogLevel.Debug);
 
         /// <summary>
-        /// Logs the info message.
+        /// Логирует информационное сообещние.
         /// </summary>
-        /// <param name="sender">A sender of the message.</param>
-        /// <param name="message">The message to log.</param>
+        /// <param name="sender">Объект или тип объекта, вызвавшего метод.</param>
+        /// <param name="message">Сообщение.</param>
         public static void Info(object sender, string message) => Send(sender, message, LogLevel.Info);
 
         /// <summary>
-        /// Logs the warn message.
+        /// Логирует предупреждающее сообщение.
         /// </summary>
-        /// <param name="sender">A sender of the message.</param>
-        /// <param name="message">The message to log.</param>
+        /// <param name="sender">Объект или тип объекта, вызвавшего метод.</param>
+        /// <param name="message">Сообщение.</param>
         public static void Warn(object sender, string message) => Send(sender, message, LogLevel.Warn);
 
         /// <summary>
-        /// Logs the error message.
+        /// Логирует сообщение об ошибке.
         /// </summary>
-        /// <param name="sender">A sender of the message.</param>
-        /// <param name="message">The message to log.</param>
+        /// <param name="sender">Объект или тип объекта, вызвавшего метод.</param>
+        /// <param name="message">Сообщение.</param>
         public static void Error(object sender, string message) => Send(sender, message, LogLevel.Error);
 
         /// <summary>
-        /// Logs the message.
+        /// Логирует сообщение.
         /// </summary>
-        /// <param name="sender">A sender of the message.</param>
-        /// <param name="message">The message to log.</param>
-        /// <param name="logLevel"><see cref="LogLevel"/> of the message.</param>
+        /// <param name="sender">Объект или тип объекта, вызвавшего метод.</param>
+        /// <param name="message">Сообщение.</param>
+        /// <param name="logLevel">"Уровень" сообщения..</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void Send(object sender, string message, LogLevel logLevel)
         {
@@ -82,7 +84,7 @@ namespace TrickyBot.API.Features
                 senderName = sender.GetType().FullName;
             }
 
-            Console.WriteLine($"[{DateTime.Now:dd.MM.yyyy HH:mm:ss}] [{logLevel.ToString().ToUpper()}] [{senderName}] {message}");
+            Console.WriteLine($"[{DateTime.Now:dd.MM.yyyy HH:mm:ss}] [{logLevel.ToLocalString().ToUpper()}] [{senderName}] {message}");
             Console.ForegroundColor = previousColor;
         }
     }

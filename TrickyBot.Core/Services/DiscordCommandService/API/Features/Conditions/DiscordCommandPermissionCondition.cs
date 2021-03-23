@@ -12,21 +12,21 @@ using TrickyBot.Services.PermissionService.API.Features;
 namespace TrickyBot.Services.DiscordCommandService.API.Features.Conditions
 {
     /// <summary>
-    /// A condition that can be used for permission check.
+    /// Условие, проверяющее наличие определённого разрешения у пользователя.
     /// </summary>
     public class DiscordCommandPermissionCondition : IDiscordCommandCondition
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordCommandPermissionCondition"/> class.
+        /// Инициализирует новый экземпляр класса <see cref="DiscordCommandPermissionCondition"/>.
         /// </summary>
-        /// <param name="permission">The name of permission.</param>
+        /// <param name="permission">Название разрешения.</param>
         public DiscordCommandPermissionCondition(string permission)
         {
             this.Permission = permission;
         }
 
         /// <summary>
-        /// Gets the name of permission.
+        /// Получает название разрешения.
         /// </summary>
         public string Permission { get; }
 

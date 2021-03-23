@@ -13,26 +13,26 @@ using TrickyBot.Services.DiscordCommandService.API.Features;
 namespace TrickyBot.Services.DiscordCommandService.API.Interfaces
 {
     /// <summary>
-    /// A Discord command.
+    /// Дискорд-команда.
     /// </summary>
     public interface IDiscordCommand
     {
         /// <summary>
-        /// Gets a name of the command.
+        /// Получает имя команды.
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        /// Gets a <see cref="DiscordCommandRunMode"/> of the command.
+        /// Получает способ выполнения команды.
         /// </summary>
         DiscordCommandRunMode RunMode { get; }
 
         /// <summary>
-        /// Executes the command asynchronously.
+        /// Асинхронно выполняет команду.
         /// </summary>
-        /// <param name="message">The message that invoked the command.</param>
-        /// <param name="parameter">Command parameter.</param>
-        /// <returns>A task that represents the asynchronous execution operation.</returns>
+        /// <param name="message">Сообщение, которое вызвало команду.</param>
+        /// <param name="parameter">Параметр команды.</param>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
         Task ExecuteAsync(IMessage message, string parameter);
     }
 }

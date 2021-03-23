@@ -17,14 +17,14 @@ using TrickyBot.API.Features;
 namespace TrickyBot
 {
     /// <summary>
-    /// A class that wraps <see cref="DiscordSocketClient"/>.
+    /// Основной класс бота.
     /// </summary>
     public class Bot
     {
         private readonly ManualResetEventSlim manualResetEvent = new ManualResetEventSlim(true);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Bot"/> class.
+        /// Инициализирует новый экземпляр класса <see cref="Bot"/>.
         /// </summary>
         public Bot()
         {
@@ -34,30 +34,30 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Gets the instance of <see cref="Bot"/> class.
+        /// Получает экземпляр <see cref="Bot"/>.
         /// </summary>
         public static Bot Instance { get; private set; }
 
         /// <summary>
-        /// Gets the <see cref="DiscordSocketClient"/> associated with this bot.
+        /// Получает экземпляр <see cref="DiscordSocketClient"/>, с которым работает бот.
         /// </summary>
         public DiscordSocketClient Client { get; }
 
         /// <summary>
-        /// Gets the <see cref="TrickyBot.ServiceManager"/> associated with this bot.
+        /// Получает экземпляр <see cref="TrickyBot.ServiceManager"/>, с которым работает бот.
         /// </summary>
         public ServiceManager ServiceManager { get; }
 
         /// <summary>
-        /// Gets the version of the bot.
+        /// Получает версию сборки бота.
         /// </summary>
         public Version Version { get; } = Assembly.GetExecutingAssembly().GetName().Version;
 
         /// <summary>
-        /// Starts a bot asynchronously.
+        /// Запускает бота асинхронно.
         /// </summary>
-        /// <param name="token">The bot token to login.</param>
-        /// <returns>A task that represents the asynchronous start operation.</returns>
+        /// <param name="token">Токен бота.</param>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
         public async Task StartAsync(string token)
         {
             this.manualResetEvent.Reset();
@@ -69,9 +69,9 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Stops a bot asynchronously.
+        /// Останавливает бота асинхронно.
         /// </summary>
-        /// <returns>A task that represents the asynchronous stop operation.</returns>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
         public async Task StopAsync()
         {
             Log.Info(this, "Stopping bot...");
@@ -82,6 +82,10 @@ namespace TrickyBot
             this.manualResetEvent.Set();
         }
 
+        /// <summary>
+        /// Асинхронно ожидает остановки бота.
+        /// </summary>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
         internal async Task WaitToStopAsync()
         {
             await Task.Run(this.manualResetEvent.Wait);

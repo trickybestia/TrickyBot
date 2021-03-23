@@ -8,17 +8,17 @@
 namespace TrickyBot.Services.DiscordCommandService.API.Features
 {
     /// <summary>
-    /// An enum that contains command run modes.
+    /// Перечисление, которое содержит способы выполнения команды.
     /// </summary>
     public enum DiscordCommandRunMode
     {
         /// <summary>
-        /// A command can be run synchronously.
+        /// Команда должна выполняться синхронно.
         /// </summary>
         Sync,
 
         /// <summary>
-        /// A command should be run asynchronously.
+        /// Команда должна выполняться асинхронно.
         /// </summary>
         Async,
     }

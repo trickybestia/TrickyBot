@@ -12,27 +12,27 @@ using Newtonsoft.Json;
 namespace TrickyBot.API.Features
 {
     /// <summary>
-    /// A class that contains info about service.
+    /// Содержит в себе информацию о сервисе.
     /// </summary>
     public class ServiceInfo
     {
         /// <summary>
-        /// Gets the name of the service.
+        /// Получает название сервиса.
         /// </summary>
         public string Name { get; init; } = string.Empty;
 
         /// <summary>
-        /// Gets the author of the service.
+        /// Получает имя автора сервиса.
         /// </summary>
         public string Author { get; init; } = string.Empty;
 
         /// <summary>
-        /// Gets the github repository url of the service.
+        /// Получает ссылку на GitHub-репозиторий сервиса.
         /// </summary>
         public string GithubRepositoryUrl { get; init; } = string.Empty;
 
         /// <summary>
-        /// Gets the version of the service.
+        /// Получает версию сервиса.
         /// </summary>
         public Version Version { get; init; } = new Version(1, 0, 0, 0);
 

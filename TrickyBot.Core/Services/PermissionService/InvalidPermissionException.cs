@@ -12,7 +12,7 @@ namespace TrickyBot.Services.PermissionService
     public class InvalidPermissionException : Exception
     {
         public InvalidPermissionException(string permission)
-            : base($"\"{permission}\" is invalid permission!")
+            : base($"\"{permission}\" - неверное разрешение!")
         {
             this.Permission = permission;
         }

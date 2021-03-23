@@ -10,7 +10,7 @@ using TrickyBot.API.Interfaces;
 namespace TrickyBot.API.Features
 {
     /// <summary>
-    /// A config that is always enabled.
+    /// Конфиг всегда включённого сервиса.
     /// </summary>
     public class AlwaysEnabledConfig : IConfig
     {

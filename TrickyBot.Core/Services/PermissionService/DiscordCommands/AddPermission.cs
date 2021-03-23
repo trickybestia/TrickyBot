@@ -44,15 +44,15 @@ namespace TrickyBot.Services.PermissionService.DiscordCommands
                     Permissions.AddUserPermission(guild.GetUser(ulong.Parse(match.Result("$1"))), match.Result("$2"));
                 }
 
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} permission added.");
+                await message.Channel.SendMessageAsync($"{message.Author.Mention} разрешение добавлено.");
             }
-            catch (Exception ex) when (ex.Message == "Permission already exists!")
+            catch (Exception ex) when (ex.Message == "Разрешение уже существует!")
             {
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} permission already exists!");
+                await message.Channel.SendMessageAsync($"{message.Author.Mention} разрешение уже существует!");
             }
             catch
             {
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} invalid parameters!");
+                await message.Channel.SendMessageAsync($"{message.Author.Mention} неправильные аргументы!");
             }
         }
     }

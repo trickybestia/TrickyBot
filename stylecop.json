@@ -8,7 +8,8 @@
             "variables": {
                 "licenseFile": "LICENSE.txt",
                 "licenseName": "CC BY-ND 4.0"
-            }
+            },
+            "documentationCulture": "ru-RU"
         },
         "indentation": {
             "useTabs": false,

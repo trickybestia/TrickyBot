@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace TrickyBot.API.Features
 {
     /// <summary>
-    /// A class that provides API for parsing command line args.
+    /// Парсер аргументов командной строки.
     /// </summary>
     public static class CommandLineArgsParser
     {
@@ -43,7 +43,7 @@ namespace TrickyBot.API.Features
         }
 
         /// <summary>
-        /// Gets an <see cref="IReadOnlyDictionary{TKey, TValue}"/> of parsed command line args.
+        /// Получает список спарсенных аргументов командной строки.
         /// </summary>
         public static IReadOnlyDictionary<string, string> Args { get; }
     }

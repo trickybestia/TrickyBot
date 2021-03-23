@@ -8,12 +8,12 @@
 namespace TrickyBot.API.Interfaces
 {
     /// <summary>
-    /// A service config.
+    /// Конфиг сервиса.
     /// </summary>
     public interface IConfig
     {
         /// <summary>
-        /// Gets or sets a value indicating whether a service is enabled.
+        /// Получает или задает значение, показывающее, включён ли сервис, владеющий данным конфигом.
         /// </summary>
         bool IsEnabled { get; set; }
     }

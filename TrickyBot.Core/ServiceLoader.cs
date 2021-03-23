@@ -15,15 +15,15 @@ using TrickyBot.API.Interfaces;
 namespace TrickyBot
 {
     /// <summary>
-    /// A class that incapsulates service loading.
+    /// Класс, инкапсулирующий в себе загрузку сервисов.
     /// </summary>
     internal static class ServiceLoader
     {
         /// <summary>
-        /// Loads all service from specified assemblies.
+        /// Загружает все сервисы из приведённых сборок.
         /// </summary>
-        /// <param name="assemblies">The list of assemblies containing services.</param>
-        /// <returns>A list of loaded services.</returns>
+        /// <param name="assemblies">Список сборок.</param>
+        /// <returns>Список сервисов.</returns>
         public static List<IService<IConfig>> GetServices(IEnumerable<Assembly> assemblies)
         {
             var services = new List<IService<IConfig>>();
@@ -36,10 +36,10 @@ namespace TrickyBot
         }
 
         /// <summary>
-        /// Loads all services from the specified assembly.
+        /// Загружает все сервисы из приведённой сборки.
         /// </summary>
-        /// <param name="assembly">The assembly containing services.</param>
-        /// <returns>A list of loaded services.</returns>
+        /// <param name="assembly">Сборка.</param>
+        /// <returns>Список сервисов.</returns>
         public static List<IService<IConfig>> GetServices(Assembly assembly)
         {
             var services = new List<IService<IConfig>>();

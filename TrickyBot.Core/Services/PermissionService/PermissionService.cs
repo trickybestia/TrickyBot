@@ -97,7 +97,7 @@ namespace TrickyBot.Services.PermissionService
 
             if (!this.Config.UserPermissions[user.Id].Add(permission))
             {
-                throw new Exception("Permission already exists!");
+                throw new Exception("Разрешение уже существует!");
             }
         }
 
@@ -115,7 +115,7 @@ namespace TrickyBot.Services.PermissionService
 
             if (!this.Config.UserPermissions.ContainsKey(user.Id) || !this.Config.UserPermissions[user.Id].Remove(permission))
             {
-                throw new Exception("Permission doesn't exist!");
+                throw new Exception("Разрешение не существует!");
             }
 
             if (this.Config.UserPermissions[user.Id].Count == 0)
@@ -143,7 +143,7 @@ namespace TrickyBot.Services.PermissionService
 
             if (!this.Config.RolePermissions[role.Id].Add(permission))
             {
-                throw new Exception("Permission already exists!");
+                throw new Exception("Разрешение уже существует!");
             }
         }
 
@@ -161,7 +161,7 @@ namespace TrickyBot.Services.PermissionService
 
             if (!this.Config.RolePermissions.ContainsKey(role.Id) || !this.Config.RolePermissions[role.Id].Remove(permission))
             {
-                throw new Exception("Permission doesn't exist!");
+                throw new Exception("Разрешение не существует!");
             }
 
             if (this.Config.RolePermissions[role.Id].Count == 0)

@@ -10,14 +10,14 @@ using System;
 namespace TrickyBot.API.Features
 {
     /// <summary>
-    /// An exception that indicates whether a service is not enabled.
+    /// Exception, указывающий на то, что запрашиваемый сервис не включён.
     /// </summary>
     public class ServiceNotEnabledException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceNotEnabledException"/> class.
+        /// Инициализирует новый экземпляр класса <see cref="ServiceNotEnabledException"/>.
         /// </summary>
-        /// <param name="serviceType">The type of service.</param>
+        /// <param name="serviceType">Тип сервиса.</param>
         public ServiceNotEnabledException(Type serviceType)
             : base($"Service \"{serviceType.FullName}\" is not enabled!")
         {
@@ -25,7 +25,7 @@ namespace TrickyBot.API.Features
         }
 
         /// <summary>
-        /// Gets the type of service.
+        /// Получает тип сервиса.
         /// </summary>
         public Type ServiceType { get; }
     }

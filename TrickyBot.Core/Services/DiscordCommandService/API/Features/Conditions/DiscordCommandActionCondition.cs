@@ -11,12 +11,12 @@ using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 namespace TrickyBot.Services.DiscordCommandService.API.Features.Conditions
 {
     /// <summary>
-    /// A condition based on <see cref="Features.DiscordCommandCondition"/> delegate.
+    /// Условие, поведение которого зависит от предоставленного <see cref="Features.DiscordCommandCondition"/>.
     /// </summary>
     public class DiscordCommandActionCondition : IDiscordCommandCondition
     {
         /// <summary>
-        /// Gets or sets a <see cref="Features.DiscordCommandCondition"/> delegate that called on every <see cref="CanExecute(IMessage, string)"/> call.
+        /// Получает или задает делегат, который определяет поведение текущего экземпляра.
         /// </summary>
         public DiscordCommandCondition Condition { get; set; }
 

@@ -10,7 +10,7 @@ using TrickyBot.API.Interfaces;
 namespace TrickyBot.API.Features
 {
     /// <summary>
-    /// A config for services which have empty config.
+    /// Пустой конфиг сервиса.
     /// </summary>
     public class EmptyConfig : IConfig
     {

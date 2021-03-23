@@ -44,15 +44,15 @@ namespace TrickyBot.Services.PermissionService.DiscordCommands
                     Permissions.RemoveUserPermission(guild.GetUser(ulong.Parse(match.Result("$1"))), match.Result("$2"));
                 }
 
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} permission removed.");
+                await message.Channel.SendMessageAsync($"{message.Author.Mention} разрешение удалено.");
             }
-            catch (Exception ex) when (ex.Message == "Permission doesn't exist!")
+            catch (Exception ex) when (ex.Message == "Разрешение не существует!")
             {
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} permission doesn't exist!");
+                await message.Channel.SendMessageAsync($"{message.Author.Mention} разрешение не существует!");
             }
             catch
             {
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} invalid parameters!");
+                await message.Channel.SendMessageAsync($"{message.Author.Mention} неправильные аргументы!");
             }
         }
     }

@@ -10,10 +10,10 @@ using Discord;
 namespace TrickyBot.Services.DiscordCommandService.API.Features
 {
     /// <summary>
-    /// A delegate that represents a condition.
+    /// Делегат, представляющий условие.
     /// </summary>
-    /// <param name="message">The message that invoked the command.</param>
-    /// <param name="parameter">Command parameter.</param>
-    /// <returns>A value indicating whether the condition is true or not.</returns>
+    /// <param name="message">Сообщение, которое вызвало команду.</param>
+    /// <param name="parameter">Параметр команды.</param>
+    /// <returns>Задача, представляющая асинхронную операцию.</returns>
     public delegate bool DiscordCommandCondition(IMessage message, string parameter);
 }

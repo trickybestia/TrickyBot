@@ -10,32 +10,32 @@ using System.IO;
 namespace TrickyBot.API.Features
 {
     /// <summary>
-    /// Provides paths to bot directories.
+    /// Предоставляет доступ к набору директорий бота.
     /// </summary>
     public static class Paths
     {
         /// <summary>
-        /// Gets bot executable folder.
+        /// Получает путь к директории, в которой находится исполняемый файл бота.
         /// </summary>
         public static string BotCore { get; internal set; }
 
         /// <summary>
-        /// Gets data folder path.
+        /// Получает путь к директории данных бота.
         /// </summary>
         public static string Data { get; internal set; }
 
         /// <summary>
-        /// Gets services folder.
+        /// Получает путь к директории, которая содержит в себе библиотеки сервисов.
         /// </summary>
         public static string Services => Path.Combine(Data, "Services");
 
         /// <summary>
-        /// Gets configs folder.
+        /// Получает путь к директории, которая содержит в себе конфигурационные файлы.
         /// </summary>
         public static string Configs => Path.Combine(Data, "Configs");
 
         /// <summary>
-        /// Creates all directories.
+        /// Создаёт все директории, если они не существуют.
         /// </summary>
         internal static void Init()
         {

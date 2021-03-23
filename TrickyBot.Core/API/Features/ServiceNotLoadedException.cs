@@ -10,14 +10,14 @@ using System;
 namespace TrickyBot.API.Features
 {
     /// <summary>
-    /// An exception that indicates whether a service is not loaded.
+    /// Exception, указывающий на то, что запрашиваемый сервис не загружен.
     /// </summary>
     public class ServiceNotLoadedException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceNotLoadedException"/> class.
+        /// Инициализирует новый экземпляр класса <see cref="ServiceNotLoadedException"/>.
         /// </summary>
-        /// <param name="serviceType">The type of service.</param>
+        /// <param name="serviceType">Тип сервиса.</param>
         public ServiceNotLoadedException(Type serviceType)
             : base($"Service \"{serviceType.FullName}\" is not loaded!")
         {
@@ -25,7 +25,7 @@ namespace TrickyBot.API.Features
         }
 
         /// <summary>
-        /// Gets the type of service.
+        /// Получает тип сервиса.
         /// </summary>
         public Type ServiceType { get; }
     }
