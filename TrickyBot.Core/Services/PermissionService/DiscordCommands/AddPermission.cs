@@ -46,11 +46,11 @@ namespace TrickyBot.Services.PermissionService.DiscordCommands
 
                 await message.Channel.SendMessageAsync($"{message.Author.Mention} разрешение добавлено.");
             }
-            catch (Exception ex) when (ex.Message == "Разрешение уже существует!")
+            catch (PermissionAlreadyExistsException)
             {
                 await message.Channel.SendMessageAsync($"{message.Author.Mention} разрешение уже существует!");
             }
-            catch
+            catch (ArgumentException)
             {
                 await message.Channel.SendMessageAsync($"{message.Author.Mention} неправильные аргументы!");
             }

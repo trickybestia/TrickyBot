@@ -46,11 +46,11 @@ namespace TrickyBot.Services.PermissionService.DiscordCommands
 
                 await message.Channel.SendMessageAsync($"{message.Author.Mention} разрешение удалено.");
             }
-            catch (Exception ex) when (ex.Message == "Разрешение не существует!")
+            catch (PermissionNotExistsException)
             {
                 await message.Channel.SendMessageAsync($"{message.Author.Mention} разрешение не существует!");
             }
-            catch
+            catch (ArgumentException)
             {
                 await message.Channel.SendMessageAsync($"{message.Author.Mention} неправильные аргументы!");
             }

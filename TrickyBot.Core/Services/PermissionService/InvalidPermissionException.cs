@@ -5,18 +5,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace TrickyBot.Services.PermissionService
 {
-    public class InvalidPermissionException : Exception
+    public class InvalidPermissionException : PermissionException
     {
         public InvalidPermissionException(string permission)
-            : base($"\"{permission}\" - неверное разрешение!")
+            : base(permission, $"\"{permission}\" - неверное разрешение!")
         {
-            this.Permission = permission;
         }
-
-        public string Permission { get; }
     }
 }
