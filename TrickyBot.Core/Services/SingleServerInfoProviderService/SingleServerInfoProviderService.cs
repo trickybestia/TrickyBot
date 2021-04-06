@@ -31,7 +31,7 @@ namespace TrickyBot.Services.SingleServerInfoProviderService
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
         };
 
-        public SocketGuild Guild => Bot.Instance.Client.GetGuild(this.Config.GuildId);
+        internal SocketGuild Guild => Bot.Instance.Client.GetGuild(this.Config.GuildId);
 
         protected override Task OnStart()
         {

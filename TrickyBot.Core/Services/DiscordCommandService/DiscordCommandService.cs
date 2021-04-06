@@ -43,7 +43,7 @@ namespace TrickyBot.Services.DiscordCommandService
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
         };
 
-        public static bool IsCommand(IMessage message)
+        internal static bool IsCommand(IMessage message)
         {
             var service = Bot.Instance.ServiceManager.GetService<DiscordCommandService>();
 
