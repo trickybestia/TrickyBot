@@ -61,11 +61,11 @@ namespace TrickyBot
         public async Task StartAsync(string token)
         {
             this.manualResetEvent.Reset();
-            Log.Info(this, "Starting bot...");
+            Log.Info(this, "Запуск бота...");
             await this.Client.LoginAsync(TokenType.Bot, token);
             await this.Client.StartAsync();
             await this.ServiceManager.StartAsync();
-            Log.Info(this, "Bot started!");
+            Log.Info(this, "Бот запущен.");
         }
 
         /// <summary>
@@ -74,11 +74,11 @@ namespace TrickyBot
         /// <returns>Задача, представляющая асинхронную операцию.</returns>
         public async Task StopAsync()
         {
-            Log.Info(this, "Stopping bot...");
+            Log.Info(this, "Остановка бота...");
             await this.ServiceManager.StopAsync();
             await this.Client.LogoutAsync();
             await this.Client.StopAsync();
-            Log.Info(this, "Bot stopped.");
+            Log.Info(this, "Бот остановлен.");
             this.manualResetEvent.Set();
         }
 
