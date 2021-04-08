@@ -8,6 +8,7 @@
 using System;
 
 using Discord;
+using TrickyBot.API.Features;
 
 namespace TrickyBot.Services.PermissionService.API.Features
 {

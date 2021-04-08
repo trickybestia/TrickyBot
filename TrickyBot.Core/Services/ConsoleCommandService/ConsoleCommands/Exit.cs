@@ -7,6 +7,7 @@
 
 using System.Threading.Tasks;
 
+using TrickyBot.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 

@@ -12,9 +12,8 @@ using System.Threading.Tasks;
 
 using Discord;
 using Discord.WebSocket;
-using TrickyBot.API.Features;
 
-namespace TrickyBot
+namespace TrickyBot.API.Features
 {
     /// <summary>
     /// Основной класс бота.
@@ -44,7 +43,7 @@ namespace TrickyBot
         public DiscordSocketClient Client { get; }
 
         /// <summary>
-        /// Получает экземпляр <see cref="TrickyBot.ServiceManager"/>, с которым работает бот.
+        /// Получает экземпляр <see cref="TrickyBot.API.Features.ServiceManager"/>, с которым работает бот.
         /// </summary>
         public ServiceManager ServiceManager { get; }
 

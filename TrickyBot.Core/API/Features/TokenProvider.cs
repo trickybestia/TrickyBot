@@ -7,9 +7,7 @@
 
 using System;
 
-using TrickyBot.API.Features;
-
-namespace TrickyBot
+namespace TrickyBot.API.Features
 {
     internal static class TokenProvider
     {

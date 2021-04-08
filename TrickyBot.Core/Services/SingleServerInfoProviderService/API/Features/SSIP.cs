@@ -6,6 +6,7 @@
 // -----------------------------------------------------------------------
 
 using Discord.WebSocket;
+using TrickyBot.API.Features;
 
 namespace TrickyBot.Services.SingleServerInfoProviderService.API.Features
 {

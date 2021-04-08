@@ -12,10 +12,9 @@ using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
-using TrickyBot.API.Features;
 using TrickyBot.API.Interfaces;
 
-namespace TrickyBot
+namespace TrickyBot.API.Features
 {
     /// <summary>
     /// Обёртка над списком сервисов, созданная для удобного управления ими.

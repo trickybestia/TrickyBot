@@ -7,9 +7,7 @@
 
 using System;
 
-using TrickyBot.API.Features;
-
-namespace TrickyBot
+namespace TrickyBot.API.Features
 {
     /// <summary>
     /// Обработчик необработанных исключений.

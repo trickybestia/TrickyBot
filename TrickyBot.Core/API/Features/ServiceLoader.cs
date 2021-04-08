@@ -9,10 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-using TrickyBot.API.Features;
 using TrickyBot.API.Interfaces;
 
-namespace TrickyBot
+namespace TrickyBot.API.Features
 {
     /// <summary>
     /// Класс, инкапсулирующий в себе загрузку сервисов.
