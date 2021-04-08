@@ -5,39 +5,49 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 
 using Discord;
-using TrickyBot.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Abstract;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;
 
 namespace TrickyBot.Services.DiscordCommandService.DiscordCommands
 {
+    /// <summary>
+    /// Команда установки префикса дискорд-бота.
+    /// </summary>
     internal class SetCommandPrefix : ConditionDiscordCommand
     {
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="SetCommandPrefix"/>.
+        /// </summary>
         public SetCommandPrefix()
         {
             this.Conditions.Add(new DiscordCommandPermissionCondition("commands.prefix.set"));
         }
 
+        /// <inheritdoc/>
         public override string Name { get; } = "commands prefix set";
 
-        public override DiscordCommandRunMode RunMode { get; } = DiscordCommandRunMode.Sync;
+        /// <inheritdoc/>
+        public override DiscordCommandRunMode RunMode => DiscordCommandRunMode.Sync;
 
+        /// <inheritdoc/>
         protected override async Task Execute(IMessage message, string parameter)
         {
-            if (!string.IsNullOrEmpty(parameter) && !parameter.Contains('\n') && !parameter.Contains('\r'))
+            try
             {
-                var service = Bot.Instance.ServiceManager.GetService<DiscordCommandService>();
-                service.Config.CommandPrefix = parameter;
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} prefix set!");
+                TrickyBot.Services.DiscordCommandService.API.Features.DiscordCommands.CommandPrefix = parameter;
             }
-            else
+            catch (ArgumentException)
             {
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} invalid command prefix!");
+                await message.Channel.SendMessageAsync($"{message.Author.Mention} неправильный префикс!");
+                return;
             }
+
+            await message.Channel.SendMessageAsync($"{message.Author.Mention} префикс изменён.");
         }
     }
 }

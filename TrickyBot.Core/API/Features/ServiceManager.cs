@@ -7,7 +7,9 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
@@ -19,7 +21,7 @@ namespace TrickyBot.API.Features
     /// <summary>
     /// Обёртка над списком сервисов, созданная для удобного управления ими.
     /// </summary>
-    public class ServiceManager
+    public static class ServiceManager
     {
         /// <summary>
         /// Настройки сериализатора конфигов.
@@ -29,29 +31,19 @@ namespace TrickyBot.API.Features
             Formatting = Formatting.Indented,
         };
 
+        private static readonly ManualResetEventSlim StopEvent = new ManualResetEventSlim(true);
+
         /// <summary>
         /// Список загруженных сервисов.
         /// </summary>
-        private readonly List<IService<IConfig>> services;
-
-        /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="ServiceManager"/>.
-        /// </summary>
-        internal ServiceManager()
-        {
-            this.services = new List<IService<IConfig>>();
-        }
+#pragma warning disable SA1311 // Static readonly fields should begin with upper-case letter
+        private static readonly List<IService<IConfig>> services = new List<IService<IConfig>>();
+#pragma warning restore SA1311 // Static readonly fields should begin with upper-case letter
 
         /// <summary>
         /// Получает коллекцию загруженных сервисов.
         /// </summary>
-        public IReadOnlyCollection<IService<IConfig>> Services
-        {
-            get
-            {
-                return this.services;
-            }
-        }
+        public static IReadOnlyCollection<IService<IConfig>> Services => services;
 
         /// <summary>
         /// Возвращает экземпляр загруженного сервиса.
@@ -61,9 +53,9 @@ namespace TrickyBot.API.Features
         /// <exception cref="ServiceNotEnabledException">Запрашиваемый сервис не включен.</exception>
         /// <exception cref="ServiceNotLoadedException">Запрашиваемый сервис не загружен.</exception>
         /// <returns>Экземпляр загруженного сервиса.</returns>
-        public T GetService<T>(bool allowDisabled = false)
+        public static T GetService<T>(bool allowDisabled = false)
         {
-            foreach (var service in this.Services)
+            foreach (var service in Services)
             {
                 if (service.GetType() == typeof(T))
                 {
@@ -83,11 +75,11 @@ namespace TrickyBot.API.Features
         /// Асинхронно запускает менеджер сервисов.
         /// </summary>
         /// <returns>Задача, представляющая асинхронную операцию.</returns>
-        internal async Task StartAsync()
+        internal static async Task StartAsync()
         {
-            Log.Info(this, "Starting services...");
-            this.Load();
-            foreach (var service in this.Services)
+            Log.Info(typeof(ServiceManager), "Запуск сервисов...");
+            Load();
+            foreach (var service in Services.OrderByDescending(service => service.Priority))
             {
                 if (service.Config.IsEnabled)
                 {
@@ -95,17 +87,17 @@ namespace TrickyBot.API.Features
                 }
             }
 
-            Log.Info(this, "Services started.");
+            Log.Info(typeof(ServiceManager), "Сервисы запущены.");
         }
 
         /// <summary>
         /// Асинхронно останавливает менеджер сервисов.
         /// </summary>
         /// <returns>Задача, представляющая асинхронную операцию.</returns>
-        internal async Task StopAsync()
+        internal static async Task StopAsync()
         {
-            Log.Info(this, "Stopping services...");
-            foreach (var service in this.Services)
+            Log.Info(typeof(ServiceManager), "Остановка сервисов...");
+            foreach (var service in Services.OrderBy(service => service.Priority))
             {
                 if (service.Config.IsEnabled)
                 {
@@ -113,15 +105,24 @@ namespace TrickyBot.API.Features
                 }
             }
 
-            this.Save();
-            Log.Info(this, "Services stopped.");
+            Save();
+            Log.Info(typeof(ServiceManager), "Сервисы остановлены.");
+        }
+
+        /// <summary>
+        /// Асинхронно ожидает остановки бота.
+        /// </summary>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
+        internal static Task WaitToStopAsync()
+        {
+            return Task.Run(StopEvent.Wait);
         }
 
         /// <summary>
         /// Загружает конфиг сервиса.
         /// </summary>
         /// <param name="service">Сервис, конфиг которого будет загружен.</param>
-        private static void LoadService(IService<IConfig> service)
+        private static void LoadServiceConfig(IService<IConfig> service)
         {
             var configPath = Path.Combine(Paths.Configs, $"{service.Info.Name}.json");
             var configType = service.Config.GetType();
@@ -144,7 +145,7 @@ namespace TrickyBot.API.Features
         /// Сохраняет конфиг сервиса.
         /// </summary>
         /// <param name="service">Сервис, конфиг которого будет сохранён.</param>
-        private static void SaveService(IService<IConfig> service)
+        private static void SaveServiceConfig(IService<IConfig> service)
         {
             var configPath = Path.Combine(Paths.Configs, $"{service.Info.Name}.json");
             File.WriteAllText(configPath, JsonConvert.SerializeObject(service.Config, ConfigSerializerSettings));
@@ -153,7 +154,7 @@ namespace TrickyBot.API.Features
         /// <summary>
         /// Загружает сервисы и их конфиги.
         /// </summary>
-        private void Load()
+        private static void Load()
         {
             var assemblies = new List<Assembly>
             {
@@ -164,22 +165,22 @@ namespace TrickyBot.API.Features
                 assemblies.Add(Assembly.LoadFrom(file));
             }
 
-            this.services.AddRange(ServiceLoader.GetServices(assemblies));
+            services.AddRange(ServiceLoader.GetServices(assemblies));
 
-            foreach (var service in this.services)
+            foreach (var service in services)
             {
-                LoadService(service);
+                LoadServiceConfig(service);
             }
         }
 
         /// <summary>
         /// Сохраняет конфиги всех сервисов.
         /// </summary>
-        private void Save()
+        private static void Save()
         {
-            foreach (var service in this.services)
+            foreach (var service in services)
             {
-                SaveService(service);
+                SaveServiceConfig(service);
             }
         }
     }

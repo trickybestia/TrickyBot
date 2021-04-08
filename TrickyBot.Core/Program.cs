@@ -12,6 +12,9 @@ using TrickyBot.API.Features;
 
 namespace TrickyBot
 {
+    /// <summary>
+    /// Класс, содержащий главную точку входа в приложение.
+    /// </summary>
     internal static class Program
     {
         private static async Task Main()
@@ -29,11 +32,9 @@ namespace TrickyBot
             }
 
             Paths.Init();
-            var token = TokenProvider.GetToken();
-            Bot bot = new Bot();
-            await bot.StartAsync(token);
+            await ServiceManager.StartAsync();
             Log.Info(typeof(Program), "Введите \"exit\", чтобы остановить бота и выйти.");
-            await bot.WaitToStopAsync();
+            await ServiceManager.WaitToStopAsync();
         }
     }
 }

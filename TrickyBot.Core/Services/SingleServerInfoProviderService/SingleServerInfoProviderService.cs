@@ -12,6 +12,7 @@ using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
+using TrickyBot.Services.BotService.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
@@ -19,6 +20,8 @@ namespace TrickyBot.Services.SingleServerInfoProviderService
 {
     public class SingleServerInfoProviderService : ServiceBase<SingleServerInfoProviderServiceConfig>
     {
+        public override Priority Priority => Priorities.CoreService;
+
         public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>();
 
         public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = new List<IConsoleCommand>();
@@ -27,21 +30,27 @@ namespace TrickyBot.Services.SingleServerInfoProviderService
         {
             Name = nameof(SingleServerInfoProviderService),
             Author = "TrickyBot Team",
-            Version = Bot.Instance.Version,
+            Version = Bot.Version,
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
         };
 
-        internal SocketGuild Guild => Bot.Instance.Client.GetGuild(this.Config.GuildId);
+        internal SocketGuild Guild
+        {
+            get
+            {
+                return Bot.Client.GetGuild(this.Config.GuildId);
+            }
+        }
 
         protected override Task OnStart()
         {
-            Bot.Instance.Client.GuildAvailable += this.OnGuildAvailable;
+            Bot.Client.GuildAvailable += this.OnGuildAvailable;
             return Task.CompletedTask;
         }
 
         protected override Task OnStop()
         {
-            Bot.Instance.Client.GuildAvailable -= this.OnGuildAvailable;
+            Bot.Client.GuildAvailable -= this.OnGuildAvailable;
             return Task.CompletedTask;
         }
 

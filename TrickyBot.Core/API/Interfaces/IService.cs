@@ -22,6 +22,16 @@ namespace TrickyBot.API.Interfaces
         where TConfig : IConfig
     {
         /// <summary>
+        /// Получает состояние сервиса.
+        /// </summary>
+        ServiceState State { get; }
+
+        /// <summary>
+        /// Получает приоритет загрузки сервиса.
+        /// </summary>
+        Priority Priority { get; }
+
+        /// <summary>
         /// Получает список дискорд-команд, связанных с этим сервисом.
         /// </summary>
         IReadOnlyList<IDiscordCommand> DiscordCommands { get; }

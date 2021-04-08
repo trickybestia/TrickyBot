@@ -15,6 +15,7 @@ using TrickyBot.Services.DiscordCommandService.API.Abstract;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;
 using TrickyBot.Services.PermissionService.API.Features;
+using TrickyBot.Services.SingleServerInfoProviderService.API.Features;
 
 namespace TrickyBot.Services.PermissionService.DiscordCommands
 {
@@ -31,7 +32,7 @@ namespace TrickyBot.Services.PermissionService.DiscordCommands
 
         protected override async Task Execute(IMessage message, string parameter)
         {
-            var guild = Bot.Instance.ServiceManager.GetService<SingleServerInfoProviderService.SingleServerInfoProviderService>().Guild;
+            var guild = SSIP.Guild;
             var match = Regex.Match(parameter, @"^<@&(\d+)>\s(\S+)\s*$");
             try
             {

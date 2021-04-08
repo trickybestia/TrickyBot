@@ -30,13 +30,17 @@ namespace TrickyBot.API.Abstract
         /// </summary>
         public ServiceBase()
         {
+            this.State = ServiceState.Stopped;
             this.Config = new TConfig();
             this.DiscordCommands = DiscordCommandLoader.GetCommands(this.GetType().Assembly);
             this.ConsoleCommands = ConsoleCommandLoader.GetCommands(this.GetType().Assembly);
         }
 
         /// <inheritdoc/>
-        public TConfig Config { get; internal set; }
+        public virtual Priority Priority => Priorities.DynamicService;
+
+        /// <inheritdoc/>
+        public ServiceState State { get; private set; }
 
         /// <inheritdoc/>
         public virtual IReadOnlyList<IDiscordCommand> DiscordCommands { get; }
@@ -45,38 +49,53 @@ namespace TrickyBot.API.Abstract
         public virtual IReadOnlyList<IConsoleCommand> ConsoleCommands { get; }
 
         /// <inheritdoc/>
+        public TConfig Config { get; internal set; }
+
+        /// <inheritdoc/>
         public abstract ServiceInfo Info { get; }
 
         /// <inheritdoc/>
         public async Task StartAsync()
         {
-            Log.Info(this, $"Запуск сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\"...");
-            try
+            if (this.State == ServiceState.Stopped)
             {
-                await this.OnStart();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(this, $"Exception во время запуска сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\": {ex}");
-            }
+                this.State = ServiceState.Starting;
+                Log.Info(this, $"Запуск сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\"...");
+                try
+                {
+                    await this.OnStart();
+                }
+                catch (Exception ex)
+                {
+                    this.State = ServiceState.Stopped;
+                    Log.Error(this, $"Ошибка во время запуска сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\": {ex}");
+                    return;
+                }
 
-            Log.Info(this, $"Сервис \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\" запущен.");
+                this.State = ServiceState.Started;
+                Log.Info(this, $"Сервис \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\" запущен.");
+            }
         }
 
         /// <inheritdoc/>
         public async Task StopAsync()
         {
-            Log.Info(this, $"Остановка сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\"...");
-            try
+            if (this.State == ServiceState.Started)
             {
-                await this.OnStop();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(this, $"Exception во время остановки сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\": {ex}");
-            }
+                this.State = ServiceState.Stopping;
+                Log.Info(this, $"Остановка сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\"...");
+                try
+                {
+                    await this.OnStop();
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(this, $"Ошибка во время остановки сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\": {ex}");
+                }
 
-            Log.Info(this, $"Сервис \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\" остановлен.");
+                this.State = ServiceState.Stopped;
+                Log.Info(this, $"Сервис \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\" остановлен.");
+            }
         }
 
         /// <summary>

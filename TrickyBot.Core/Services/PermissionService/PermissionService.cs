@@ -15,6 +15,7 @@ using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
+using TrickyBot.Services.BotService.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 using TrickyBot.Services.PermissionService.API.Features;
@@ -24,6 +25,8 @@ namespace TrickyBot.Services.PermissionService
 {
     public class PermissionService : ServiceBase<PermissionServiceConfig>
     {
+        public override Priority Priority => Priorities.CoreService;
+
         public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>()
         {
             new AddPermission(),
@@ -37,7 +40,7 @@ namespace TrickyBot.Services.PermissionService
         {
             Name = nameof(PermissionService),
             Author = "TrickyBot Team",
-            Version = Bot.Instance.Version,
+            Version = Bot.Version,
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
         };
 
@@ -172,15 +175,15 @@ namespace TrickyBot.Services.PermissionService
 
         protected override Task OnStart()
         {
-            Bot.Instance.Client.RoleDeleted += this.OnRoleDeleted;
-            Bot.Instance.Client.UserLeft += this.OnUserLeft;
+            Bot.Client.RoleDeleted += this.OnRoleDeleted;
+            Bot.Client.UserLeft += this.OnUserLeft;
             return Task.CompletedTask;
         }
 
         protected override Task OnStop()
         {
-            Bot.Instance.Client.RoleDeleted -= this.OnRoleDeleted;
-            Bot.Instance.Client.UserLeft -= this.OnUserLeft;
+            Bot.Client.RoleDeleted -= this.OnRoleDeleted;
+            Bot.Client.UserLeft -= this.OnUserLeft;
             return Task.CompletedTask;
         }
 

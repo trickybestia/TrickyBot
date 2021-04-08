@@ -28,7 +28,7 @@ namespace TrickyBot.Services.DiscordCommandService.API.Abstract
         /// <summary>
         /// Получает список условий, необходимых для выполнения команды.
         /// </summary>
-        public List<IDiscordCommandCondition> Conditions { get; } = new List<IDiscordCommandCondition>();
+        public IList<IDiscordCommandCondition> Conditions { get; } = new List<IDiscordCommandCondition>();
 
         /// <inheritdoc/>
         public Task ExecuteAsync(IMessage message, string parameter)

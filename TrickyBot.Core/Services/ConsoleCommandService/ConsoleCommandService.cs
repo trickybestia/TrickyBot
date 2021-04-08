@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
+using TrickyBot.Services.BotService.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.ConsoleCommandService.ConsoleCommands;
@@ -19,29 +20,40 @@ using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.Services.ConsoleCommandService
 {
+    /// <summary>
+    /// Сервис для обработки консольных команд.
+    /// </summary>
     public class ConsoleCommandService : ServiceBase<ConsoleCommandServiceConfig>
     {
-        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>();
+        /// <inheritdoc/>
+        public override Priority Priority => Priorities.CoreService;
 
-        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = new List<IConsoleCommand>()
+        /// <inheritdoc/>
+        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = Array.Empty<IDiscordCommand>();
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = new IConsoleCommand[]
         {
             new Exit(),
         };
 
-        public override ServiceInfo Info { get; } = new ServiceInfo()
+        /// <inheritdoc/>
+        public override ServiceInfo Info { get; } = new ServiceInfo
         {
             Name = nameof(ConsoleCommandService),
             Author = "TrickyBot Team",
-            Version = Bot.Instance.Version,
+            Version = Bot.Version,
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
         };
 
+        /// <inheritdoc/>
         protected override Task OnStart()
         {
             Task.Run(this.ParseCommandsAsync);
             return Task.CompletedTask;
         }
 
+        /// <inheritdoc/>
         protected override Task OnStop() => Task.CompletedTask;
 
         private async Task ParseCommandsAsync()
@@ -51,9 +63,9 @@ namespace TrickyBot.Services.ConsoleCommandService
                 var input = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(input))
                 {
-                    Log.Info(this, $"Handling command \"{input}\"...");
+                    Log.Info(this, $"Обработка команды \"{input}\"...");
                     bool commandHandled = false;
-                    foreach (var service in Bot.Instance.ServiceManager.Services)
+                    foreach (var service in ServiceManager.Services)
                     {
                         if (service.Config.IsEnabled)
                         {
@@ -80,7 +92,7 @@ namespace TrickyBot.Services.ConsoleCommandService
 
                     if (!commandHandled)
                     {
-                        Log.Error(this, $"Unrecognized command \"{input}\"!");
+                        Log.Error(this, $"Нераспознанная команда:\n{input}");
                     }
                 }
             }

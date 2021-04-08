@@ -17,6 +17,7 @@ using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
+using TrickyBot.Services.BotService.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
@@ -24,53 +25,52 @@ using TrickyBot.Services.DiscordCommandService.DiscordCommands;
 
 namespace TrickyBot.Services.DiscordCommandService
 {
+    /// <summary>
+    /// Сервис для обработки дискорд-команд.
+    /// </summary>
     public class DiscordCommandService : ServiceBase<DiscordCommandServiceConfig>
     {
         private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 
-        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>()
+        /// <inheritdoc/>
+        public override Priority Priority => Priorities.CoreService;
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new IDiscordCommand[]
         {
             new SetCommandPrefix(),
         };
 
-        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = new List<IConsoleCommand>();
+        /// <inheritdoc/>
+        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = Array.Empty<IConsoleCommand>();
 
-        public override ServiceInfo Info { get; } = new ServiceInfo()
+        /// <inheritdoc/>
+        public override ServiceInfo Info { get; } = new ServiceInfo
         {
             Name = nameof(DiscordCommandService),
             Author = "TrickyBot Team",
-            Version = Bot.Instance.Version,
+            Version = Bot.Version,
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
         };
 
-        internal static bool IsCommand(IMessage message)
-        {
-            var service = Bot.Instance.ServiceManager.GetService<DiscordCommandService>();
-
-            if (message.Channel is IDMChannel && !service.Config.AllowDMCommands)
-            {
-                return false;
-            }
-
-            return message is IUserMessage && !message.Author.IsBot && message.Content.StartsWith(service.Config.CommandPrefix);
-        }
-
+        /// <inheritdoc/>
         protected override Task OnStart()
         {
-            Bot.Instance.Client.MessageReceived += this.OnMessageReceived;
+            Bot.Client.MessageReceived += this.OnMessageReceived;
             return Task.CompletedTask;
         }
 
+        /// <inheritdoc/>
         protected override Task OnStop()
         {
-            Bot.Instance.Client.MessageReceived -= this.OnMessageReceived;
+            Bot.Client.MessageReceived -= this.OnMessageReceived;
             return Task.CompletedTask;
         }
 
         private async Task ExecuteCommandAsync(IMessage message, string parameter)
         {
             await this.semaphore.WaitAsync();
-            foreach (var service in Bot.Instance.ServiceManager.Services)
+            foreach (var service in ServiceManager.Services)
             {
                 if (service.Config.IsEnabled)
                 {
@@ -106,7 +106,7 @@ namespace TrickyBot.Services.DiscordCommandService
 
         private async Task OnMessageReceived(SocketMessage message)
         {
-            if (IsCommand(message))
+            if (TrickyBot.Services.DiscordCommandService.API.Features.DiscordCommands.IsCommand(message))
             {
                 var userMessage = (SocketUserMessage)message;
                 int argPos = 0;

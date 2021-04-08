@@ -9,6 +9,9 @@ using TrickyBot.API.Features;
 
 namespace TrickyBot.Services.ConsoleCommandService
 {
+    /// <summary>
+    /// Конфиг <see cref="TrickyBot.Services.ConsoleCommandService.ConsoleCommandService"/>.
+    /// </summary>
     public class ConsoleCommandServiceConfig : AlwaysEnabledConfig
     {
     }

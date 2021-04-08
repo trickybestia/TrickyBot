@@ -65,7 +65,7 @@ namespace TrickyBot.Services.PermissionService.API.Features
         /// <returns>Имеет ли пользователь определённое разрешение.</returns>
         public static bool HasPermission(IGuildUser user, string permission)
         {
-            var service = Bot.Instance.ServiceManager.GetService<PermissionService>();
+            var service = ServiceManager.GetService<PermissionService>();
             return service.HasPermission(user, permission);
         }
 
@@ -76,7 +76,7 @@ namespace TrickyBot.Services.PermissionService.API.Features
         /// <param name="permission">Разрешение.</param>
         public static void AddUserPermission(IGuildUser user, string permission)
         {
-            var service = Bot.Instance.ServiceManager.GetService<PermissionService>();
+            var service = ServiceManager.GetService<PermissionService>();
             service.AddUserPermission(user, permission);
         }
 
@@ -87,7 +87,7 @@ namespace TrickyBot.Services.PermissionService.API.Features
         /// <param name="permission">Разрешение.</param>
         public static void AddRolePermission(IRole role, string permission)
         {
-            var service = Bot.Instance.ServiceManager.GetService<PermissionService>();
+            var service = ServiceManager.GetService<PermissionService>();
             service.AddRolePermission(role, permission);
         }
 
@@ -98,7 +98,7 @@ namespace TrickyBot.Services.PermissionService.API.Features
         /// <param name="permission">Разрешение.</param>
         public static void RemoveUserPermission(IGuildUser user, string permission)
         {
-            var service = Bot.Instance.ServiceManager.GetService<PermissionService>();
+            var service = ServiceManager.GetService<PermissionService>();
             service.RemoveUserPermission(user, permission);
         }
 
@@ -109,7 +109,7 @@ namespace TrickyBot.Services.PermissionService.API.Features
         /// <param name="permission">Разрешение.</param>
         public static void RemoveRolePermission(IRole role, string permission)
         {
-            var service = Bot.Instance.ServiceManager.GetService<PermissionService>();
+            var service = ServiceManager.GetService<PermissionService>();
             service.RemoveRolePermission(role, permission);
         }
     }

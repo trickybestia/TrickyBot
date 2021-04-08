@@ -13,6 +13,7 @@ using TrickyBot.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Abstract;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;
+using TrickyBot.Services.SingleServerInfoProviderService.API.Features;
 
 namespace TrickyBot.Services.PermissionService.DiscordCommands
 {
@@ -29,8 +30,8 @@ namespace TrickyBot.Services.PermissionService.DiscordCommands
 
         protected override async Task Execute(IMessage message, string parameter)
         {
-            var service = Bot.Instance.ServiceManager.GetService<PermissionService>();
-            var guild = Bot.Instance.ServiceManager.GetService<SingleServerInfoProviderService.SingleServerInfoProviderService>().Guild;
+            var service = ServiceManager.GetService<PermissionService>();
+            var guild = SSIP.Guild;
             var responseBuilder = new EmbedBuilder();
             var stringBuilder = new StringBuilder();
             if (string.IsNullOrEmpty(parameter))

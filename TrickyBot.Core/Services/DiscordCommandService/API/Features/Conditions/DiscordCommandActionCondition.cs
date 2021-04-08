@@ -16,11 +16,17 @@ namespace TrickyBot.Services.DiscordCommandService.API.Features.Conditions
     public class DiscordCommandActionCondition : IDiscordCommandCondition
     {
         /// <summary>
-        /// Получает или задает делегат, который определяет поведение текущего экземпляра.
+        /// Делегат, который определяет поведение текущего экземпляра.
         /// </summary>
-        public DiscordCommandCondition Condition { get; set; }
+        private readonly DiscordCommandCondition condition;
+
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="DiscordCommandActionCondition"/>.
+        /// </summary>
+        /// <param name="condition"><inheritdoc cref="condition"/></param>
+        public DiscordCommandActionCondition(DiscordCommandCondition condition) => this.condition = condition;
 
         /// <inheritdoc/>
-        public bool CanExecute(IMessage message, string parameter) => this.Condition(message, parameter);
+        public bool CanExecute(IMessage message, string parameter) => this.condition(message, parameter);
     }
 }

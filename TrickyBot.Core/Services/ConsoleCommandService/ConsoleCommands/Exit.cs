@@ -13,15 +13,21 @@ using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 
 namespace TrickyBot.Services.ConsoleCommandService.ConsoleCommands
 {
+    /// <summary>
+    /// Команда завершения работы бота.
+    /// </summary>
     internal class Exit : IConsoleCommand
     {
+        /// <inheritdoc/>
         public string Name { get; } = "exit";
 
+        /// <inheritdoc/>
         public ConsoleCommandRunMode RunMode => ConsoleCommandRunMode.Sync;
 
+        /// <inheritdoc/>
         public async Task ExecuteAsync(string parameter)
         {
-            await Bot.Instance.StopAsync();
+            await ServiceManager.StopAsync();
         }
     }
 }

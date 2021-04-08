@@ -9,10 +9,19 @@ using TrickyBot.API.Features;
 
 namespace TrickyBot.Services.DiscordCommandService
 {
+    /// <summary>
+    /// Конфиг <see cref="TrickyBot.Services.DiscordCommandService.DiscordCommandService"/>.
+    /// </summary>
     public class DiscordCommandServiceConfig : AlwaysEnabledConfig
     {
+        /// <summary>
+        /// Получает или задает префикс дискорд-команд.
+        /// </summary>
         public string CommandPrefix { get; set; } = "!";
 
+        /// <summary>
+        /// Получает или задает значение, показывающее, должен ли бот обрабатывать команды в личных сообщениях.
+        /// </summary>
         public bool AllowDMCommands { get; set; } = false;
     }
 }

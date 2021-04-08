@@ -18,6 +18,12 @@ namespace TrickyBot.Services.SingleServerInfoProviderService.API.Features
         /// <summary>
         /// Получает "привязанный" к боту сервер.
         /// </summary>
-        public static SocketGuild Guild => Bot.Instance.ServiceManager.GetService<SingleServerInfoProviderService>().Guild;
+        public static SocketGuild Guild
+        {
+            get
+            {
+                return ServiceManager.GetService<SingleServerInfoProviderService>().Guild;
+            }
+        }
     }
 }
