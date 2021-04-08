@@ -15,7 +15,7 @@ using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 namespace TrickyBot.API.Interfaces
 {
     /// <summary>
-    /// Сервис бота.
+    /// Интерфейс, который должен быть реализован сервисом бота.
     /// </summary>
     /// <typeparam name="TConfig">Конфиг сервиса.</typeparam>
     public interface IService<out TConfig>
