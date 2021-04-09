@@ -8,23 +8,26 @@
 using System;
 using System.Threading.Tasks;
 
-internal static class ConsoleHelper
+namespace TrickyBot.API.Features
 {
-    static ConsoleHelper()
+    internal static class ConsoleHelper
     {
-        Task.Run(ReadLineCycle);
-    }
-
-    public static event Action<string> OnReadLine;
-
-    private static void ReadLineCycle()
-    {
-        while (true)
+        static ConsoleHelper()
         {
-            var input = Console.ReadLine();
-            if (OnReadLine is not null)
+            Task.Run(ReadLineCycle);
+        }
+
+        public static event Action<string> OnReadLine;
+
+        private static void ReadLineCycle()
+        {
+            while (true)
             {
-                OnReadLine(input);
+                var input = Console.ReadLine();
+                if (OnReadLine is not null)
+                {
+                    OnReadLine(input);
+                }
             }
         }
     }
