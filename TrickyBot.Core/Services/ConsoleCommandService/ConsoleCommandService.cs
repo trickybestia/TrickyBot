@@ -50,14 +50,14 @@ namespace TrickyBot.Services.ConsoleCommandService
         /// <inheritdoc/>
         protected override Task OnStart()
         {
-            ConsoleHelper.OnReadLine += this.ParseCommandAsync;
+            EventConsole.OnReadLine += this.ParseCommandAsync;
             return Task.CompletedTask;
         }
 
         /// <inheritdoc/>
         protected override Task OnStop()
         {
-            ConsoleHelper.OnReadLine -= this.ParseCommandAsync;
+            EventConsole.OnReadLine -= this.ParseCommandAsync;
             return Task.CompletedTask;
         }
 

@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="ConsoleHelper.cs" company="TrickyBot Team">
+// <copyright file="EventConsole.cs" company="TrickyBot Team">
 // Copyright (c) TrickyBot Team. All rights reserved.
 // Licensed under the CC BY-ND 4.0 license.
 // </copyright>
@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace TrickyBot.API.Features
 {
-    internal static class ConsoleHelper
+    internal static class EventConsole
     {
-        static ConsoleHelper()
+        static EventConsole()
         {
             Task.Run(ReadLineCycle);
         }
