@@ -7,9 +7,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Setup Debug Session
-        uses: csexton/debugger-action@master
-
       - name: Pull repository
         uses: actions/checkout@v2.3.1
 
@@ -41,3 +38,6 @@ jobs:
         with:
           name: NuGet package
           path: TrickyBot.*.nupkg
+
+      - name: Setup Debug Session
+        uses: csexton/debugger-action@master
