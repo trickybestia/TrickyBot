@@ -16,7 +16,7 @@ jobs:
           dotnet-version: 5.0.x
 
       - name: Publish
-        run: dotnet publish -c Release
+        run: dotnet publish -c Release -p:UseAppHost=false
 
       - name: Create NuGet package
         shell: pwsh
