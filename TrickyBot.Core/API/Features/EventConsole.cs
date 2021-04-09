@@ -17,7 +17,7 @@ namespace TrickyBot.API.Features
     {
         static EventConsole()
         {
-            Task.Run(ReadLineCycle);
+            new Task(ReadLineCycle, TaskCreationOptions.LongRunning).Start();
         }
 
         /// <summary>
