@@ -19,17 +19,26 @@ using TrickyBot.Services.SingleServerInfoProviderService.API.Features;
 
 namespace TrickyBot.Services.PermissionService.DiscordCommands
 {
+    /// <summary>
+    /// Команда добавления разрешения.
+    /// </summary>
     internal class AddPermission : ConditionDiscordCommand
     {
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="AddPermission"/>.
+        /// </summary>
         public AddPermission()
         {
             this.Conditions.Add(new DiscordCommandPermissionCondition("permissions.add"));
         }
 
+        /// <inheritdoc/>
         public override string Name { get; } = "permissions add";
 
+        /// <inheritdoc/>
         public override DiscordCommandRunMode RunMode { get; } = DiscordCommandRunMode.Sync;
 
+        /// <inheritdoc/>
         protected override async Task Execute(IMessage message, string parameter)
         {
             var guild = SSIP.Guild;

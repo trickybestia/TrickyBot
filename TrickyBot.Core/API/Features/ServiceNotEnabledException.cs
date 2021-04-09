@@ -10,7 +10,7 @@ using System;
 namespace TrickyBot.API.Features
 {
     /// <summary>
-    /// Exception, указывающий на то, что запрашиваемый сервис не включён.
+    /// Исключение, указывающее на то, что запрашиваемый сервис не включён.
     /// </summary>
     public class ServiceNotEnabledException : Exception
     {
@@ -19,7 +19,7 @@ namespace TrickyBot.API.Features
         /// </summary>
         /// <param name="serviceType">Тип сервиса.</param>
         public ServiceNotEnabledException(Type serviceType)
-            : base($"Service \"{serviceType.FullName}\" is not enabled!")
+            : base($"Сервис \"{serviceType.FullName}\" не включён.")
         {
             this.ServiceType = serviceType;
         }

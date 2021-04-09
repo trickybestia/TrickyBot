@@ -6,6 +6,8 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using Discord;
 using TrickyBot.API.Features;
@@ -58,6 +60,37 @@ namespace TrickyBot.Services.PermissionService.API.Features
         }
 
         /// <summary>
+        /// Проверяет, является ли <paramref name="child"/> дочерним расширением <paramref name="parent"/>.
+        /// </summary>
+        /// <param name="parent">Родительское разрешение.</param>
+        /// <param name="child">Дочернее разрешение.</param>
+        /// <returns>Значение, указывающее, является ли <paramref name="child"/> дочерним расширением <paramref name="parent"/>.</returns>
+        public static bool IsSubpermission(ReadOnlySpan<char> parent, ReadOnlySpan<char> child)
+        {
+            for (int i = 0; i < parent.Length && i < child.Length; i++)
+            {
+                if (parent[i] == '*')
+                {
+                    return true;
+                }
+
+                if (parent[i] != child[i])
+                {
+                    break;
+                }
+            }
+
+            if (parent.Length == child.Length)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Определяет, имеет ли пользователь определённое разрешение.
         /// </summary>
         /// <param name="user">Пользователь.</param>
@@ -66,7 +99,40 @@ namespace TrickyBot.Services.PermissionService.API.Features
         public static bool HasPermission(IGuildUser user, string permission)
         {
             var service = ServiceManager.GetService<PermissionService>();
-            return service.HasPermission(user, permission);
+
+            if (user is null)
+            {
+                throw new ArgumentException(null, nameof(user), new NullReferenceException());
+            }
+
+            if (!Permissions.IsValidPermission(permission))
+            {
+                throw new ArgumentException(null, nameof(permission), new InvalidPermissionException(permission));
+            }
+
+            if (service.Config.UserPermissions.ContainsKey(user.Id))
+            {
+                foreach (var parentPermission in service.Config.UserPermissions[user.Id])
+                {
+                    if (IsSubpermission(parentPermission, permission))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            foreach (var roleId in user.RoleIds.Intersect(service.Config.RolePermissions.Keys))
+            {
+                foreach (var parentPermission in service.Config.RolePermissions[roleId])
+                {
+                    if (IsSubpermission(parentPermission, permission))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -77,7 +143,26 @@ namespace TrickyBot.Services.PermissionService.API.Features
         public static void AddUserPermission(IGuildUser user, string permission)
         {
             var service = ServiceManager.GetService<PermissionService>();
-            service.AddUserPermission(user, permission);
+
+            if (user is null)
+            {
+                throw new ArgumentException(null, nameof(user), new NullReferenceException());
+            }
+
+            if (!Permissions.IsValidPermission(permission))
+            {
+                throw new ArgumentException(null, nameof(permission), new InvalidPermissionException(permission));
+            }
+
+            if (!service.Config.UserPermissions.ContainsKey(user.Id))
+            {
+                service.Config.UserPermissions.Add(user.Id, new HashSet<string>());
+            }
+
+            if (!service.Config.UserPermissions[user.Id].Add(permission))
+            {
+                throw new PermissionAlreadyExistsException(permission);
+            }
         }
 
         /// <summary>
@@ -88,7 +173,26 @@ namespace TrickyBot.Services.PermissionService.API.Features
         public static void AddRolePermission(IRole role, string permission)
         {
             var service = ServiceManager.GetService<PermissionService>();
-            service.AddRolePermission(role, permission);
+
+            if (role is null)
+            {
+                throw new ArgumentException(null, nameof(role), new NullReferenceException());
+            }
+
+            if (!Permissions.IsValidPermission(permission))
+            {
+                throw new ArgumentException(null, nameof(permission), new InvalidPermissionException(permission));
+            }
+
+            if (!service.Config.RolePermissions.ContainsKey(role.Id))
+            {
+                service.Config.RolePermissions.Add(role.Id, new HashSet<string>());
+            }
+
+            if (!service.Config.RolePermissions[role.Id].Add(permission))
+            {
+                throw new PermissionAlreadyExistsException(permission);
+            }
         }
 
         /// <summary>
@@ -99,7 +203,26 @@ namespace TrickyBot.Services.PermissionService.API.Features
         public static void RemoveUserPermission(IGuildUser user, string permission)
         {
             var service = ServiceManager.GetService<PermissionService>();
-            service.RemoveUserPermission(user, permission);
+
+            if (user is null)
+            {
+                throw new ArgumentException(null, nameof(user), new NullReferenceException());
+            }
+
+            if (!Permissions.IsValidPermission(permission))
+            {
+                throw new ArgumentException(null, nameof(permission), new InvalidPermissionException(permission));
+            }
+
+            if (!service.Config.UserPermissions.ContainsKey(user.Id) || !service.Config.UserPermissions[user.Id].Remove(permission))
+            {
+                throw new PermissionNotExistsException(permission);
+            }
+
+            if (service.Config.UserPermissions[user.Id].Count == 0)
+            {
+                service.Config.UserPermissions.Remove(user.Id);
+            }
         }
 
         /// <summary>
@@ -110,7 +233,26 @@ namespace TrickyBot.Services.PermissionService.API.Features
         public static void RemoveRolePermission(IRole role, string permission)
         {
             var service = ServiceManager.GetService<PermissionService>();
-            service.RemoveRolePermission(role, permission);
+
+            if (role is null)
+            {
+                throw new ArgumentException(null, nameof(role), new NullReferenceException());
+            }
+
+            if (!Permissions.IsValidPermission(permission))
+            {
+                throw new ArgumentException(null, nameof(permission), new InvalidPermissionException(permission));
+            }
+
+            if (!service.Config.RolePermissions.ContainsKey(role.Id) || !service.Config.RolePermissions[role.Id].Remove(permission))
+            {
+                throw new PermissionNotExistsException(permission);
+            }
+
+            if (service.Config.RolePermissions[role.Id].Count == 0)
+            {
+                service.Config.RolePermissions.Remove(role.Id);
+            }
         }
     }
 }

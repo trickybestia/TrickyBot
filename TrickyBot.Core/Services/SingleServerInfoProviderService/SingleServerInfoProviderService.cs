@@ -5,6 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,15 +19,22 @@ using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.Services.SingleServerInfoProviderService
 {
+    /// <summary>
+    /// Сервис, предоставляющий доступ к информации о "привязанном" к боту сервере.
+    /// </summary>
     public class SingleServerInfoProviderService : ServiceBase<SingleServerInfoProviderServiceConfig>
     {
+        /// <inheritdoc/>
         public override Priority Priority => Priorities.CoreService;
 
-        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new List<IDiscordCommand>();
+        /// <inheritdoc/>
+        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = Array.Empty<IDiscordCommand>();
 
-        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = new List<IConsoleCommand>();
+        /// <inheritdoc/>
+        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = Array.Empty<IConsoleCommand>();
 
-        public override ServiceInfo Info { get; } = new ServiceInfo()
+        /// <inheritdoc/>
+        public override ServiceInfo Info { get; } = new ServiceInfo
         {
             Name = nameof(SingleServerInfoProviderService),
             Author = "TrickyBot Team",
@@ -34,20 +42,14 @@ namespace TrickyBot.Services.SingleServerInfoProviderService
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
         };
 
-        internal SocketGuild Guild
-        {
-            get
-            {
-                return Bot.Client.GetGuild(this.Config.GuildId);
-            }
-        }
-
+        /// <inheritdoc/>
         protected override Task OnStart()
         {
             Bot.Client.GuildAvailable += this.OnGuildAvailable;
             return Task.CompletedTask;
         }
 
+        /// <inheritdoc/>
         protected override Task OnStop()
         {
             Bot.Client.GuildAvailable -= this.OnGuildAvailable;

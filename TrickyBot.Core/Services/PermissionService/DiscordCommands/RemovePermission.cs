@@ -19,17 +19,26 @@ using TrickyBot.Services.SingleServerInfoProviderService.API.Features;
 
 namespace TrickyBot.Services.PermissionService.DiscordCommands
 {
+    /// <summary>
+    /// Команда удаления разрешения.
+    /// </summary>
     internal class RemovePermission : ConditionDiscordCommand
     {
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="RemovePermission"/>.
+        /// </summary>
         public RemovePermission()
         {
             this.Conditions.Add(new DiscordCommandPermissionCondition("permissions.remove"));
         }
 
+        /// <inheritdoc/>
         public override string Name { get; } = "permissions remove";
 
+        /// <inheritdoc/>
         public override DiscordCommandRunMode RunMode { get; } = DiscordCommandRunMode.Sync;
 
+        /// <inheritdoc/>
         protected override async Task Execute(IMessage message, string parameter)
         {
             var guild = SSIP.Guild;

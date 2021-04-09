@@ -35,7 +35,7 @@ namespace TrickyBot.API.Features
             }
             catch (Exception ex)
             {
-                Log.Error(typeof(CommandLineArgsParser), $"Exception thrown while parsing command line args: {ex}");
+                Log.Error(typeof(CommandLineArgsParser), $"Ошибка при обработке параметров командной строки: {ex}");
                 Environment.Exit(1);
             }
 

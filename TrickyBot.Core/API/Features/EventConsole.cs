@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace TrickyBot.API.Features
 {
+    /// <summary>
+    /// Обёртка над консолью, предоставляющая событийный интерфейс для работы с ней.
+    /// </summary>
     internal static class EventConsole
     {
         static EventConsole()
@@ -17,6 +20,9 @@ namespace TrickyBot.API.Features
             Task.Run(ReadLineCycle);
         }
 
+        /// <summary>
+        /// Событие чтения строки из консоли.
+        /// </summary>
         public static event Action<string> OnReadLine;
 
         private static void ReadLineCycle()

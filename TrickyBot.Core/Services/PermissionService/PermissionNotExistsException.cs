@@ -7,8 +7,15 @@
 
 namespace TrickyBot.Services.PermissionService
 {
+    /// <summary>
+    /// Исключение, указывающее на то, что разрешение не существует у пользователя или у роли.
+    /// </summary>
     public class PermissionNotExistsException : PermissionException
     {
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="PermissionNotExistsException"/>.
+        /// </summary>
+        /// <param name="permission">Разрешение.</param>
         public PermissionNotExistsException(string permission)
             : base(permission, $"Разрешение \"{permission}\" не существует!")
         {

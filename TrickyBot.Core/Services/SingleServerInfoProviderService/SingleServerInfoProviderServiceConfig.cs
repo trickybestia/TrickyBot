@@ -9,8 +9,14 @@ using TrickyBot.API.Features;
 
 namespace TrickyBot.Services.SingleServerInfoProviderService
 {
+    /// <summary>
+    /// Конфиг <see cref="TrickyBot.Services.SingleServerInfoProviderService.SingleServerInfoProviderService"/>.
+    /// </summary>
     public class SingleServerInfoProviderServiceConfig : AlwaysEnabledConfig
     {
+        /// <summary>
+        /// Получает или задает Id "привязанного" к боту сервера.
+        /// </summary>
         public ulong GuildId { get; set; }
     }
 }

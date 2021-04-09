@@ -56,12 +56,12 @@ namespace TrickyBot.API.Features
         {
             if (sender is null)
             {
-                throw new ArgumentException("Value can not be null!", nameof(sender), new NullReferenceException());
+                throw new ArgumentException("Значение не может быть null.", nameof(sender), new NullReferenceException());
             }
 
             if (string.IsNullOrEmpty(message))
             {
-                throw new ArgumentException("String can not be null or empty!", nameof(message));
+                throw new ArgumentException("Строка не может быть null или пустой.", nameof(message));
             }
 
             var previousColor = Console.ForegroundColor;

@@ -49,7 +49,7 @@ namespace TrickyBot.API.Features
                     var constructor = type.GetConstructor(Array.Empty<Type>());
                     if (constructor is null)
                     {
-                        Log.Error(typeof(ServiceLoader), $"{type.FullName} does not have public constructor without parameters!");
+                        Log.Error(typeof(ServiceLoader), $"Тип {type.FullName} не имеет публичных конструкторов без параметров!");
                     }
                     else
                     {
@@ -59,7 +59,7 @@ namespace TrickyBot.API.Features
                         }
                         catch (Exception ex)
                         {
-                            Log.Error(typeof(ServiceLoader), $"Exception thrown while creating instance of {type.FullName}: {ex}");
+                            Log.Error(typeof(ServiceLoader), $"Ошибка во время создания экземпляра типа {type.FullName}: {ex}");
                         }
                     }
                 }

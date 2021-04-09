@@ -136,7 +136,7 @@ namespace TrickyBot.API.Features
             }
             catch
             {
-                Log.Warn(typeof(ServiceLoader), $"Service \"{service.Info.Name}\" v{service.Info.Version} by \"{service.Info.Author}\" does not have config, generating...");
+                Log.Warn(typeof(ServiceLoader), $"Сервис \"{service.Info.Name}\" v{service.Info.Version} by \"{service.Info.Author}\" не имеет конфига, создание...");
                 File.WriteAllText(configPath, JsonConvert.SerializeObject(service.Config, ConfigSerializerSettings));
             }
         }

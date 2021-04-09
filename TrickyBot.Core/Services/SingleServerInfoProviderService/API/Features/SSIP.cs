@@ -7,6 +7,7 @@
 
 using Discord.WebSocket;
 using TrickyBot.API.Features;
+using TrickyBot.Services.BotService.API.Features;
 
 namespace TrickyBot.Services.SingleServerInfoProviderService.API.Features
 {
@@ -22,7 +23,7 @@ namespace TrickyBot.Services.SingleServerInfoProviderService.API.Features
         {
             get
             {
-                return ServiceManager.GetService<SingleServerInfoProviderService>().Guild;
+                return Bot.Client.GetGuild(ServiceManager.GetService<SingleServerInfoProviderService>().Config.GuildId);
             }
         }
     }

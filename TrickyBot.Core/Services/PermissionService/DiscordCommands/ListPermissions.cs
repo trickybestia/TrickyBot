@@ -17,17 +17,26 @@ using TrickyBot.Services.SingleServerInfoProviderService.API.Features;
 
 namespace TrickyBot.Services.PermissionService.DiscordCommands
 {
+    /// <summary>
+    /// Команда вывода списка разрешений.
+    /// </summary>
     internal class ListPermissions : ConditionDiscordCommand
     {
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="ListPermissions"/>.
+        /// </summary>
         public ListPermissions()
         {
             this.Conditions.Add(new DiscordCommandPermissionCondition("permissions.list"));
         }
 
+        /// <inheritdoc/>
         public override string Name { get; } = "permissions list";
 
+        /// <inheritdoc/>
         public override DiscordCommandRunMode RunMode { get; } = DiscordCommandRunMode.Sync;
 
+        /// <inheritdoc/>
         protected override async Task Execute(IMessage message, string parameter)
         {
             var service = ServiceManager.GetService<PermissionService>();
