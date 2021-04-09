@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: TrickyBot
-          path: TrickyBot.Core\bin\Release
+          path: TrickyBot.Core/bin/Release
 
       - name: Upload NuGet package
         uses: actions/upload-artifact@v2
