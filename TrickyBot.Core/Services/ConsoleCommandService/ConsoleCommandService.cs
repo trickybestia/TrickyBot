@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 using TrickyBot.API.Abstract;
@@ -49,51 +50,51 @@ namespace TrickyBot.Services.ConsoleCommandService
         /// <inheritdoc/>
         protected override Task OnStart()
         {
-            Task.Run(this.ParseCommandsAsync);
+            ConsoleHelper.OnReadLine += this.ParseCommandAsync;
             return Task.CompletedTask;
         }
 
         /// <inheritdoc/>
-        protected override Task OnStop() => Task.CompletedTask;
-
-        private async Task ParseCommandsAsync()
+        protected override Task OnStop()
         {
-            while (true)
+            ConsoleHelper.OnReadLine -= this.ParseCommandAsync;
+            return Task.CompletedTask;
+        }
+
+        private async void ParseCommandAsync(string input)
+        {
+            if (!string.IsNullOrWhiteSpace(input))
             {
-                var input = Console.ReadLine();
-                if (!string.IsNullOrWhiteSpace(input))
+                Log.Info(this, $"Обработка команды \"{input}\"...");
+                bool commandHandled = false;
+                foreach (var service in ServiceManager.Services)
                 {
-                    Log.Info(this, $"Обработка команды \"{input}\"...");
-                    bool commandHandled = false;
-                    foreach (var service in ServiceManager.Services)
+                    if (service.Config.IsEnabled)
                     {
-                        if (service.Config.IsEnabled)
+                        foreach (var command in service.ConsoleCommands)
                         {
-                            foreach (var command in service.ConsoleCommands)
+                            var match = Regex.Match(input, @$"{command.Name}\s?(.*)", RegexOptions.Singleline);
+                            if (match.Success)
                             {
-                                var match = Regex.Match(input, @$"{command.Name}\s?(.*)", RegexOptions.Singleline);
-                                if (match.Success)
+                                commandHandled = true;
+                                if (command.RunMode == ConsoleCommandRunMode.Sync)
                                 {
-                                    commandHandled = true;
-                                    if (command.RunMode == ConsoleCommandRunMode.Sync)
-                                    {
-                                        await command.ExecuteAsync(match.Result("$1"));
-                                    }
-                                    else if (command.RunMode == ConsoleCommandRunMode.Async)
-                                    {
+                                    await command.ExecuteAsync(match.Result("$1"));
+                                }
+                                else if (command.RunMode == ConsoleCommandRunMode.Async)
+                                {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                                        Task.Run(() => command.ExecuteAsync(match.Result("$1")));
+                                    Task.Run(() => command.ExecuteAsync(match.Result("$1")));
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                                    }
                                 }
                             }
                         }
                     }
+                }
 
-                    if (!commandHandled)
-                    {
-                        Log.Error(this, $"Нераспознанная команда:\n{input}");
-                    }
+                if (!commandHandled)
+                {
+                    Log.Error(this, $"Нераспознанная команда:\n{input}");
                 }
             }
         }
