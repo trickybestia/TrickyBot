@@ -38,6 +38,3 @@ jobs:
         with:
           name: NuGet package
           path: TrickyBot.*.nupkg
-
-      - name: Setup Debug Session
-        uses: csexton/debugger-action@master
