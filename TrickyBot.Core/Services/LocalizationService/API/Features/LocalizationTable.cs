@@ -28,7 +28,7 @@ namespace TrickyBot.Services.LocalizationService.API.Features
         public string Language { get; }
 
         /// <summary>
-        /// Получает словарь, где ключ - id локализируемой строки, значение - текстовое представление локализируемой строки.
+        /// Получает словарь, где ключ - id локализованной строки, значение - текстовое представление локализованной строки.
         /// </summary>
         public IReadOnlyDictionary<string, string> Strings { get; }
 
