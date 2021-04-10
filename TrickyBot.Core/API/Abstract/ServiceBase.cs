@@ -68,8 +68,7 @@ namespace TrickyBot.API.Abstract
                 catch (Exception ex)
                 {
                     this.State = ServiceState.Stopped;
-                    Log.Error(this, $"Ошибка во время запуска сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\": {ex}");
-                    return;
+                    throw new Exception($"Ошибка во время запуска сервиса \"{this.Info.Name}\" v{this.Info.Version.ToString(3)} от \"{this.Info.Author}\".", ex);
                 }
 
                 this.State = ServiceState.Started;
