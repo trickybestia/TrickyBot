@@ -71,7 +71,7 @@ namespace TrickyBot.API.Features
             {
                 LogLevel.Debug => ConsoleColor.Green,
                 LogLevel.Info => ConsoleColor.Cyan,
-                LogLevel.Warn => ConsoleColor.Magenta,
+                LogLevel.Warn => ConsoleColor.Yellow,
                 LogLevel.Error => ConsoleColor.Red,
             };
             string senderName;
