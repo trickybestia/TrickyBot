@@ -60,8 +60,9 @@ namespace TrickyBot.Services.LocalizationService
                 this.localizations.Add(await LocalizationTable.FromStreamAsync(stream));
             }
 
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var service in ServiceManager.Services)
             {
+                var assembly = service.GetType().Assembly;
                 foreach (var localizationResourceName in assembly.GetManifestResourceNames().Where(name => name.Contains("Localizations")))
                 {
                     using var stream = assembly.GetManifestResourceStream(localizationResourceName);
