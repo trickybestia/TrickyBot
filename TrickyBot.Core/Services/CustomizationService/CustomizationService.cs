@@ -54,7 +54,7 @@ namespace TrickyBot.Services.CustomizationService
         protected override async Task OnStart()
         {
             this.customizationTables = new List<CustomizationTable>();
-            foreach (var file in Directory.EnumerateFiles(Paths.Localizations))
+            foreach (var file in Directory.EnumerateFiles(Paths.CustomStrings))
             {
                 using var stream = new FileStream(file, FileMode.Open, FileAccess.Read);
                 this.customizationTables.Add(await CustomizationTable.FromStreamAsync(stream));

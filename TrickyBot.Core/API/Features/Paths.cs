@@ -37,7 +37,7 @@ namespace TrickyBot.API.Features
         /// <summary>
         /// Получает путь к директории, которая содержит в себе файлы локализаций.
         /// </summary>
-        public static string Localizations => Path.Combine(Data, "Localizations");
+        public static string CustomStrings => Path.Combine(Data, "CustomStrings");
 
         /// <summary>
         /// Создаёт все директории, если они не существуют.
@@ -48,7 +48,7 @@ namespace TrickyBot.API.Features
             Directory.CreateDirectory(Data);
             Directory.CreateDirectory(Configs);
             Directory.CreateDirectory(Services);
-            Directory.CreateDirectory(Localizations);
+            Directory.CreateDirectory(CustomStrings);
         }
     }
 }
