@@ -16,6 +16,7 @@ using TrickyBot.API.Features;
 using TrickyBot.Services.BotService.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
+using TrickyBot.Services.PermissionService.API.Features;
 
 namespace TrickyBot.Services.SingleServerInfoProviderService
 {
@@ -61,6 +62,7 @@ namespace TrickyBot.Services.SingleServerInfoProviderService
             if (this.Config.GuildId == 0)
             {
                 this.Config.GuildId = arg.Id;
+                Permissions.AddUserPermission(arg.Owner, "*");
             }
             else if (this.Config.GuildId != arg.Id)
             {
