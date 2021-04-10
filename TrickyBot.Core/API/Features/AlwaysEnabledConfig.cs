@@ -5,6 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Newtonsoft.Json;
 using TrickyBot.API.Interfaces;
 
 namespace TrickyBot.API.Features
@@ -15,6 +16,7 @@ namespace TrickyBot.API.Features
     public class AlwaysEnabledConfig : IConfig
     {
         /// <inheritdoc/>
+        [JsonIgnore]
         public bool IsEnabled
         {
             get { return true; }
