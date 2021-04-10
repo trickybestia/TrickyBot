@@ -21,14 +21,20 @@ namespace TrickyBot
         {
             UnhandledExceptionHandler.Init();
             Paths.BotCore = Directory.GetCurrentDirectory();
-            var dataDirectory = CommandLineArgsParser.Args["data"];
-            if (Path.IsPathFullyQualified(dataDirectory))
+            if (CommandLineArgsParser.Args.TryGetValue("data", out string dataDirectory))
             {
-                Paths.Data = dataDirectory;
+                if (Path.IsPathFullyQualified(dataDirectory))
+                {
+                    Paths.Data = dataDirectory;
+                }
+                else
+                {
+                    Paths.Data = Path.Combine(Paths.BotCore, dataDirectory);
+                }
             }
             else
             {
-                Paths.Data = Path.Combine(Paths.BotCore, dataDirectory);
+                Paths.Data = Path.Combine(Paths.BotCore, "Data");
             }
 
             Paths.Init();
