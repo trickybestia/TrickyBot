@@ -28,7 +28,7 @@ namespace TrickyBot.Services.LocalizationService
         private List<LocalizationTable> localizations;
 
         /// <inheritdoc/>
-        public override Priority Priority => Priorities.CoreService;
+        public override Priority Priority { get; } = new Priority(Priorities.CoreService.Value + 1);
 
         /// <inheritdoc/>
         public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = Array.Empty<IDiscordCommand>();
