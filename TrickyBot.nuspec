@@ -4,14 +4,14 @@
     <id>TrickyBot</id>
     <title>TrickyBot</title>
     <version>$version$</version>
-    <authors>The TrickyBot Team</authors>
+    <authors>The The TrickyBot Team</authors>
     <owners>TrickyBestia</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.txt</license>
     <projectUrl>https://github.com/TrickyBestia/TrickyBot</projectUrl>
     <repository type="Git" url="https://github.com/TrickyBestia/TrickyBot"/>
     <description>Modular single-server Discord bot framework.</description>
-    <copyright>Copyright (c) TrickyBot Team 2020 - $year$</copyright>
+    <copyright>Copyright (c) The TrickyBot Team 2020 - $year$</copyright>
     <dependencies>
       <group targetFramework="net5.0">
         <dependency id="Discord.Net" version="2.2.0" />

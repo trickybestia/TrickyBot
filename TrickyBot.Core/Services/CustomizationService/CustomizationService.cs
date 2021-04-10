@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="CustomizationService.cs" company="TrickyBot Team">
-// Copyright (c) TrickyBot Team. All rights reserved.
+// <copyright file="CustomizationService.cs" company="The TrickyBot Team">
+// Copyright (c) The TrickyBot Team. All rights reserved.
 // Licensed under the CC BY-ND 4.0 license.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -40,7 +40,7 @@ namespace TrickyBot.Services.CustomizationService
         public override ServiceInfo Info { get; } = new ServiceInfo
         {
             Name = nameof(CustomizationService),
-            Author = "TrickyBot Team",
+            Author = "The TrickyBot Team",
             Version = Bot.Version,
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
         };
