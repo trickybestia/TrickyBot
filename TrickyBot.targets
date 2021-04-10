@@ -9,7 +9,7 @@
     <Copyright>Copyright (c) TrickyBot Team 2020 - $([System.DateTime]::Now.ToString("yyyy"))</Copyright>
     <RepositoryType>Git</RepositoryType>
     <RepositoryUrl>https://github.com/TrickyBestia/TrickyBot</RepositoryUrl>
-    <NoWarn>1701;1702;SA0001;CS1591;IDE0090;IDE0057</NoWarn>
+    <NoWarn>1701;1702;SA0001;IDE0090;IDE0057</NoWarn>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
