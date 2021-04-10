@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="LocalizationService.cs" company="TrickyBot Team">
+// <copyright file="CustomizationService.cs" company="TrickyBot Team">
 // Copyright (c) TrickyBot Team. All rights reserved.
 // Licensed under the CC BY-ND 4.0 license.
 // </copyright>
@@ -15,17 +15,17 @@ using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
 using TrickyBot.Services.BotService.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
+using TrickyBot.Services.CustomizationService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
-using TrickyBot.Services.LocalizationService.API.Features;
 
-namespace TrickyBot.Services.LocalizationService
+namespace TrickyBot.Services.CustomizationService
 {
     /// <summary>
-    /// Сервис для поддержки локализации и кастомизации интерфейса бота.
+    /// Сервис для поддержки кастомизации интерфейса бота.
     /// </summary>
-    public class LocalizationService : ServiceBase<LocalizationServiceConfig>
+    public class CustomizationService : ServiceBase<CustomizationServiceConfig>
     {
-        private List<LocalizationTable> localizations;
+        private List<CustomizationTable> customizationTables;
 
         /// <inheritdoc/>
         public override Priority Priority { get; } = new Priority(Priorities.CoreService.Value + 1);
@@ -39,34 +39,34 @@ namespace TrickyBot.Services.LocalizationService
         /// <inheritdoc/>
         public override ServiceInfo Info { get; } = new ServiceInfo
         {
-            Name = nameof(LocalizationService),
+            Name = nameof(CustomizationService),
             Author = "TrickyBot Team",
             Version = Bot.Version,
             GithubRepositoryUrl = "https://github.com/TrickyBestia/TrickyBot",
         };
 
         /// <summary>
-        /// Получает список загруженных таблиц локализаций.
+        /// Получает список загруженных таблиц кастомных строк.
         /// </summary>
-        public IReadOnlyList<LocalizationTable> LocalizationTables => this.localizations;
+        public IReadOnlyList<CustomizationTable> CustomizationTables => this.customizationTables;
 
         /// <inheritdoc/>
         protected override async Task OnStart()
         {
-            this.localizations = new List<LocalizationTable>();
+            this.customizationTables = new List<CustomizationTable>();
             foreach (var file in Directory.EnumerateFiles(Paths.Localizations))
             {
                 using var stream = new FileStream(file, FileMode.Open, FileAccess.Read);
-                this.localizations.Add(await LocalizationTable.FromStreamAsync(stream));
+                this.customizationTables.Add(await CustomizationTable.FromStreamAsync(stream));
             }
 
             foreach (var service in ServiceManager.Services)
             {
                 var assembly = service.GetType().Assembly;
-                foreach (var localizationResourceName in assembly.GetManifestResourceNames().Where(name => name.Contains("Localizations")))
+                foreach (var localizationResourceName in assembly.GetManifestResourceNames().Where(name => name.EndsWith("CustomStrings.txt")))
                 {
                     using var stream = assembly.GetManifestResourceStream(localizationResourceName);
-                    this.localizations.Add(await LocalizationTable.FromStreamAsync(stream));
+                    this.customizationTables.Add(await CustomizationTable.FromStreamAsync(stream));
                 }
             }
         }

@@ -1,30 +1,28 @@
 // -----------------------------------------------------------------------
-// <copyright file="LocalizedString.cs" company="TrickyBot Team">
+// <copyright file="CustomString.cs" company="TrickyBot Team">
 // Copyright (c) TrickyBot Team. All rights reserved.
 // Licensed under the CC BY-ND 4.0 license.
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Linq;
-
-namespace TrickyBot.Services.LocalizationService.API.Features
+namespace TrickyBot.Services.CustomizationService.API.Features
 {
     /// <summary>
-    /// Локализованная строка.
+    /// Изменяемая пользователем строка.
     /// </summary>
-    public class LocalizedString
+    public class CustomString
     {
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="LocalizedString"/>.
+        /// Инициализирует новый экземпляр класса <see cref="CustomString"/>.
         /// </summary>
         /// <param name="id">Идентификатор строки.</param>
-        public LocalizedString(string id)
+        public CustomString(string id)
         {
             this.Id = id;
         }
 
         /// <summary>
-        /// Получает идентификатор строки в виде "ServiceName.SomeText".
+        /// Получает идентификатор строки.
         /// </summary>
         public string Id { get; }
 
@@ -47,10 +45,9 @@ namespace TrickyBot.Services.LocalizationService.API.Features
         /// <inheritdoc/>
         public override string ToString()
         {
-            foreach (var localization in Localization.Localizations)
+            foreach (var customizationTable in Customization.CustomizationTables)
             {
-                var localizationTable = Localization.LocalizationTables.FirstOrDefault(table => table.Language == localization);
-                if (localizationTable is not null && localizationTable.Strings.TryGetValue(this.Id, out string value))
+                if (customizationTable.Strings.TryGetValue(this.Id, out string value))
                 {
                     return value;
                 }
