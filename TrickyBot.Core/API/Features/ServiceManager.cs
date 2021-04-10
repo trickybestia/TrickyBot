@@ -77,6 +77,7 @@ namespace TrickyBot.API.Features
         /// <returns>Задача, представляющая асинхронную операцию.</returns>
         internal static async Task StartAsync()
         {
+            StopEvent.Reset();
             Log.Info(typeof(ServiceManager), "Запуск сервисов...");
             Load();
             foreach (var service in Services.OrderByDescending(service => service.Priority))
@@ -107,6 +108,7 @@ namespace TrickyBot.API.Features
 
             Save();
             Log.Info(typeof(ServiceManager), "Сервисы остановлены.");
+            StopEvent.Set();
         }
 
         /// <summary>
