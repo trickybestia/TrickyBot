@@ -65,7 +65,7 @@ namespace TrickyBot.Services.ConsoleCommandService
         {
             if (!string.IsNullOrWhiteSpace(input))
             {
-                Log.Info(this, $"Обработка команды \"{input}\"...");
+                Log.Info(this, $"Обработка команды\n{input}");
                 bool commandHandled = false;
                 foreach (var service in ServiceManager.Services)
                 {
