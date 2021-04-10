@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+    <EmbeddedResource Include="**/**/CustomStrings.txt" />
   </ItemGroup>
 
 </Project>
