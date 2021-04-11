@@ -4,7 +4,7 @@
     <id>TrickyBot</id>
     <title>TrickyBot</title>
     <version>$version$</version>
-    <authors>The The TrickyBot Team</authors>
+    <authors>The TrickyBot Team</authors>
     <owners>TrickyBestia</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.txt</license>
