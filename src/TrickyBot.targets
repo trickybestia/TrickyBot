@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <PlatformTarget>anycpu</PlatformTarget>
+    <Version>2.0.0</Version>
+    <Company>The TrickyBot Team</Company>
+    <Copyright>Copyright (c) The TrickyBot Team 2020 - $([System.DateTime]::Now.ToString("yyyy"))</Copyright>
+    <RepositoryType>Git</RepositoryType>
+    <RepositoryUrl>https://github.com/TrickyBestia/TrickyBot</RepositoryUrl>
+    <NoWarn>IDE0090;IDE0057</NoWarn>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <DebugType>None</DebugType>
+  </PropertyGroup>
+</Project>

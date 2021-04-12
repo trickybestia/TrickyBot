@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   Build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Pull repository
@@ -15,12 +15,13 @@ jobs:
         with:
           dotnet-version: 5.0.x
 
-      - name: Build
-        run: dotnet build -c Release
+      - name: Publish
+        run: cd src && dotnet publish -c Release -p:UseAppHost=false
 
       - name: Create NuGet package
         shell: pwsh
         run: |
+          cd src
           [XML]$TargetsFile = Get-Content TrickyBot.targets
           $version = $TargetsFile.Project.PropertyGroup.Version
           $version = $Version[0].Trim()
@@ -31,10 +32,10 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: TrickyBot
-          path: TrickyBot.Core\bin\Release
+          path: src/TrickyBot.Core/bin/Release/publish
 
       - name: Upload NuGet package
         uses: actions/upload-artifact@v2
         with:
           name: NuGet package
-          path: TrickyBot.*.nupkg
+          path: src/TrickyBot.*.nupkg
