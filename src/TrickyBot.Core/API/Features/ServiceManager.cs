@@ -13,7 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
-
+using TrickyBot.API.Exceptions;
 using TrickyBot.API.Interfaces;
 
 namespace TrickyBot.API.Features

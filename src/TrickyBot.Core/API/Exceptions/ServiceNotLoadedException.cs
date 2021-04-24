@@ -7,7 +7,7 @@
 
 using System;
 
-namespace TrickyBot.API.Features
+namespace TrickyBot.API.Exceptions
 {
     /// <summary>
     /// Исключение, указывающее на то, что запрашиваемый сервис не загружен.

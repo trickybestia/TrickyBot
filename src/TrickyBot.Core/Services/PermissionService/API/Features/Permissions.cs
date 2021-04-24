@@ -11,6 +11,7 @@ using System.Linq;
 
 using Discord;
 using TrickyBot.API.Features;
+using TrickyBot.Services.PermissionService.API.Exceptions;
 
 namespace TrickyBot.Services.PermissionService.API.Features
 {

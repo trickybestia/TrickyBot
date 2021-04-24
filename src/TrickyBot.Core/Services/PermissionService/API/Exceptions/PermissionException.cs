@@ -7,7 +7,7 @@
 
 using System;
 
-namespace TrickyBot.Services.PermissionService
+namespace TrickyBot.Services.PermissionService.API.Exceptions
 {
     /// <summary>
     /// Базовый класс для всех исключений, связанных с разрешениями.

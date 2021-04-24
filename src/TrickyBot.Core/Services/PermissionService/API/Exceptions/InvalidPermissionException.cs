@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace TrickyBot.Services.PermissionService
+namespace TrickyBot.Services.PermissionService.API.Exceptions
 {
     /// <summary>
     /// Исключение, указывающее на то, что разрешение неверно.

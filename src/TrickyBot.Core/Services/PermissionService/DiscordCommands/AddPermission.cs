@@ -13,6 +13,7 @@ using Discord;
 using TrickyBot.Services.DiscordCommandService.API.Abstract;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;
+using TrickyBot.Services.PermissionService.API.Exceptions;
 using TrickyBot.Services.PermissionService.API.Features;
 using TrickyBot.Services.SingleServerInfoProviderService.API.Features;
 
