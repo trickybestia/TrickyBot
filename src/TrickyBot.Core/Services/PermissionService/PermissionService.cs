@@ -5,20 +5,15 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-using Discord;
 using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
 using TrickyBot.Services.BotService.API.Features;
-using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
-using TrickyBot.Services.PermissionService.API.Features;
 using TrickyBot.Services.PermissionService.DiscordCommands;
 
 namespace TrickyBot.Services.PermissionService
@@ -26,21 +21,18 @@ namespace TrickyBot.Services.PermissionService
     /// <summary>
     /// Сервис обработки разрешений.
     /// </summary>
-    public class PermissionService : ServiceBase<PermissionServiceConfig>
+    public class PermissionService : ServiceBase<PermissionServiceConfig>, IDiscordCommandService<PermissionServiceConfig>
     {
         /// <inheritdoc/>
         public override Priority Priority => Priorities.CoreService;
 
         /// <inheritdoc/>
-        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new IDiscordCommand[]
+        public IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new IDiscordCommand[]
         {
             new AddPermission(),
             new RemovePermission(),
             new ListPermissions(),
         };
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = Array.Empty<IConsoleCommand>();
 
         /// <inheritdoc/>
         public override ServiceInfo Info { get; } = new ServiceInfo

@@ -10,7 +10,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Discord;
-using TrickyBot.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Abstract;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;

@@ -5,8 +5,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Discord.WebSocket;
@@ -14,8 +12,6 @@ using Discord.WebSocket;
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
 using TrickyBot.Services.BotService.API.Features;
-using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
-using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 using TrickyBot.Services.PermissionService.API.Features;
 
 namespace TrickyBot.Services.SingleServerInfoProviderService
@@ -27,12 +23,6 @@ namespace TrickyBot.Services.SingleServerInfoProviderService
     {
         /// <inheritdoc/>
         public override Priority Priority => Priorities.CoreService;
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = Array.Empty<IDiscordCommand>();
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = Array.Empty<IConsoleCommand>();
 
         /// <inheritdoc/>
         public override ServiceInfo Info { get; } = new ServiceInfo

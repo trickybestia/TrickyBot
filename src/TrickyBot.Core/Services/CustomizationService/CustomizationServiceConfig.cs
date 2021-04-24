@@ -5,8 +5,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-
 using TrickyBot.API.Features;
 
 namespace TrickyBot.Services.CustomizationService

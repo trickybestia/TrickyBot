@@ -6,15 +6,10 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using TrickyBot.API.Features;
 using TrickyBot.API.Interfaces;
-using TrickyBot.Services.ConsoleCommandService.API.Features;
-using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
-using TrickyBot.Services.DiscordCommandService.API.Features;
-using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.API.Abstract
 {
@@ -32,8 +27,6 @@ namespace TrickyBot.API.Abstract
         {
             this.State = ServiceState.Stopped;
             this.Config = new TConfig();
-            this.DiscordCommands = DiscordCommandLoader.GetCommands(this.GetType().Assembly);
-            this.ConsoleCommands = ConsoleCommandLoader.GetCommands(this.GetType().Assembly);
         }
 
         /// <inheritdoc/>
@@ -41,12 +34,6 @@ namespace TrickyBot.API.Abstract
 
         /// <inheritdoc/>
         public ServiceState State { get; private set; }
-
-        /// <inheritdoc/>
-        public virtual IReadOnlyList<IDiscordCommand> DiscordCommands { get; }
-
-        /// <inheritdoc/>
-        public virtual IReadOnlyList<IConsoleCommand> ConsoleCommands { get; }
 
         /// <inheritdoc/>
         public TConfig Config { get; internal set; }

@@ -8,32 +8,28 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
+using TrickyBot.API.Interfaces;
 using TrickyBot.Services.BotService.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Features;
 using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.ConsoleCommandService.ConsoleCommands;
-using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.Services.ConsoleCommandService
 {
     /// <summary>
     /// Сервис для обработки консольных команд.
     /// </summary>
-    public class ConsoleCommandService : ServiceBase<ConsoleCommandServiceConfig>
+    public class ConsoleCommandService : ServiceBase<ConsoleCommandServiceConfig>, IConsoleCommandService<ConsoleCommandServiceConfig>
     {
         /// <inheritdoc/>
         public override Priority Priority => Priorities.CoreService;
 
         /// <inheritdoc/>
-        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = Array.Empty<IDiscordCommand>();
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = new IConsoleCommand[]
+        public IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = new IConsoleCommand[]
         {
             new Exit(),
         };
@@ -67,26 +63,30 @@ namespace TrickyBot.Services.ConsoleCommandService
             {
                 Log.Info(this, $"Обработка команды\n{input}");
                 bool commandHandled = false;
-                foreach (var service in ServiceManager.Services)
+                foreach (var service in ServiceManager.GetServicesOfType<IConsoleCommandService<IConfig>>())
                 {
-                    if (service.Config.IsEnabled)
+                    foreach (var command in service.ConsoleCommands)
                     {
-                        foreach (var command in service.ConsoleCommands)
+                        var match = Regex.Match(input, @$"{command.Name}\s?(.*)", RegexOptions.Singleline);
+                        if (match.Success)
                         {
-                            var match = Regex.Match(input, @$"{command.Name}\s?(.*)", RegexOptions.Singleline);
-                            if (match.Success)
+                            commandHandled = true;
+                            if (command.RunMode == ConsoleCommandRunMode.Sync)
                             {
-                                commandHandled = true;
-                                if (command.RunMode == ConsoleCommandRunMode.Sync)
+                                try
                                 {
                                     await command.ExecuteAsync(match.Result("$1"));
                                 }
-                                else if (command.RunMode == ConsoleCommandRunMode.Async)
+                                catch (Exception ex)
                                 {
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                                    Task.Run(() => command.ExecuteAsync(match.Result("$1")));
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                                    Log.Error(this, $"Исключение во время обработки консольной команды \"{command.Name}\": {ex}");
                                 }
+                            }
+                            else if (command.RunMode == ConsoleCommandRunMode.Async)
+                            {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                                Task.Run(() => command.ExecuteAsync(match.Result("$1")));
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                             }
                         }
                     }

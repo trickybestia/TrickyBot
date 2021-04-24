@@ -5,12 +5,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using TrickyBot.API.Features;
-using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
-using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.API.Interfaces
 {
@@ -30,16 +27,6 @@ namespace TrickyBot.API.Interfaces
         /// Получает приоритет загрузки сервиса.
         /// </summary>
         Priority Priority { get; }
-
-        /// <summary>
-        /// Получает список дискорд-команд, связанных с этим сервисом.
-        /// </summary>
-        IReadOnlyList<IDiscordCommand> DiscordCommands { get; }
-
-        /// <summary>
-        /// Получает список серверных консольных команд, связанных с этим сервисом.
-        /// </summary>
-        IReadOnlyList<IConsoleCommand> ConsoleCommands { get; }
 
         /// <summary>
         /// Получает конфиг сервиса.

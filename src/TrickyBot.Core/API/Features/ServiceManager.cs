@@ -72,6 +72,27 @@ namespace TrickyBot.API.Features
         }
 
         /// <summary>
+        /// Возвращает список экземпляров сервисов, которые могут могуть быть преобразованы к заданному типу.
+        /// </summary>
+        /// <typeparam name="T">Тип сервисов.</typeparam>
+        /// <param name="allowDisabled">Значение, указывающее на возможность возврата не включённого сервиса.</param>
+        /// <returns>Список экземпляров сервисов, которые могут могуть быть преобразованы к заданному типу.</returns>
+        public static List<T> GetServicesOfType<T>(bool allowDisabled = false)
+        {
+            var result = new List<T>();
+
+            foreach (var service in Services)
+            {
+                if ((service.Config.IsEnabled || allowDisabled) && service is T typedService)
+                {
+                    result.Add(typedService);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Асинхронно запускает менеджер сервисов.
         /// </summary>
         /// <returns>Задача, представляющая асинхронную операцию.</returns>

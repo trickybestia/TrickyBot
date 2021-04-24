@@ -5,17 +5,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 using Discord.WebSocket;
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
 using TrickyBot.Services.BotService.API.Features;
-using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
-using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.Services.BotService
 {
@@ -26,12 +21,6 @@ namespace TrickyBot.Services.BotService
     {
         /// <inheritdoc/>
         public override Priority Priority => Priorities.BotService;
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = Array.Empty<IConsoleCommand>();
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = Array.Empty<IDiscordCommand>();
 
         /// <inheritdoc/>
         public override ServiceInfo Info { get; } = new ServiceInfo

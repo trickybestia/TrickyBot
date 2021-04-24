@@ -17,8 +17,8 @@ using Discord.WebSocket;
 
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
+using TrickyBot.API.Interfaces;
 using TrickyBot.Services.BotService.API.Features;
-using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 using TrickyBot.Services.DiscordCommandService.DiscordCommands;
@@ -28,7 +28,7 @@ namespace TrickyBot.Services.DiscordCommandService
     /// <summary>
     /// Сервис для обработки дискорд-команд.
     /// </summary>
-    public class DiscordCommandService : ServiceBase<DiscordCommandServiceConfig>
+    public class DiscordCommandService : ServiceBase<DiscordCommandServiceConfig>, IDiscordCommandService<DiscordCommandServiceConfig>
     {
         private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 
@@ -36,13 +36,10 @@ namespace TrickyBot.Services.DiscordCommandService
         public override Priority Priority => Priorities.CoreService;
 
         /// <inheritdoc/>
-        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new IDiscordCommand[]
+        public IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new IDiscordCommand[]
         {
             new SetCommandPrefix(),
         };
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = Array.Empty<IConsoleCommand>();
 
         /// <inheritdoc/>
         public override ServiceInfo Info { get; } = new ServiceInfo
@@ -70,32 +67,29 @@ namespace TrickyBot.Services.DiscordCommandService
         private async Task ExecuteCommandAsync(IMessage message, string parameter)
         {
             await this.semaphore.WaitAsync();
-            foreach (var service in ServiceManager.Services)
+            foreach (var service in ServiceManager.GetServicesOfType<IDiscordCommandService<IConfig>>())
             {
-                if (service.Config.IsEnabled)
+                foreach (var command in service.DiscordCommands)
                 {
-                    foreach (var command in service.DiscordCommands)
+                    var match = Regex.Match(parameter, @$"{command.Name}\s?(.*)", RegexOptions.Singleline);
+                    if (match.Success)
                     {
-                        var match = Regex.Match(parameter, @$"{command.Name}\s?(.*)", RegexOptions.Singleline);
-                        if (match.Success)
+                        if (command.RunMode == DiscordCommandRunMode.Sync)
                         {
-                            if (command.RunMode == DiscordCommandRunMode.Sync)
+                            try
                             {
-                                try
-                                {
-                                    await command.ExecuteAsync(message, match.Result("$1"));
-                                }
-                                catch (Exception ex)
-                                {
-                                    Log.Error(this, $"Exception thrown while executing command \"{command.Name}\": {ex}");
-                                }
+                                await command.ExecuteAsync(message, match.Result("$1"));
                             }
-                            else
+                            catch (Exception ex)
                             {
+                                Log.Error(this, $"Исключение во время обработки дискорд-команды \"{command.Name}\": {ex}");
+                            }
+                        }
+                        else
+                        {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                                Task.Run(() => command.ExecuteAsync(message, match.Result("$1")));
+                            Task.Run(() => command.ExecuteAsync(message, match.Result("$1")));
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                            }
                         }
                     }
                 }
@@ -106,7 +100,7 @@ namespace TrickyBot.Services.DiscordCommandService
 
         private async Task OnMessageReceived(SocketMessage message)
         {
-            if (TrickyBot.Services.DiscordCommandService.API.Features.DiscordCommands.IsCommand(message))
+            if (API.Features.DiscordCommands.IsCommand(message))
             {
                 var userMessage = (SocketUserMessage)message;
                 int argPos = 0;

@@ -5,7 +5,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,9 +13,7 @@ using System.Threading.Tasks;
 using TrickyBot.API.Abstract;
 using TrickyBot.API.Features;
 using TrickyBot.Services.BotService.API.Features;
-using TrickyBot.Services.ConsoleCommandService.API.Interfaces;
 using TrickyBot.Services.CustomizationService.API.Features;
-using TrickyBot.Services.DiscordCommandService.API.Interfaces;
 
 namespace TrickyBot.Services.CustomizationService
 {
@@ -29,12 +26,6 @@ namespace TrickyBot.Services.CustomizationService
 
         /// <inheritdoc/>
         public override Priority Priority { get; } = new Priority(Priorities.CoreService.Value + 1);
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = Array.Empty<IDiscordCommand>();
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = Array.Empty<IConsoleCommand>();
 
         /// <inheritdoc/>
         public override ServiceInfo Info { get; } = new ServiceInfo
