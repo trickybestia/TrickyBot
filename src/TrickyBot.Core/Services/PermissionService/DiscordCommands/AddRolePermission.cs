@@ -55,15 +55,15 @@ namespace TrickyBot.Services.PermissionService.DiscordCommands
                 {
                     Permissions.AddRolePermission(role, permission);
 
-                    await message.Channel.SendMessageAsync(new CustomString(CustomStringIds.RolePermissionAdded).Format(("callerMention", message.Author.Mention), ("roleMention", role.Mention), ("permission", permission)));
+                    await message.Channel.SendMessageAsync(embed: new EmbedBuilder().WithDescription(new CustomString(CustomStringIds.RolePermissionAdded).Format(("callerMention", message.Author.Mention), ("roleMention", role.Mention), ("permission", permission))).Build());
                 }
                 catch (PermissionAlreadyExistsException)
                 {
-                    await message.Channel.SendMessageAsync(new CustomString(CustomStringIds.RolePermissionAlreadyExists).Format(("callerMention", message.Author.Mention), ("roleMention", role.Mention), ("permission", permission)));
+                    await message.Channel.SendMessageAsync(embed: new EmbedBuilder().WithDescription(new CustomString(CustomStringIds.RolePermissionAlreadyExists).Format(("callerMention", message.Author.Mention), ("roleMention", role.Mention), ("permission", permission))).Build());
                 }
                 catch (ArgumentException)
                 {
-                    await message.Channel.SendMessageAsync(new CustomString(CustomStringIds.InvalidParameters).Format(("callerMention", message.Author.Mention)));
+                    await message.Channel.SendMessageAsync(embed: new EmbedBuilder().WithDescription(new CustomString(CustomStringIds.InvalidParameters).Format(("callerMention", message.Author.Mention))).Build());
                 }
             }
         }
