@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 using TrickyBot.API.Exceptions;
+using TrickyBot.API.Extensions;
 using TrickyBot.API.Interfaces;
 
 namespace TrickyBot.API.Features
@@ -93,6 +94,18 @@ namespace TrickyBot.API.Features
         }
 
         /// <summary>
+        /// Сохраняет на диск конфиги всех сервисов.
+        /// </summary>
+        /// <returns>Задача, представляющая асинхронную операцию.</returns>
+        public static async Task SaveConfigs()
+        {
+            foreach (var service in services)
+            {
+                await SaveServiceConfig(service);
+            }
+        }
+
+        /// <summary>
         /// Асинхронно запускает менеджер сервисов.
         /// </summary>
         /// <returns>Задача, представляющая асинхронную операцию.</returns>
@@ -100,7 +113,7 @@ namespace TrickyBot.API.Features
         {
             StopEvent.Reset();
             Log.Info(typeof(ServiceManager), "Запуск сервисов...");
-            Load();
+            await Load();
             foreach (var service in Services.OrderByDescending(service => service.Priority))
             {
                 if (service.Config.IsEnabled)
@@ -127,7 +140,7 @@ namespace TrickyBot.API.Features
                 }
             }
 
-            Save();
+            await SaveConfigs();
             Log.Info(typeof(ServiceManager), "Сервисы остановлены.");
             StopEvent.Set();
         }
@@ -145,19 +158,26 @@ namespace TrickyBot.API.Features
         /// Загружает конфиг сервиса.
         /// </summary>
         /// <param name="service">Сервис, конфиг которого будет загружен.</param>
-        private static void LoadServiceConfig(IService<IConfig> service)
+        private static async Task LoadServiceConfig(IService<IConfig> service)
         {
             var configPath = Path.Combine(Paths.Configs, $"{service.Info.Name}.json");
-            var configType = service.Config.GetType();
-            try
+            if (File.Exists(configPath))
             {
-                var config = JsonConvert.DeserializeObject(File.ReadAllText(configPath), configType, ConfigSerializerSettings);
-                foreach (var sourceProperty in configType.GetProperties())
+                var content = await File.ReadAllTextAsync(configPath);
+                var configType = service.Config.GetType();
+                try
                 {
-                    configType.GetProperty(sourceProperty.Name)?.SetValue(service.Config, sourceProperty.GetValue(config, null), null);
+                    var config = JsonConvert.DeserializeObject(content, configType, ConfigSerializerSettings);
+                    config.CopyPropertiesTo(service.Config);
+                }
+                catch (JsonException)
+                {
+                    service.Config.IsEnabled = false;
+                    Log.Error(typeof(ServiceManager), $"Ошибка парсинга конфига сервиса \"{service.Info.Name}\".");
+                    throw;
                 }
             }
-            catch
+            else
             {
                 Log.Warn(typeof(ServiceLoader), $"Сервис \"{service.Info.Name}\" v{service.Info.Version} от \"{service.Info.Author}\" не имеет конфига, создание...");
                 File.WriteAllText(configPath, JsonConvert.SerializeObject(service.Config, ConfigSerializerSettings));
@@ -168,16 +188,17 @@ namespace TrickyBot.API.Features
         /// Сохраняет конфиг сервиса.
         /// </summary>
         /// <param name="service">Сервис, конфиг которого будет сохранён.</param>
-        private static void SaveServiceConfig(IService<IConfig> service)
+        private static async Task SaveServiceConfig(IService<IConfig> service)
         {
             var configPath = Path.Combine(Paths.Configs, $"{service.Info.Name}.json");
-            File.WriteAllText(configPath, JsonConvert.SerializeObject(service.Config, ConfigSerializerSettings));
+            var content = JsonConvert.SerializeObject(service.Config, ConfigSerializerSettings);
+            await File.WriteAllTextAsync(configPath, content);
         }
 
         /// <summary>
         /// Загружает сервисы и их конфиги.
         /// </summary>
-        private static void Load()
+        private static async Task Load()
         {
             var assemblies = new List<Assembly>
             {
@@ -192,18 +213,7 @@ namespace TrickyBot.API.Features
 
             foreach (var service in services)
             {
-                LoadServiceConfig(service);
-            }
-        }
-
-        /// <summary>
-        /// Сохраняет конфиги всех сервисов.
-        /// </summary>
-        private static void Save()
-        {
-            foreach (var service in services)
-            {
-                SaveServiceConfig(service);
+                await LoadServiceConfig(service);
             }
         }
     }
