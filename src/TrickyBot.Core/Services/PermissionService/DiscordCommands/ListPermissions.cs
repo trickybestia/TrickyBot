@@ -59,7 +59,7 @@ namespace TrickyBot.Services.PermissionService.DiscordCommands
 
                 stringBuilder.Replace("*", @"\*");
 
-                responseBuilder.AddField("Roles:", stringBuilder.ToString());
+                responseBuilder.AddField("Роли:", stringBuilder.ToString());
                 stringBuilder.Clear();
             }
 
@@ -77,7 +77,7 @@ namespace TrickyBot.Services.PermissionService.DiscordCommands
 
                 stringBuilder.Replace("*", @"\*");
 
-                responseBuilder.AddField("Users:", stringBuilder.ToString());
+                responseBuilder.AddField("Пользователи:", stringBuilder.ToString());
             }
 
             await message.Channel.SendMessageAsync(embed: responseBuilder.Build());
