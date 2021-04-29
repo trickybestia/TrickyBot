@@ -1,15 +1,15 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="AddPermission.cs" company="The TrickyBot Team">
+// <copyright file="AddRolePermission.cs" company="The TrickyBot Team">
 // Copyright (c) The TrickyBot Team. All rights reserved.
 // Licensed under the CC BY-ND 4.0 license.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Discord;
+using TrickyBot.Services.CustomizationService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Abstract;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;
@@ -23,14 +23,14 @@ using TokenType = TrickyBot.Services.PatternMatchingService.API.Features.TokenTy
 namespace TrickyBot.Services.PermissionService.DiscordCommands
 {
     /// <summary>
-    /// Команда добавления разрешения.
+    /// Команда добавления разрешения роли.
     /// </summary>
-    internal class AddPermission : ConditionDiscordCommand
+    internal class AddRolePermission : ConditionDiscordCommand
     {
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="AddPermission"/>.
+        /// Инициализирует новый экземпляр класса <see cref="AddRolePermission"/>.
         /// </summary>
-        public AddPermission()
+        public AddRolePermission()
         {
             this.Conditions.Add(new DiscordCommandPermissionCondition("permissions.add"));
         }
@@ -44,29 +44,27 @@ namespace TrickyBot.Services.PermissionService.DiscordCommands
         /// <inheritdoc/>
         protected override async Task Execute(IMessage message, string parameter)
         {
-            var guild = SSIP.Guild;
             var match = PatternMatcher.Match(parameter, TokenType.RoleMention, TokenType.Text);
-            try
-            {
-                if (match.Success)
-                {
-                    Permissions.AddRolePermission(guild.GetRole((ulong)match.Values[0]), (string)match.Values[1]);
-                }
-                else
-                {
-                    match = PatternMatcher.Match(parameter, TokenType.UserMention, TokenType.Text);
-                    Permissions.AddUserPermission(guild.GetUser((ulong)match.Values[0]), (string)match.Values[1]);
-                }
 
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} разрешение добавлено.");
-            }
-            catch (PermissionAlreadyExistsException)
+            if (match.Success)
             {
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} разрешение уже существует!");
-            }
-            catch (ArgumentException)
-            {
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} неправильные аргументы!");
+                var role = SSIP.Guild.GetRole((ulong)match.Values[0]);
+                var permission = (string)match.Values[1];
+
+                try
+                {
+                    Permissions.AddRolePermission(role, permission);
+
+                    await message.Channel.SendMessageAsync(new CustomString(CustomStringIds.RolePermissionAdded).Format(("callerMention", message.Author.Mention), ("roleMention", role.Mention), ("permission", permission)));
+                }
+                catch (PermissionAlreadyExistsException)
+                {
+                    await message.Channel.SendMessageAsync(new CustomString(CustomStringIds.RolePermissionAlreadyExists).Format(("callerMention", message.Author.Mention), ("roleMention", role.Mention), ("permission", permission)));
+                }
+                catch (ArgumentException)
+                {
+                    await message.Channel.SendMessageAsync(new CustomString(CustomStringIds.InvalidParameters).Format(("callerMention", message.Author.Mention)));
+                }
             }
         }
     }

@@ -1,0 +1,11 @@
+TrickyBot.Services.PermissionService.RolePermissionAdded={callerMention}, роли {roleMention} выдано разрешение "{permission}".
+TrickyBot.Services.PermissionService.RolePermissionRemoved={callerMention}, у роли {roleMention} удалено разрешение "{permission}".
+TrickyBot.Services.PermissionService.RolePermissionNotExists={callerMention}, у роли {roleMention} нет разрешения "{permission}".
+TrickyBot.Services.PermissionService.RolePermissionAlreadyExists={callerMention}, у роли {roleMention} уже есть разрешение "{permission}".
+
+TrickyBot.Services.PermissionService.UserPermissionAdded={callerMention}, пользователю {targetMention} выдано разрешение "{permission}".
+TrickyBot.Services.PermissionService.UserPermissionRemoved={callerMention}, у пользователя {targetMention} удалено разрешение "{permission}".
+TrickyBot.Services.PermissionService.UserPermissionNotExists={callerMention}, у пользователя {targetMention} нет разрешения "{permission}".
+TrickyBot.Services.PermissionService.UserPermissionAlreadyExists={callerMention}, у пользователя {targetMention} уже есть разрешение "{permission}".
+
+TrickyBot.Services.PermissionService.InvalidParameters={callerMention}, введены неправильные аргументы.

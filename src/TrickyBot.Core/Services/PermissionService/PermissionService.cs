@@ -29,8 +29,10 @@ namespace TrickyBot.Services.PermissionService
         /// <inheritdoc/>
         public IReadOnlyList<IDiscordCommand> DiscordCommands { get; } = new IDiscordCommand[]
         {
-            new AddPermission(),
-            new RemovePermission(),
+            new AddUserPermission(),
+            new RemoveUserPermission(),
+            new AddRolePermission(),
+            new RemoveRolePermission(),
             new ListPermissions(),
         };
 

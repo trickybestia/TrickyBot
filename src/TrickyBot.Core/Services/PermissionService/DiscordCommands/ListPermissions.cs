@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 using Discord;
 using TrickyBot.API.Features;
+using TrickyBot.Services.CustomizationService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Abstract;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;
@@ -43,48 +44,43 @@ namespace TrickyBot.Services.PermissionService.DiscordCommands
             var guild = SSIP.Guild;
             var responseBuilder = new EmbedBuilder();
             var stringBuilder = new StringBuilder();
-            if (string.IsNullOrEmpty(parameter))
+
+            if (service.Config.RolePermissions.Count != 0)
             {
-                if (service.Config.RolePermissions.Count != 0)
+                foreach (var roleInfo in service.Config.RolePermissions)
                 {
-                    foreach (var roleInfo in service.Config.RolePermissions)
+                    var role = guild.GetRole(roleInfo.Key);
+                    stringBuilder.AppendLine($"{role.Mention}:");
+                    foreach (var rolePermission in roleInfo.Value)
                     {
-                        var role = guild.GetRole(roleInfo.Key);
-                        stringBuilder.AppendLine($"{role.Mention}:");
-                        foreach (var rolePermission in roleInfo.Value)
-                        {
-                            stringBuilder.Append(rolePermission).AppendLine(",");
-                        }
+                        stringBuilder.Append(rolePermission).AppendLine(",");
                     }
-
-                    stringBuilder.Replace("*", @"\*");
-
-                    responseBuilder.AddField("Roles:", stringBuilder.ToString());
-                    stringBuilder.Clear();
                 }
 
-                if (service.Config.UserPermissions.Count != 0)
+                stringBuilder.Replace("*", @"\*");
+
+                responseBuilder.AddField("Roles:", stringBuilder.ToString());
+                stringBuilder.Clear();
+            }
+
+            if (service.Config.UserPermissions.Count != 0)
+            {
+                foreach (var userInfo in service.Config.UserPermissions)
                 {
-                    foreach (var userInfo in service.Config.UserPermissions)
+                    var user = guild.GetUser(userInfo.Key);
+                    stringBuilder.AppendLine($"{user.Mention}:");
+                    foreach (var rolePermission in userInfo.Value)
                     {
-                        stringBuilder.AppendLine($"<@{userInfo.Key}>:");
-                        foreach (var rolePermission in userInfo.Value)
-                        {
-                            stringBuilder.Append(rolePermission).AppendLine(",");
-                        }
+                        stringBuilder.Append(rolePermission).AppendLine(",");
                     }
-
-                    stringBuilder.Replace("*", @"\*");
-
-                    responseBuilder.AddField("Users:", stringBuilder.ToString());
                 }
 
-                await message.Channel.SendMessageAsync(embed: responseBuilder.Build());
+                stringBuilder.Replace("*", @"\*");
+
+                responseBuilder.AddField("Users:", stringBuilder.ToString());
             }
-            else
-            {
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} неправильные аргументы!");
-            }
+
+            await message.Channel.SendMessageAsync(embed: responseBuilder.Build());
         }
     }
 }

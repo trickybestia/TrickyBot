@@ -38,8 +38,12 @@ namespace TrickyBot.Services.CustomizationService.API.Features
             while (!reader.EndOfStream)
             {
                 var line = await reader.ReadLineAsync();
-                var splittedLine = line.Split('=');
-                strings.Add(splittedLine[0], splittedLine[1]);
+
+                if (!string.IsNullOrEmpty(line))
+                {
+                    var splittedLine = line.Split('=');
+                    strings.Add(splittedLine[0], splittedLine[1]);
+                }
             }
 
             return new CustomizationTable(strings);

@@ -1,15 +1,15 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="RemovePermission.cs" company="The TrickyBot Team">
+// <copyright file="RemoveRolePermission.cs" company="The TrickyBot Team">
 // Copyright (c) The TrickyBot Team. All rights reserved.
 // Licensed under the CC BY-ND 4.0 license.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Discord;
+using TrickyBot.Services.CustomizationService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Abstract;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;
@@ -23,14 +23,14 @@ using TokenType = TrickyBot.Services.PatternMatchingService.API.Features.TokenTy
 namespace TrickyBot.Services.PermissionService.DiscordCommands
 {
     /// <summary>
-    /// Команда удаления разрешения.
+    /// Команда удаления разрешения роли.
     /// </summary>
-    internal class RemovePermission : ConditionDiscordCommand
+    internal class RemoveRolePermission : ConditionDiscordCommand
     {
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="RemovePermission"/>.
+        /// Инициализирует новый экземпляр класса <see cref="RemoveRolePermission"/>.
         /// </summary>
-        public RemovePermission()
+        public RemoveRolePermission()
         {
             this.Conditions.Add(new DiscordCommandPermissionCondition("permissions.remove"));
         }
@@ -44,29 +44,27 @@ namespace TrickyBot.Services.PermissionService.DiscordCommands
         /// <inheritdoc/>
         protected override async Task Execute(IMessage message, string parameter)
         {
-            var guild = SSIP.Guild;
             var match = PatternMatcher.Match(parameter, TokenType.RoleMention, TokenType.Text);
-            try
-            {
-                if (match.Success)
-                {
-                    Permissions.RemoveRolePermission(guild.GetRole((ulong)match.Values[0]), (string)match.Values[1]);
-                }
-                else
-                {
-                    match = PatternMatcher.Match(parameter, TokenType.UserMention, TokenType.Text);
-                    Permissions.RemoveUserPermission(guild.GetUser((ulong)match.Values[0]), (string)match.Values[1]);
-                }
 
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} разрешение удалено.");
-            }
-            catch (PermissionNotExistsException)
+            if (match.Success)
             {
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} разрешение не существует!");
-            }
-            catch (ArgumentException)
-            {
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} неправильные аргументы!");
+                var role = SSIP.Guild.GetRole((ulong)match.Values[0]);
+                var permission = (string)match.Values[1];
+
+                try
+                {
+                    Permissions.RemoveRolePermission(role, permission);
+
+                    await message.Channel.SendMessageAsync(new CustomString(CustomStringIds.RolePermissionRemoved).Format(("callerMention", message.Author.Mention), ("roleMention", role.Mention), ("permission", permission)));
+                }
+                catch (PermissionNotExistsException)
+                {
+                    await message.Channel.SendMessageAsync(new CustomString(CustomStringIds.RolePermissionNotExists).Format(("callerMention", message.Author.Mention), ("roleMention", role.Mention), ("permission", permission)));
+                }
+                catch (ArgumentException)
+                {
+                    await message.Channel.SendMessageAsync(new CustomString(CustomStringIds.InvalidParameters).Format(("callerMention", message.Author.Mention)));
+                }
             }
         }
     }
