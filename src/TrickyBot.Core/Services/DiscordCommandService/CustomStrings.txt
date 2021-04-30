@@ -1,0 +1,2 @@
+TrickyBot.Services.DiscordCommandService.PrefixChanged={callerMention}, префикс успешно изменён на `{prefix}`.
+TrickyBot.Services.DiscordCommandService.InvalidPrefix={callerMention}, указан неверный префикс `{prefix}`. Префикс не должен быть пустым, начинаться или заканчиваться на пробел, содержать символы переноса строки.

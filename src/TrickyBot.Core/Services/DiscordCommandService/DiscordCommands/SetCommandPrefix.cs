@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 
 using Discord;
+using TrickyBot.Services.CustomizationService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Abstract;
 using TrickyBot.Services.DiscordCommandService.API.Features;
 using TrickyBot.Services.DiscordCommandService.API.Features.Conditions;
@@ -40,14 +41,13 @@ namespace TrickyBot.Services.DiscordCommandService.DiscordCommands
             try
             {
                 TrickyBot.Services.DiscordCommandService.API.Features.DiscordCommands.CommandPrefix = parameter;
+
+                await message.Channel.SendMessageAsync(embed: new EmbedBuilder().WithDescription(new CustomString(CustomStringIds.PrefixChanged).Format(("callerMention", message.Author.Mention), ("prefix", parameter))).Build());
             }
             catch (ArgumentException)
             {
-                await message.Channel.SendMessageAsync($"{message.Author.Mention} неправильный префикс!");
-                return;
+                await message.Channel.SendMessageAsync(embed: new EmbedBuilder().WithDescription(new CustomString(CustomStringIds.InvalidPrefix).Format(("callerMention", message.Author.Mention), ("prefix", parameter))).Build());
             }
-
-            await message.Channel.SendMessageAsync($"{message.Author.Mention} префикс изменён.");
         }
     }
 }
