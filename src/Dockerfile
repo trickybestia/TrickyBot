@@ -10,7 +10,7 @@ LABEL org.label-schema.schema-version="1.0"
 LABEL org.label-schema.url="https://github.com/TrickyBestia/TrickyBot"
 LABEL org.label-schema.vcs-url="https://github.com/TrickyBestia/TrickyBot"
 LABEL org.label-schema.version="3.0.0"
-LABEL org.label-schema.docker.cmd="docker run -d --name trickybot --mount type=bind,source=/var/TrickyBotData,target=/appdata trickybot:3.0.0"
+LABEL org.label-schema.docker.cmd="docker run -d --name trickybot --mount type=bind,source=/var/TrickyBotData,target=/appdata trickybestia/trickybot:3.0.0"
 WORKDIR /app
 
 COPY --from=build /app/TrickyBot.Core/bin/Release/publish .
