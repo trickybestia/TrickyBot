@@ -25,7 +25,9 @@ jobs:
           $version = $TargetsFile.Project.PropertyGroup.Version
           $version = $Version[0].Trim()
           $year = [System.DateTime]::Now.ToString("yyyy")
-          nuget pack -Version $version -Properties Year=$year
+          new-item packages -itemtype directory
+          cd packages
+          nuget pack -Version $version -Properties Year=$year ..
 
       - name: Upload build
         uses: actions/upload-artifact@v2
@@ -37,4 +39,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: NuGet package
-          path: artifacts/TrickyBot.*.nupkg
+          path: packages/TrickyBot.*.nupkg
