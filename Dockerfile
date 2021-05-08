@@ -13,7 +13,7 @@ LABEL org.label-schema.version="3.0.0"
 LABEL org.label-schema.docker.cmd="docker run -d --name trickybot --mount type=bind,source=/var/TrickyBotData,target=/appdata trickybestia/trickybot:3.0.0"
 WORKDIR /app
 
-COPY --from=build /app/TrickyBot.Core/bin/Release/publish .
+COPY --from=build /app/artifacts/publish .
 RUN mkdir /appdata && useradd trickybot -M && chown -R trickybot . /appdata
 ENTRYPOINT ["dotnet", "TrickyBot.Core.dll", "--data", "/appdata"]
 USER trickybot

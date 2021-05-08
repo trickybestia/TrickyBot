@@ -11,6 +11,7 @@
     <RepositoryUrl>https://github.com/TrickyBestia/TrickyBot</RepositoryUrl>
     <NoWarn>IDE0090;IDE0057</NoWarn>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>$(SolutionDir)artifacts</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
-  <Import Project="../TrickyBot.targets" />
+  <Import Project="../../TrickyBot.targets" />
   
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
     <EmbeddedResource Include="**/**/CustomStrings.txt" />
   </ItemGroup>
 

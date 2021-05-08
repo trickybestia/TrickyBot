@@ -16,12 +16,11 @@ jobs:
           dotnet-version: 5.0.x
 
       - name: Publish
-        run: cd src && dotnet publish -c Release -p:UseAppHost=false
+        run: dotnet publish -c Release -p:UseAppHost=false
 
       - name: Create NuGet package
         shell: pwsh
         run: |
-          cd src
           [XML]$TargetsFile = Get-Content TrickyBot.targets
           $version = $TargetsFile.Project.PropertyGroup.Version
           $version = $Version[0].Trim()
@@ -32,10 +31,10 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: TrickyBot
-          path: src/TrickyBot.Core/bin/Release/publish
+          path: artifacts/publish
 
       - name: Upload NuGet package
         uses: actions/upload-artifact@v2
         with:
           name: NuGet package
-          path: src/TrickyBot.*.nupkg
+          path: artifacts/TrickyBot.*.nupkg
