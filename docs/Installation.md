@@ -1,4 +1,19 @@
 # Установка
+## Docker (Linux)
+Наиболее простым способом установки бота является использование [Docker-образа](https://hub.docker.com/repository/docker/trickybestia/trickybot).
+1. Создаём директорию в /var/, в которой будут находится файлы конфигурации бота.
+```bash
+mkdir /var/TrickyBotData
+```
+2. Создаём и запускаем Docker-контейнер.
+```bash
+docker run docker run -it --name trickybot --mount type=bind,source=/var/TrickyBotData,target=/appdata trickybestia/trickybot:latest
+```
+3. В /var/TrickyBotData/Configs/BotService.json задаём токен бота.
+4. Запускаем Docker-контейнер.
+```bash
+docker start trickybot
+```
 ## Ubuntu 20.04 LTS
 1. Устанавливаем .NET 5.0.
 ```bash
