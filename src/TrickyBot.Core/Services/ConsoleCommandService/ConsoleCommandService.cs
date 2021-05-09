@@ -32,6 +32,7 @@ namespace TrickyBot.Services.ConsoleCommandService
         public IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = new IConsoleCommand[]
         {
             new Exit(),
+            new TrickyBot.Services.ConsoleCommandService.ConsoleCommands.Services(),
         };
 
         /// <inheritdoc/>
