@@ -22,6 +22,9 @@ namespace TrickyBot.Services.PatternMatchingService
     public class PatternMatchingService : ServiceBase<PatternMatchingServiceConfig>, IConsoleCommandService<PatternMatchingServiceConfig>
     {
         /// <inheritdoc/>
+        public override Priority Priority => Priorities.CoreService;
+
+        /// <inheritdoc/>
         public IReadOnlyList<IConsoleCommand> ConsoleCommands { get; } = new IConsoleCommand[]
         {
             new Analyze(),
